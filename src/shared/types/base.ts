@@ -1,7 +1,7 @@
 // Base entity interface that all domain models extend
 export interface BaseEntity {
   id: string;
-  createdAt?: string;
+  createdAt: string;
   updatedAt?: string;
 }
 

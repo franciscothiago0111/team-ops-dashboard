@@ -1,39 +1,26 @@
+import { BaseEntity } from ".";
+import { Team } from "./team";
+import { User } from "./user";
+
 export type TaskStatus = "PENDING" | "IN_PROGRESS" | "DONE";
 export type TaskPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
-export interface TaskFile {
-  id: string;
-  name: string;
-  url: string;
-  size: number;
-  mimeType: string;
-  createdAt: string;
-}
 
-export interface Task {
-  id: string;
-  title: string;
-  description: string | null;
+export interface Task extends BaseEntity {
+  name: string;
+  description: string;
   status: TaskStatus;
-  assignedToId: string | null;
-  assignedTo?: {
-    id: string;
-    name: string;
-  } | null;
+  assignedToId: string;
+  assignedTo?: User;
+
   createdById: string;
-  createdBy?: {
-    id: string;
-    name: string;
-  } | null;
   teamId: string;
-  team?: {
-    id: string;
-    name: string;
-  } | null;
-  createdAt: string;
-  updatedAt?: string;
+  team?: Team;
+  createdBy?: User;
+
+
+
   priority: TaskPriority;
-  dueDate: string | null;
-  labels: string[];
-  files?: TaskFile[];
+  dueDate?: string;
+
 }

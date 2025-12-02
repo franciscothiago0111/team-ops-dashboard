@@ -1,12 +1,12 @@
-import { BaseEntity } from "./base";
-import { Employee } from "./employee";
+import { BaseEntity } from ".";
 import { Task } from "./task";
+import { User } from "./user";
 
 export interface Team extends BaseEntity {
   name: string;
   description?: string;
   managerId: string;
   companyId: string;
-  members?: Employee[];
+  members?: User[];
   tasks?: Task[];
 }

@@ -13,7 +13,7 @@ export interface IMetricsFilters {
 export const MetricsService = {
   getMetrics: async (filters: IMetricsFilters = {}): Promise<MetricsResponse> => {
     return await api.get<MetricsResponse>("/metrics", {
-      params: filters,
+      params: filters as Record<string, string | number | boolean | undefined>,
     });
   },
 };

@@ -1,7 +1,5 @@
 export * from "./base";
 export * from "./user";
-export * from "./employee";
-export * from "./manager";
 export * from "./company";
 export * from "./team";
 export * from "./task";
