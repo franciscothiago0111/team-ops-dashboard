@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@/core/ui/Card";
+
 import { TeamsList } from "./_components/TeamsList";
 import { TeamsFilter } from "./_components/TeamsFilter";
 import { DashboardShell } from "../_components/DashboardShell";
@@ -20,11 +20,7 @@ export default function TeamsPage() {
             </p>
           </header>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            <Card title="Times Ativos" description="Times em operação" />
-            <Card title="Membros" description="Total de colaboradores" />
-            <Card title="Projetos" description="Projetos em andamento" />
-          </div>
+
 
           <TeamsFilter />
 

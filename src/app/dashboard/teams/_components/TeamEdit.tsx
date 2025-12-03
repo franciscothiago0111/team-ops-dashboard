@@ -132,7 +132,7 @@ export function TeamEdit({ id }: TeamEditProps) {
   );
 
   return (
-    <RoleGuard allowedRoles={["ADMIN", "MANAGER"]}>
+    <RoleGuard allowedRoles={["ADMIN"]}>
       <DashboardShell title="Editar Time">
         <div className="space-y-6">
           <BackButton />

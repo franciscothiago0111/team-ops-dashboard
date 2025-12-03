@@ -24,7 +24,7 @@ export function TeamCard({ team }: TeamCardProps) {
       <dl className="mt-4 grid grid-cols-2 gap-4 text-sm text-slate-500">
         <div>
           <dt className="font-medium text-slate-400">Gerente</dt>
-          <dd className="text-slate-900">{team.managerId}</dd>
+          <dd className="text-slate-900">{team?.manager?.name}</dd>
         </div>
         {team.createdAt && (
           <div>

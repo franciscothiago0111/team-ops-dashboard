@@ -2,7 +2,7 @@ import { BaseEntity } from ".";
 import { Team } from "./team";
 import { User } from "./user";
 
-export type TaskStatus = "PENDING" | "IN_PROGRESS" | "DONE";
+export type TaskStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
 export type TaskPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
 

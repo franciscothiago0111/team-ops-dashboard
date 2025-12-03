@@ -18,7 +18,7 @@ export function TeamsList({ title = "Times" }: TeamsListProps) {
   const searchParams = useSearchParams();
   const { user } = useAuth();
 
-  const canCreateTeam = user?.role === "MANAGER" || user?.role === "ADMIN";
+  const canCreateTeam = user?.role === "ADMIN";
 
   const filters: ITeamListParams = {
     name: searchParams.get("name") || undefined,

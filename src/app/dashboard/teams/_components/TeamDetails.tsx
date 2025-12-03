@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { Users, ClipboardList, UserX, CheckCircle, Clock, AlertCircle } from "lucide-react";
 import { Task } from "@/shared/types/task";
 import { User } from "@/shared/types";
+import { useAuth } from "@/core/hooks/useAuth";
 
 interface TeamDetailsProps {
   id: string;
@@ -23,6 +24,11 @@ interface TeamDetailsProps {
 export function TeamDetails({ id }: TeamDetailsProps) {
   const router = useRouter();
   const { data: team, isLoading, error } = useTeamDetails(id);
+  const { user } = useAuth();
+
+  const canEditTeam = user?.role === "ADMIN";
+
+
 
   const members = team?.members ?? [];
   const tasks = team?.tasks ?? [];
@@ -80,9 +86,11 @@ export function TeamDetails({ id }: TeamDetailsProps) {
                 <h1 className="text-3xl font-semibold text-slate-900">{team.name}</h1>
               </div>
               <div>
-                <Button onClick={() => router.push(`/dashboard/teams/${id}/edit`)}>
-                  Editar
-                </Button>
+                {canEditTeam && (
+                  <Button onClick={() => router.push(`/dashboard/teams/${id}/edit`)}>
+                    Editar
+                  </Button>
+                )}
               </div>
             </div>
 
