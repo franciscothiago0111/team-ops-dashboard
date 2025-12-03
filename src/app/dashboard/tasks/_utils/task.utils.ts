@@ -7,7 +7,8 @@ import { isPast, isToday, formatDistanceToNow, formatDate } from "@/core/utils/f
 export const statusConfig: Record<TaskStatus, { label: string; color: string; bgColor: string }> = {
   PENDING: { label: "Pendente", color: "text-amber-700", bgColor: "bg-amber-100" },
   IN_PROGRESS: { label: "Em Progresso", color: "text-blue-700", bgColor: "bg-blue-100" },
-  DONE: { label: "Concluída", color: "text-green-700", bgColor: "bg-green-100" },
+  COMPLETED: { label: "Concluída", color: "text-green-700", bgColor: "bg-green-100" },
+  CANCELLED: { label: "Cancelada", color: "text-red-700", bgColor: "bg-red-100" },
 };
 
 /**
@@ -35,8 +36,9 @@ export const priorityConfigDetails: Record<TaskPriority, { label: string; icon: 
  */
 export const nextStatus: Record<TaskStatus, TaskStatus | null> = {
   PENDING: "IN_PROGRESS",
-  IN_PROGRESS: "DONE",
-  DONE: null,
+  IN_PROGRESS: "COMPLETED",
+  COMPLETED: null,
+  CANCELLED: null,
 };
 
 /**
@@ -45,7 +47,8 @@ export const nextStatus: Record<TaskStatus, TaskStatus | null> = {
 export const nextStatusLabelCard: Record<TaskStatus, string> = {
   PENDING: "Iniciar",
   IN_PROGRESS: "Concluir",
-  DONE: "",
+  COMPLETED: "",
+  CANCELLED: "",
 };
 
 /**
@@ -54,7 +57,8 @@ export const nextStatusLabelCard: Record<TaskStatus, string> = {
 export const nextStatusLabelDetails: Record<TaskStatus, string> = {
   PENDING: "Iniciar Tarefa",
   IN_PROGRESS: "Marcar como Concluída",
-  DONE: "",
+  COMPLETED: "",
+  CANCELLED: "",
 };
 
 /**
@@ -64,7 +68,7 @@ export function getDueDateInfoCard(dueDate: Date | string | null | undefined, ta
   if (!dueDate) return null;
 
   const date = new Date(dueDate);
-  const isOverdue = isPast(date) && taskStatus !== "DONE";
+  const isOverdue = isPast(date) && taskStatus !== "COMPLETED";
   const isDueToday = isToday(date);
 
   return {
@@ -81,7 +85,7 @@ export function getDueDateInfoDetails(dueDate: Date | string | null | undefined,
   if (!dueDate) return null;
 
   const date = new Date(dueDate);
-  const isOverdue = isPast(date) && taskStatus !== "DONE";
+  const isOverdue = isPast(date) && taskStatus !== "COMPLETED";
   const isDueToday = isToday(date);
 
   return {

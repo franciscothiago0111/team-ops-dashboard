@@ -5,7 +5,7 @@ export const metricsFiltersSchema = z.object({
   endDate: z.string().optional(),
   teamId: z.string().optional(),
   userId: z.string().optional(),
-  taskStatus: z.enum(["PENDING", "IN_PROGRESS", "DONE"]).optional(),
+  taskStatus: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED"]).optional(),
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional(),
 });
 

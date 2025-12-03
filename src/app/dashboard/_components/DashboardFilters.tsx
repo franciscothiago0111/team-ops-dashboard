@@ -63,7 +63,7 @@ export function DashboardFilters({ onFilterChange, userRole }: DashboardFiltersP
             <option value="">Todos</option>
             <option value="PENDING">Pendente</option>
             <option value="IN_PROGRESS">Em Progresso</option>
-            <option value="DONE">Concluído</option>
+            <option value="COMPLETED">Concluído</option>
           </Select>
         </div>
 

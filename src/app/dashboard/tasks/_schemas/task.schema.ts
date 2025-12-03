@@ -20,7 +20,7 @@ export const UpdateTaskSchema = z.object({
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional(),
   dueDate: z.string().optional().nullable(),
   labels: z.array(z.string()).optional(),
-  status: z.enum(["PENDING", "IN_PROGRESS", "DONE"]).optional(),
+  status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]).optional(),
 });
 
 export type UpdateTaskInput = z.infer<typeof UpdateTaskSchema>;

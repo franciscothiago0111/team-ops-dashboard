@@ -35,31 +35,18 @@ const priorityOptions = [
 const statusOptions = [
   { value: "PENDING", label: "Pendente" },
   { value: "IN_PROGRESS", label: "Em Progresso" },
-  { value: "DONE", label: "Concluída" },
+  { value: "COMPLETED", label: "Concluída" },
+  { value: "CANCELLED", label: "Cancelada" },
 ];
 
-const getFileIcon = (mimeType: string) => {
-  if (mimeType.startsWith("image/")) return <ImageIcon className="h-5 w-5 text-purple-500" />;
-  if (mimeType.includes("pdf")) return <FileText className="h-5 w-5 text-red-500" />;
-  return <File className="h-5 w-5 text-slate-500" />;
-};
 
-const formatFileSize = (bytes: number) => {
-  if (bytes === 0) return "0 Bytes";
-  const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-};
 
 export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
   const toast = useAppToast();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const { execute, isLoading } = useUpdateTask();
 
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const [isUploadingFiles, setIsUploadingFiles] = useState(false);
-  const [deletingFileId, setDeletingFileId] = useState<string | null>(null);
 
   const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
   const { data: employeesData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100 });

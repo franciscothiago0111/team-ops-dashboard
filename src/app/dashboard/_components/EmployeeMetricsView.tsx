@@ -61,17 +61,17 @@ export function EmployeeMetricsView({ data }: EmployeeMetricsViewProps) {
 
         <Card className="bg-linear-to-br from-blue-600 to-blue-400 text-white">
           <p className="text-sm text-blue-100">Taxa de Conclusão</p>
-          <p className="text-4xl font-bold">{data.performance.completionRate.toFixed(1)}%</p>
+          <p className="text-4xl font-bold">{data?.performance?.completionRate.toFixed(1)}%</p>
         </Card>
 
         <Card className="bg-linear-to-br from-emerald-600 to-emerald-400 text-white">
           <p className="text-sm text-emerald-100">Concluídas no Período</p>
-          <p className="text-4xl font-bold">{data.performance.tasksCompletedInPeriod}</p>
+          <p className="text-4xl font-bold">{data?.performance?.tasksCompletedInPeriod}</p>
         </Card>
 
         <Card className="bg-linear-to-br from-amber-600 to-amber-400 text-white">
           <p className="text-sm text-amber-100">Tempo Médio</p>
-          <p className="text-4xl font-bold">{data.performance.averageCompletionTime.toFixed(1)}h</p>
+          <p className="text-4xl font-bold">{data?.performance?.averageCompletionTime.toFixed(1)}h</p>
         </Card>
       </div>
 
@@ -90,7 +90,7 @@ export function EmployeeMetricsView({ data }: EmployeeMetricsViewProps) {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {taskStatusData.map((entry, index) => (
+                {taskStatusData?.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -115,21 +115,21 @@ export function EmployeeMetricsView({ data }: EmployeeMetricsViewProps) {
       {/* Performance Summary */}
       <Card
         title="Minha Performance"
-        description={`Período: ${formatDate(data.period.startDate)} - ${formatDate(data.period.endDate)}`}
+        description={`Período: ${formatDate(data?.period.startDate)} - ${formatDate(data?.period.endDate)}`}
       >
         <div className="grid gap-4 md:grid-cols-4">
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Tarefas Criadas</p>
-            <p className="text-2xl font-bold text-slate-900">{data.performance.tasksCreated}</p>
+            <p className="text-2xl font-bold text-slate-900">{data?.performance?.tasksCreated}</p>
           </div>
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Meu Time</p>
-            <p className="text-lg font-bold text-slate-900">{data.team.name}</p>
+            <p className="text-lg font-bold text-slate-900">{data?.team.name}</p>
           </div>
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Posição no Time</p>
             <p className="text-2xl font-bold text-slate-900">
-              {data.team.myRankInTeam}º / {data.team.totalMembers}
+              {data?.team.myRankInTeam}º / {data?.team.totalMembers}
             </p>
           </div>
           <div className="rounded-lg bg-slate-50 p-4">
@@ -140,10 +140,10 @@ export function EmployeeMetricsView({ data }: EmployeeMetricsViewProps) {
       </Card>
 
       {/* Upcoming Deadlines */}
-      {data.upcomingDeadlines.length > 0 && (
+      {data?.upcomingDeadlines?.length > 0 && (
         <Card title="Próximos Prazos" description="Tarefas com prazo próximo">
           <div className="space-y-3">
-            {data.upcomingDeadlines.map((task) => (
+            {data?.upcomingDeadlines.map((task) => (
               <Link
                 key={task.taskId}
                 href={`/dashboard/tasks/${task.taskId}`}
@@ -169,11 +169,11 @@ export function EmployeeMetricsView({ data }: EmployeeMetricsViewProps) {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Total de Notificações</p>
-            <p className="text-3xl font-bold text-slate-900">{data.notifications.total}</p>
+            <p className="text-3xl font-bold text-slate-900">{data?.notifications.total}</p>
           </div>
           <div className="rounded-lg bg-amber-50 p-4">
             <p className="text-sm text-amber-700">Não Lidas</p>
-            <p className="text-3xl font-bold text-amber-600">{data.notifications.unread}</p>
+            <p className="text-3xl font-bold text-amber-600">{data?.notifications.unread}</p>
           </div>
         </div>
       </Card>
