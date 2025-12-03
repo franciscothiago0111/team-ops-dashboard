@@ -31,7 +31,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
   const { execute, isLoading } = useCreateTask();
 
   const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
-  const { data: employeesData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100 });
+  const { data: employeesData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100, role: "EMPLOYEE" });
 
   const form = useForm<CreateTaskInput>({
     resolver: zodResolver(CreateTaskSchema),

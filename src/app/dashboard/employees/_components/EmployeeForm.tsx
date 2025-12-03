@@ -11,7 +11,7 @@ import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useAuth } from "@/core/hooks/useAuth";
 import { useCreateEmployee } from "../_hooks/useCreateEmployee";
 import { CreateEmployeeInput, CreateEmployeeSchema } from "../_schemas/employee.schema";
-import { useTeamList } from "../../teams/_hooks/useTeamList";
+// import { useTeamList } from "../../teams/_hooks/useTeamList";
 
 interface EmployeeFormProps {
   onSuccess?: () => void;
@@ -21,15 +21,15 @@ export function EmployeeForm({ onSuccess }: EmployeeFormProps) {
   const { execute, isLoading } = useCreateEmployee();
 
 
-  const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
-  const teams = teamsData?.data ?? [];
+  // const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
+  // const teams = teamsData?.data ?? [];
 
-  const teamOptions = [
-    ...teams.map((team) => ({
-      value: team.id,
-      label: team.name,
-    })),
-  ];
+  // const teamOptions = [
+  //   ...teams.map((team) => ({
+  //     value: team.id,
+  //     label: team.name,
+  //   })),
+  // ];
 
 
 
@@ -102,13 +102,13 @@ export function EmployeeForm({ onSuccess }: EmployeeFormProps) {
           error={errors.role?.message}
           options={getRoleOptions()}
         />
-        <Select
+        {/* <Select
           label="Time"
           {...form.register("teamId")}
           error={errors.teamId?.message}
           options={teamOptions}
           disabled={isLoadingTeams}
-        />
+        /> */}
       </InputsGrid>
 
       <div className="flex gap-3">

@@ -94,7 +94,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
             )}
 
             <InputsGrid className="mt-6">
-              <InfoField label="ID do Gerente" value={team.managerId} />
+              <InfoField label="Gerente" value={team?.manager?.name} />
               {team.createdAt && (
                 <InfoField
                   label="Criado em"

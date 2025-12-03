@@ -20,10 +20,8 @@ import { ErrorState } from "@/shared/components/ErrorState";
 import { BackButton } from "@/shared/components/BackButton";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 import { useUpdateTeam } from "../_hooks/useUpdateTeam";
-import { useTeamMembers } from "../_hooks/useTeamMembers";
 import { UpdateTeamInput, UpdateTeamSchema } from "../_schemas/team.schema";
 import { useAppToast } from "@/core/hooks/useToast";
-import { User } from "@/shared/types";
 
 interface TeamEditProps {
   id: string;
@@ -33,9 +31,11 @@ export function TeamEdit({ id }: TeamEditProps) {
   const router = useRouter();
   const toast = useAppToast();
   const { data: team, isLoading, error } = useTeamDetails(id);
-  const { data: members } = useTeamMembers(id);
-  const { data: employeesData } = useEmployeeList({ limit: 100 });
+  const { data: employeesData } = useEmployeeList({ limit: 100, role: "EMPLOYEE", withoutTeam: true });
   const { execute: updateTeam, isLoading: isUpdating } = useUpdateTeam();
+
+  const availableEmployees = employeesData?.data || [];
+  const currentMembers = team?.members || [];
 
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [membersToAdd, setMembersToAdd] = useState<string[]>([]);
@@ -47,16 +47,6 @@ export function TeamEdit({ id }: TeamEditProps) {
       name: team.name || "",
     } : undefined,
   });
-
-  const employees = employeesData?.data ?? [];
-  const currentMembers = members ?? [];
-
-  // Get available employees (not in team and not pending to be added)
-  const availableEmployees = employees.filter(
-    (emp) =>
-      !currentMembers.some((member: User) => member.id === emp.id) &&
-      !membersToAdd.includes(emp.id)
-  );
 
   const employeeOptions = [
     { value: "", label: "Escolha um colaborador..." },
@@ -90,7 +80,7 @@ export function TeamEdit({ id }: TeamEditProps) {
   async function onSubmit(values: UpdateTeamInput) {
     try {
       // Calculate final member IDs
-      const currentMemberIds = currentMembers.map((m: User) => m.id);
+      const currentMemberIds = currentMembers.map((m) => m.id);
       const finalMemberIds = [
         ...currentMemberIds.filter((id) => !membersToRemove.includes(id)),
         ...membersToAdd,
@@ -137,7 +127,7 @@ export function TeamEdit({ id }: TeamEditProps) {
   const { errors } = form.formState;
 
   // Get pending employees to display
-  const pendingEmployees = employees.filter((emp) =>
+  const pendingEmployees = availableEmployees.filter((emp) =>
     membersToAdd.includes(emp.id)
   );
 
@@ -248,7 +238,7 @@ export function TeamEdit({ id }: TeamEditProps) {
                     <p className="text-sm font-semibold text-slate-700">
                       Membros atuais:
                     </p>
-                    {currentMembers.map((member: User) => {
+                    {currentMembers.map((member) => {
                       const markedForRemoval = membersToRemove.includes(member.id);
                       return (
                         <div

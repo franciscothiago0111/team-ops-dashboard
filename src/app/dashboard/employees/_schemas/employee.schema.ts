@@ -7,7 +7,7 @@ export const CreateEmployeeSchema = z.object({
   role: z.enum(["EMPLOYEE", "MANAGER", "ADMIN"], {
     message: "Role inválido",
   }),
-  teamId: z.string().min(1, "Time é obrigatório"),
+
 });
 
 export type CreateEmployeeInput = z.infer<typeof CreateEmployeeSchema>;

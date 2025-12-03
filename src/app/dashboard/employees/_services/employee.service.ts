@@ -6,9 +6,9 @@ export interface IEmployeeListParams {
   page?: number;
   limit?: number;
   name?: string;
-  department?: string;
-  position?: string;
+  role?: string;
   teamId?: string;
+  withoutTeam?: boolean;
 }
 
 export interface ICreateEmployeeData {
