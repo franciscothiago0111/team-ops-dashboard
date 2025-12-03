@@ -22,9 +22,16 @@ export function AppProvider({ children }: AppProviderProps) {
           },
           mutations: {
             // Prevent React Query from throwing errors that would trigger Next.js error overlay
+            useErrorBoundary: false,
             throwOnError: false,
           },
-        }
+        },
+        // Suppress error logging in development
+        logger: {
+          log: console.log,
+          warn: console.warn,
+          error: () => {}, // Suppress error logs
+        },
       })
   );
 
