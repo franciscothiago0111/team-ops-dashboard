@@ -18,8 +18,7 @@ export function EmployeesList({ title = "Colaboradores" }: EmployeesListProps) {
 
   const filters: IEmployeeListParams = {
     name: searchParams.get("name") || undefined,
-    department: searchParams.get("department") || undefined,
-    position: searchParams.get("position") || undefined,
+    role: searchParams.get("role") || undefined,
     page: searchParams.get("page") ? Number(searchParams.get("page")) : undefined,
     limit: searchParams.get("limit") ? Number(searchParams.get("limit")) : 10,
   };

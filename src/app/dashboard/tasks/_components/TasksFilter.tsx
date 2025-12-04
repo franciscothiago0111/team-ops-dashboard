@@ -7,9 +7,9 @@ export function TasksFilter() {
     <Filter
       fields={[
         {
-          name: "title",
-          label: "Título",
-          placeholder: "Buscar por título...",
+          name: "name",
+          label: "Nome da Tarefa",
+          placeholder: "Buscar por nome...",
           type: "text",
         },
         {

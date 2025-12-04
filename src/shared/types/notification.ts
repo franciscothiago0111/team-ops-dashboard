@@ -1,7 +1,6 @@
 
 
 
-import type { Role } from "./user";
 import { BaseEntity } from "./base";
 
 export interface Notification extends BaseEntity {

@@ -27,7 +27,7 @@ const COLUMNS: { status: TaskStatus; title: string; icon: React.ReactNode; color
     bgColor: "bg-blue-50 border-blue-200",
   },
   {
-    status: "DONE",
+    status: "COMPLETED",
     title: "Concluídas",
     icon: <CheckCircle2 className="h-5 w-5" />,
     color: "text-green-600",
@@ -47,6 +47,7 @@ export function TasksBoard() {
     assignedToId: searchParams.get("assignedToId") || undefined,
     teamId: searchParams.get("teamId") || undefined,
     limit: 100, // Load all tasks for the board view
+    priority: searchParams.get("priority") || undefined,
   };
 
   const { data, isLoading, error, refetch } = useTaskList(filters);

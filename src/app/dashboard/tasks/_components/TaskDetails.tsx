@@ -25,8 +25,10 @@ import {
   Users,
   ArrowRight,
   Pencil,
+  Download,
 } from "lucide-react";
 import clsx from "clsx";
+import { usePDFDownload } from "@/core/hooks/usePDFDownload";
 
 
 interface TaskDetailsProps {
@@ -38,8 +40,10 @@ export function TaskDetails({ id }: TaskDetailsProps) {
   const { data: task, isLoading, error } = useTaskDetails(id);
   const { execute: updateTask, isLoading: isUpdating } = useUpdateTask();
   const { user } = useAuth();
+  const { generatePDF, isGenerating: isGeneratingPDF } = usePDFDownload();
 
   const canEditTask = user?.role === "MANAGER" || user?.role === "ADMIN";
+  const isAssignedToCurrentUser = user?.id === task?.assignedToId;
 
   if (isLoading) {
     return <LoadingState message="Carregando tarefa..." />;
@@ -60,20 +64,44 @@ export function TaskDetails({ id }: TaskDetailsProps) {
     }
   };
 
+  const handleDownloadPDF = async () => {
+    if (!task) return;
+
+    await generatePDF({
+      template: 'task-details',
+      data: task,
+      options: {
+        filename: `task-${task.id}-${task.name.replace(/\s+/g, '-').toLowerCase()}.pdf`,
+        title: `Task: ${task.name}`,
+        author: user?.name || 'Team Ops Dashboard',
+        subject: 'Task Details Report',
+      },
+    });
+  };
+
   return (
     <DashboardShell title="Detalhes da Tarefa">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <BackButton />
-          {canEditTask && (
-            <Link
-              href={`/dashboard/tasks/${task.id}/edit`}
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
-            >
-              <Pencil className="h-4 w-4" />
-              Editar
-            </Link>
-          )}
+          <div className="flex items-center gap-2">
+
+
+            <Button onClick={handleDownloadPDF}
+              isLoading={isGeneratingPDF} leftIcon={<Download className="h-4 w-4" />}>
+              Download PDF
+            </Button>
+
+            {canEditTask && (
+              <Link
+                href={`/dashboard/tasks/${task.id}/edit`}
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+              >
+                <Pencil className="h-4 w-4" />
+                Editar
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Main Card */}
@@ -100,10 +128,11 @@ export function TaskDetails({ id }: TaskDetailsProps) {
                 <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">{task.name}</h1>
               </div>
 
-              {next && canEditTask && (
+              {next && (
                 <Button
                   onClick={handleStatusChange}
                   isLoading={isUpdating}
+                  disabled={!isAssignedToCurrentUser}
                   className="whitespace-nowrap"
                 >
                   {nextStatusLabelDetails[task.status]}

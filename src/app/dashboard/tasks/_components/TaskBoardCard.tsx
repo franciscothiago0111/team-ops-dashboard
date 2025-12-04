@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Calendar, User, Flag, ArrowRight } from "lucide-react";
 import clsx from "clsx";
 import { Task, TaskStatus } from "@/shared/types/task";
+import { useAuth } from "@/core/hooks/useAuth";
 import {
   priorityConfigCard,
   nextStatus,
@@ -19,9 +20,12 @@ interface TaskBoardCardProps {
 }
 
 export function TaskBoardCard({ task, onStatusChange, currentStatus }: TaskBoardCardProps) {
+  const { user } = useAuth();
   const priority = priorityConfigCard[task.priority];
   const next = nextStatus[currentStatus];
   const dueDateInfo = getDueDateInfoCard(task.dueDate, task.status);
+
+  const isAssignedToCurrentUser = user?.id === task.assignedToId;
 
   return (
     <div className="group rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300 hover:shadow-md">
@@ -81,7 +85,13 @@ export function TaskBoardCard({ task, onStatusChange, currentStatus }: TaskBoard
       {next && (
         <button
           onClick={() => onStatusChange(task.id, next)}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-700 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
+          disabled={!isAssignedToCurrentUser}
+          className={clsx(
+            "mt-4 flex w-full items-center justify-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium transition-all",
+            isAssignedToCurrentUser
+              ? "border-slate-200 bg-slate-50 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
+              : "border-slate-100 bg-slate-50 text-slate-400 cursor-not-allowed opacity-50"
+          )}
         >
           {nextStatusLabelCard[currentStatus]}
           <ArrowRight className="h-3 w-3" />

@@ -6,7 +6,7 @@ import { Bell, Check, X } from "lucide-react";
 import clsx from "clsx";
 import { useNotifications, useMarkAsRead, useMarkAllAsRead, useUnreadCount } from "../_hooks/useNotifications";
 import { Notification } from "@/shared/types/notification";
-import { formatDate } from "@/core/utils/formatters";
+import { formatDayDateToHour } from "@/core/utils/formatters";
 
 
 export function NotificationPanel() {
@@ -211,11 +211,8 @@ export function NotificationPanel() {
                           {notification.message}
                         </p>
                         <p className="mt-2 text-xs text-slate-400">
-                          {/* {notification.createdAt && formatDistanceToNow(new Date(notification.createdAt), {
-                            addSuffix: true,
-                            locale: ptBR,
-                          })} */}
-                          {notification.createdAt && formatDate(notification.createdAt)}
+
+                          {notification.createdAt && formatDayDateToHour(notification.createdAt)}
                         </p>
                       </div>
 

@@ -97,7 +97,7 @@ export function DashboardSidebar({
                       : "bg-white text-slate-700 group-hover:bg-indigo-100 group-hover:text-indigo-700"
                   )}
                 >
-                  {item.label.charAt(0)}
+                  <item.icon className="h-5 w-5" />
                 </span>
                 {isSidebarOpen && (
                   <>

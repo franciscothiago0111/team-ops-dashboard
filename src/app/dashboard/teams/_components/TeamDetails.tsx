@@ -35,7 +35,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
 
   const getTaskStatusIcon = (status: Task["status"]) => {
     switch (status) {
-      case "DONE":
+      case "COMPLETED":
         return <CheckCircle className="h-4 w-4 text-green-600" />;
       case "IN_PROGRESS":
         return <Clock className="h-4 w-4 text-blue-600" />;
@@ -46,7 +46,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
 
   const getTaskStatusLabel = (status: Task["status"]) => {
     switch (status) {
-      case "DONE":
+      case "COMPLETED":
         return "Concluída";
       case "IN_PROGRESS":
         return "Em Progresso";
@@ -57,7 +57,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
 
   const getTaskStatusColor = (status: Task["status"]) => {
     switch (status) {
-      case "DONE":
+      case "COMPLETED":
         return "bg-green-100 text-green-700";
       case "IN_PROGRESS":
         return "bg-blue-100 text-blue-700";

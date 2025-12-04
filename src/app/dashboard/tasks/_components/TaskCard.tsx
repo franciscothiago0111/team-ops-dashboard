@@ -20,7 +20,7 @@ export function TaskCard({ task }: TaskCardProps) {
     if (!task.dueDate) return null;
 
     const dueDate = new Date(task.dueDate);
-    const isOverdue = isPast(dueDate) && task.status !== "DONE";
+    const isOverdue = isPast(dueDate) && task.status !== "COMPLETED";
     const isDueToday = isToday(dueDate);
 
     return {

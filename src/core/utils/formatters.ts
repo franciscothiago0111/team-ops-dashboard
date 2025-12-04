@@ -47,13 +47,17 @@ export function formatDate2Digit(date: Date | string) {
   });
 }
 
-export function formatDateToHour(date: Date | string) {
+export function formatDayDateToHour(date: Date | string) {
   const newDate = new Date(date);
-
-  newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
-
-  return `${newDate.getHours()} : ${newDate.getMinutes()}`;
+  return newDate.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 }
+
 
 /**
  * Check if a date is in the past
