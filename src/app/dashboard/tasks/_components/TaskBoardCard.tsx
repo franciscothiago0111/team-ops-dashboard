@@ -5,6 +5,7 @@ import { Calendar, User, Flag, ArrowRight } from "lucide-react";
 import clsx from "clsx";
 import { Task, TaskStatus } from "@/shared/types/task";
 import { useAuth } from "@/core/hooks/useAuth";
+import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 import {
   priorityConfigCard,
   nextStatus,
@@ -55,7 +56,9 @@ export function TaskBoardCard({ task, onStatusChange, currentStatus }: TaskBoard
 
       {/* Description */}
       {task.description && (
-        <p className="mt-2 text-xs text-slate-500 line-clamp-2">{task.description}</p>
+        <div className="mt-2 text-xs text-slate-500 line-clamp-2">
+          <RichTextDisplay content={task.description} />
+        </div>
       )}
 
       {/* Meta Info */}

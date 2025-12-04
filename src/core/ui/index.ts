@@ -11,6 +11,8 @@ export type { SelectProps } from "./Select";
 export { Textarea } from "./Textarea";
 export type { TextareaProps } from "./Textarea";
 
+export { RichTextEditor } from "./RichTextEditor";
+
 export { Card } from "./Card";
 
 export { Badge } from "./Badge";

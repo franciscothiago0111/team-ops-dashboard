@@ -9,6 +9,7 @@ import { DashboardShell } from "../../_components/DashboardShell";
 import { LoadingState } from "@/shared/components/LoadingState";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { BackButton } from "@/shared/components/BackButton";
+import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 import { formatDate } from "@/core/utils/formatters";
 import {
   statusConfig,
@@ -145,7 +146,7 @@ export function TaskDetails({ id }: TaskDetailsProps) {
             {task.description && (
               <div className="rounded-lg bg-slate-50 p-4">
                 <h3 className="mb-2 text-sm font-medium text-slate-500">Descrição</h3>
-                <p className="text-slate-700 whitespace-pre-wrap">{task.description}</p>
+                <RichTextDisplay content={task.description} />
               </div>
             )}
 

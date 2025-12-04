@@ -5,6 +5,7 @@ import { Calendar, User, Paperclip, Flag, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 import { statusConfig, priorityConfigDetails } from "../_utils/task.utils";
 import { isPast, isToday, formatDate } from "@/core/utils/formatters";
+import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 
 
 interface TaskCardProps {
@@ -60,7 +61,9 @@ export function TaskCard({ task }: TaskCardProps) {
 
       {/* Description */}
       {task.description && (
-        <p className="mt-2 text-sm text-slate-600 line-clamp-2">{task.description}</p>
+        <div className="mt-2 text-sm text-slate-600 line-clamp-2">
+          <RichTextDisplay content={task.description} />
+        </div>
       )}
 
       {/* Meta Grid */}

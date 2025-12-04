@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import '../core/ui/RichTextEditor.css';
 
 :root {
   --background: #ffffff;

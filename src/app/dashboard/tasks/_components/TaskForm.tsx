@@ -1,13 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarDays, Flag } from "lucide-react";
 
 import { Button } from "@/core/ui/Button";
 import { Input } from "@/core/ui/Input";
 import { Select } from "@/core/ui/Select";
-import { Textarea } from "@/core/ui/Textarea";
+import { RichTextEditor } from "@/core/ui/RichTextEditor";
 import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useCreateTask } from "../_hooks/useCreateTask";
@@ -88,12 +87,18 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
       </InputsGrid>
 
       <InputsGrid cols={1}>
-        <Textarea
-          label="Descrição"
-          placeholder="Descreva os detalhes da tarefa..."
-          {...form.register("description")}
-          error={errors.description?.message}
-          rows={4}
+        <Controller
+          name="description"
+          control={form.control}
+          render={({ field }) => (
+            <RichTextEditor
+              label="Descrição"
+              placeholder="Descreva os detalhes da tarefa..."
+              value={field.value}
+              onChange={field.onChange}
+              error={errors.description?.message}
+            />
+          )}
         />
       </InputsGrid>
 
