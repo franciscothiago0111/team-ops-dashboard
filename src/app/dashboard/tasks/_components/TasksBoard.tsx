@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Plus, ClipboardList, Clock, CheckCircle2 } from "lucide-react";
 import clsx from "clsx";
 import { TaskStatus } from "@/shared/types/task";
 import { ITaskListParams } from "../_services/task.service";
@@ -11,28 +10,30 @@ import { useUpdateTask } from "../_hooks/useUpdateTask";
 import { useAuth } from "@/core/hooks/useAuth";
 import { TaskBoardCard } from "./TaskBoardCard";
 import { LoadingState } from "@/shared/components/LoadingState";
+import { Plus } from "lucide-react";
+import { statusConfig } from "../_utils/task.utils";
 
-const COLUMNS: { status: TaskStatus; title: string; icon: React.ReactNode; color: string; bgColor: string }[] = [
+const COLUMNS = [
   {
-    status: "PENDING",
-    title: "Pendentes",
-    icon: <ClipboardList className="h-5 w-5" />,
-    color: "text-amber-600",
-    bgColor: "bg-amber-50 border-amber-200",
+    status: "PENDING" as TaskStatus,
+    title: statusConfig.PENDING.pluralLabel,
+    icon: <statusConfig.PENDING.icon className="h-5 w-5" />,
+    color: statusConfig.PENDING.color,
+    bgColor: statusConfig.PENDING.bgColor,
   },
   {
-    status: "IN_PROGRESS",
-    title: "Em Progresso",
-    icon: <Clock className="h-5 w-5" />,
-    color: "text-blue-600",
-    bgColor: "bg-blue-50 border-blue-200",
+    status: "IN_PROGRESS" as TaskStatus,
+    title: statusConfig.IN_PROGRESS.pluralLabel,
+    icon: <statusConfig.IN_PROGRESS.icon className="h-5 w-5" />,
+    color: statusConfig.IN_PROGRESS.color,
+    bgColor: statusConfig.IN_PROGRESS.bgColor,
   },
   {
-    status: "COMPLETED",
-    title: "Concluídas",
-    icon: <CheckCircle2 className="h-5 w-5" />,
-    color: "text-green-600",
-    bgColor: "bg-green-50 border-green-200",
+    status: "COMPLETED" as TaskStatus,
+    title: statusConfig.COMPLETED.pluralLabel,
+    icon: <statusConfig.COMPLETED.icon className="h-5 w-5" />,
+    color: statusConfig.COMPLETED.color,
+    bgColor: statusConfig.COMPLETED.bgColor,
   },
 ];
 

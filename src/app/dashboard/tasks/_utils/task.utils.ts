@@ -1,16 +1,50 @@
+import type { LucideIcon } from "lucide-react";
 import { TaskStatus, TaskPriority } from "@/shared/types/task";
 import { isPast, isToday, formatDistanceToNow, formatDate } from "@/core/utils/formatters";
+import { ClipboardList, Clock, CheckCircle2, XCircle } from "lucide-react";
 
 /**
  * Configuration for task status display
  */
-export const statusConfig: Record<TaskStatus, { label: string; color: string; bgColor: string }> = {
-  PENDING: { label: "Pendente", color: "text-amber-700", bgColor: "bg-amber-100" },
-  IN_PROGRESS: { label: "Em Progresso", color: "text-blue-700", bgColor: "bg-blue-100" },
-  COMPLETED: { label: "Concluída", color: "text-green-700", bgColor: "bg-green-100" },
-  CANCELLED: { label: "Cancelada", color: "text-red-700", bgColor: "bg-red-100" },
+export const statusConfig: Record<
+  TaskStatus,
+  {
+    label: string;
+    pluralLabel: string;
+    icon: LucideIcon;
+    color: string;
+    bgColor: string
+  }
+> = {
+  PENDING: {
+    label: "Pendente",
+    pluralLabel: "Pendentes",
+    icon: ClipboardList,
+    color: "text-amber-600",
+    bgColor: "bg-amber-50"
+  },
+  IN_PROGRESS: {
+    label: "Em Progresso",
+    pluralLabel: "Em Progresso",
+    icon: Clock,
+    color: "text-blue-600",
+    bgColor: "bg-blue-50"
+  },
+  COMPLETED: {
+    label: "Concluída",
+    pluralLabel: "Concluídas",
+    icon: CheckCircle2,
+    color: "text-green-600",
+    bgColor: "bg-green-50"
+  },
+  CANCELLED: {
+    label: "Cancelada",
+    pluralLabel: "Canceladas",
+    icon: XCircle,
+    color: "text-red-600",
+    bgColor: "bg-red-50"
+  },
 };
-
 /**
  * Configuration for task priority display (card version)
  */

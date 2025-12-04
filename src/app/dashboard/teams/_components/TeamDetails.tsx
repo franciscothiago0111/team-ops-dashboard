@@ -12,10 +12,12 @@ import { InputsGrid } from "@/shared/components/InputsGrid";
 import { InfoField } from "@/shared/components/InfoField";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 import { useRouter } from "next/navigation";
-import { Users, ClipboardList, UserX, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import { Users, ClipboardList, UserX } from "lucide-react";
 import { Task } from "@/shared/types/task";
 import { User } from "@/shared/types";
 import { useAuth } from "@/core/hooks/useAuth";
+import { formatDate } from "@/core/utils/formatters";
+import { statusConfig } from "../../tasks/_utils/task.utils";
 
 interface TeamDetailsProps {
   id: string;
@@ -33,38 +35,8 @@ export function TeamDetails({ id }: TeamDetailsProps) {
   const members = team?.members ?? [];
   const tasks = team?.tasks ?? [];
 
-  const getTaskStatusIcon = (status: Task["status"]) => {
-    switch (status) {
-      case "COMPLETED":
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
-      case "IN_PROGRESS":
-        return <Clock className="h-4 w-4 text-blue-600" />;
-      default:
-        return <AlertCircle className="h-4 w-4 text-slate-400" />;
-    }
-  };
 
-  const getTaskStatusLabel = (status: Task["status"]) => {
-    switch (status) {
-      case "COMPLETED":
-        return "Concluída";
-      case "IN_PROGRESS":
-        return "Em Progresso";
-      default:
-        return "Pendente";
-    }
-  };
 
-  const getTaskStatusColor = (status: Task["status"]) => {
-    switch (status) {
-      case "COMPLETED":
-        return "bg-green-100 text-green-700";
-      case "IN_PROGRESS":
-        return "bg-blue-100 text-blue-700";
-      default:
-        return "bg-slate-100 text-slate-700";
-    }
-  };
 
   if (isLoading) {
     return <LoadingState message="Carregando time..." />;
@@ -94,25 +66,18 @@ export function TeamDetails({ id }: TeamDetailsProps) {
               </div>
             </div>
 
-            {team.description && (
-              <div className="mt-4">
-                <h3 className="text-sm font-medium text-slate-400 mb-2">Descrição</h3>
-                <p className="text-slate-900">{team.description}</p>
-              </div>
-            )}
-
             <InputsGrid className="mt-6">
               <InfoField label="Gerente" value={team?.manager?.name} />
               {team.createdAt && (
                 <InfoField
                   label="Criado em"
-                  value={new Date(team.createdAt).toLocaleString("pt-BR")}
+                  value={formatDate(team.createdAt)}
                 />
               )}
               {team.updatedAt && (
                 <InfoField
                   label="Atualizado em"
-                  value={new Date(team.updatedAt).toLocaleString("pt-BR")}
+                  value={formatDate(team.updatedAt)}
                 />
               )}
             </InputsGrid>
@@ -191,36 +156,39 @@ export function TeamDetails({ id }: TeamDetailsProps) {
               </div>
             ) : (
               <div className="space-y-2">
-                {tasks.map((task: Task) => (
-                  <div
-                    key={task.id}
-                    className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-4 transition-colors hover:bg-slate-50 cursor-pointer"
-                    onClick={() => router.push(`/dashboard/tasks/${task.id}`)}
-                  >
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      {getTaskStatusIcon(task.status)}
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-sm font-semibold text-slate-900">
-                          {task.name}
-                        </h3>
-                        {task.description && (
-                          <p className="mt-1 truncate text-xs text-slate-500">
-                            {task.description}
-                          </p>
-                        )}
+                {tasks.map((task: Task) => {
+                  const StatusIcon = statusConfig[task.status].icon;
+                  return (
+                    <div
+                      key={task.id}
+                      className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-4 transition-colors hover:bg-slate-50 cursor-pointer"
+                      onClick={() => router.push(`/dashboard/tasks/${task.id}`)}
+                    >
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <StatusIcon className={`h-5 w-5 ${statusConfig[task.status].color}`} />
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-sm font-semibold text-slate-900">
+                            {task.name}
+                          </h3>
+                          {task.description && (
+                            <p className="mt-1 truncate text-xs text-slate-500">
+                              {task.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 ml-4">
+                        <span
+                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusConfig[
+                            task.status
+                          ].color}`}
+                        >
+                          {statusConfig[task.status].label}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 ml-4">
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${getTaskStatusColor(
-                          task.status
-                        )}`}
-                      >
-                        {getTaskStatusLabel(task.status)}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </Card>

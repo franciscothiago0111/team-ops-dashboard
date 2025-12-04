@@ -119,6 +119,7 @@ export function TaskDetails({ id }: TaskDetailsProps) {
                       status.color
                     )}
                   >
+                    <status.icon className="h-4 w-4" />
                     {status.label}
                   </span>
                   <span className={clsx("flex items-center gap-1 text-sm font-medium", priority.color)}>

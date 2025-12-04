@@ -50,7 +50,8 @@ export function TaskCard({ task }: TaskCardProps) {
                 status.color
               )}
             >
-
+              <status.icon className="h-3.5 w-3.5" />
+              {status.label}
             </span>
           </div>
           <h3 className="text-lg font-semibold text-slate-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">

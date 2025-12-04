@@ -1,6 +1,5 @@
 "use client";
 
-import { Card } from "@/core/ui/Card";
 import { EmployeesList } from "./_components/EmployeesList";
 import { EmployeesFilter } from "./_components/EmployeesFilter";
 import { DashboardShell } from "../_components/DashboardShell";
@@ -19,12 +18,6 @@ export default function EmployeesPage() {
               Gere admissões, desligamentos e movimentações com módulos independentes.
             </p>
           </header>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            <Card title="Ativos" description="96 colaboradores" />
-            <Card title="Onboarding" description="6 admissões em andamento" />
-            <Card title="Pendências" description="3 aprovações aguardando" />
-          </div>
 
           <EmployeesFilter />
 
