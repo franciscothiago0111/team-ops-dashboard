@@ -10,6 +10,7 @@ import { useTaskList } from "../_hooks/useTaskList";
 import { useUpdateTask } from "../_hooks/useUpdateTask";
 import { useAuth } from "@/core/hooks/useAuth";
 import { TaskBoardCard } from "./TaskBoardCard";
+import { LoadingState } from "@/shared/components/LoadingState";
 
 const COLUMNS: { status: TaskStatus; title: string; icon: React.ReactNode; color: string; bgColor: string }[] = [
   {
@@ -62,23 +63,7 @@ export function TasksBoard() {
   };
 
   if (isLoading) {
-    return (
-      <div className="grid gap-6 lg:grid-cols-3">
-        {COLUMNS.map((column) => (
-          <div key={column.status} className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 animate-pulse rounded bg-slate-200" />
-              <div className="h-5 w-24 animate-pulse rounded bg-slate-200" />
-            </div>
-            <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-32 animate-pulse rounded-xl bg-slate-100" />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+    return <LoadingState message="Carregando tarefas..." />;
   }
 
   if (error) {

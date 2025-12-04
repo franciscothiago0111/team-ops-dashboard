@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { TasksBoard } from "./_components/TasksBoard";
 import { TasksFilter } from "./_components/TasksFilter";
 import { DashboardShell } from "../_components/DashboardShell";
@@ -18,9 +17,7 @@ export default function TasksPage() {
 
         <TasksFilter />
 
-        <Suspense fallback={<div className="animate-pulse h-96 bg-slate-100 rounded-xl" />}>
-          <TasksBoard />
-        </Suspense>
+        <TasksBoard />
       </div>
     </DashboardShell>
   );
