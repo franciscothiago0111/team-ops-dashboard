@@ -22,7 +22,7 @@ export function EmployeeEdit({ id }: EmployeeEditProps) {
   };
 
   const handleCancel = () => {
-    router.push(`/dashboard/employees/${id}`);
+    router.back();
   };
 
   if (isLoading) {

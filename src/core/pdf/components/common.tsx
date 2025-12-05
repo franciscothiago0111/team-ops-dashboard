@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ leftText, rightText }) => (
     <Text>{leftText}</Text>
     <Text
       render={({ pageNumber, totalPages }) =>
-        rightText ? `${rightText} | Page ${pageNumber} of ${totalPages}` : `Page ${pageNumber} of ${totalPages}`
+        rightText ? `${rightText} | Página ${pageNumber} de ${totalPages}` : `Página ${pageNumber} de ${totalPages}`
       }
     />
   </View>

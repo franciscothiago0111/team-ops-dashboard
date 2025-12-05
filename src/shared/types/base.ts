@@ -2,7 +2,7 @@
 export interface BaseEntity {
   id: string;
   createdAt: string;
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 // Omit common fields when creating entities

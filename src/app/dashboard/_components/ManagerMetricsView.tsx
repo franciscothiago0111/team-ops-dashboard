@@ -36,7 +36,7 @@ export function ManagerMetricsView({ data }: ManagerMetricsViewProps) {
   ];
 
   // Direct Reports Performance
-  const directReportsData = data.directReports.users.map(user => ({
+  const directReportsData = data?.directReports?.users.map(user => ({
     name: user.userName,
     completionRate: user.completionRate,
     completed: user.tasksCompleted,

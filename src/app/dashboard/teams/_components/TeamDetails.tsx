@@ -50,7 +50,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
     <RoleGuard allowedRoles={["ADMIN", "MANAGER"]}>
       <DashboardShell title="Detalhes do Time">
         <div className="space-y-6">
-          <BackButton />
+          <BackButton onClick={() => router.back()} />
 
           <Card>
             <div className="flex flex-col gap-6 md:flex-row md:justify-between">

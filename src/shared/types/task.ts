@@ -21,6 +21,6 @@ export interface Task extends BaseEntity {
 
 
   priority: TaskPriority;
-  dueDate?: string;
+  dueDate: string;
 
 }

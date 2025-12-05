@@ -105,7 +105,7 @@ export function TeamEdit({ id }: TeamEditProps) {
   }
 
   const handleCancel = () => {
-    router.push(`/dashboard/teams/${id}`);
+    router.back();
   };
 
   if (isLoading) {

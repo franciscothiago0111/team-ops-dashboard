@@ -12,6 +12,10 @@ import { TaskBoardCard } from "./TaskBoardCard";
 import { LoadingState } from "@/shared/components/LoadingState";
 import { Plus } from "lucide-react";
 import { statusConfig } from "../_utils/task.utils";
+import { useCSVDownload } from "@/core/hooks/useCSVDownload";
+import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
+import { formatDate } from "@/core/utils/formatters";
+import { stripHtmlTags } from "@/core/utils/text";
 
 const COLUMNS = [
   {
@@ -41,6 +45,7 @@ export function TasksBoard() {
   const searchParams = useSearchParams();
   const { user } = useAuth();
   const { execute: updateTask } = useUpdateTask();
+  const { generateCSV, isGenerating } = useCSVDownload();
 
   const canCreateTask = user?.role === "MANAGER" || user?.role === "ADMIN";
 
@@ -52,7 +57,14 @@ export function TasksBoard() {
     priority: searchParams.get("priority") || undefined,
   };
 
+  // Separate query for CSV export with high limit
+  const filtersCsv: ITaskListParams = {
+    ...filters,
+    limit: 10000000,
+  };
+
   const { data, isLoading, error, refetch } = useTaskList(filters);
+  const { data: dataCsv } = useTaskList(filtersCsv);
   const tasks = data?.data ?? [];
 
   const getTasksByStatus = (status: TaskStatus) => {
@@ -61,6 +73,29 @@ export function TasksBoard() {
 
   const handleStatusChange = async (taskId: string, newStatus: TaskStatus) => {
     await updateTask({ id: taskId, status: newStatus });
+  };
+
+  const handleDownloadCSV = async () => {
+    if (!dataCsv?.data || dataCsv.data.length === 0) {
+      return;
+    }
+
+    const csvData = dataCsv.data.map((task) => ({
+      ID: task.id,
+      Nome: task.name,
+      Descrição: stripHtmlTags(task.description) || "",
+      Status: task.status,
+      Prioridade: task.priority,
+      "Atribuído para": task.assignedTo?.name || "",
+      Equipe: task.team?.name || "",
+      "Criado por": task.createdBy?.name || "",
+      "Data de vencimento": formatDate(task?.dueDate) || "",
+      "Criado em": formatDate(task.createdAt) || "",
+      "Atualizado em": task.updatedAt ? formatDate(task.updatedAt) : "",
+    }));
+
+    const fileName = `tarefas_${formatDate(new Date())}.csv`;
+    await generateCSV({ data: csvData, filename: fileName });
   };
 
   if (isLoading) {
@@ -91,15 +126,22 @@ export function TasksBoard() {
             {tasks.length} tarefa{tasks.length !== 1 ? "s" : ""} no total
           </p>
         </div>
-        {canCreateTask && (
-          <Link
-            href="/dashboard/tasks/new"
-            className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
-          >
-            <Plus className="h-4 w-4" />
-            Nova tarefa
-          </Link>
-        )}
+        <div className="flex items-center gap-3">
+          <CSVDownloadButton
+            onClick={handleDownloadCSV}
+            isLoading={isGenerating}
+            disabled={!dataCsv?.data || dataCsv.data.length === 0}
+          />
+          {canCreateTask && (
+            <Link
+              href="/dashboard/tasks/new"
+              className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+            >
+              <Plus className="h-4 w-4" />
+              Nova tarefa
+            </Link>
+          )}
+        </div>
       </div>
 
       {/* Kanban Board */}

@@ -11,7 +11,13 @@ export function TeamCard({ team }: TeamCardProps) {
     <Card>
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h3 className="text-xl font-semibold text-slate-900">{team.name}</h3>
+          {/* <h3 className="text-xl font-semibold text-slate-900">{team.name}</h3> */}
+          <Link
+            href={`/dashboard/teams/${team.id}`}
+            className="block text-sm font-semibold text-slate-900 hover:text-indigo-600 transition-colors line-clamp-2"
+          >
+            {team.name}
+          </Link>
         </div>
       </div>
 
@@ -36,14 +42,6 @@ export function TeamCard({ team }: TeamCardProps) {
         )}
       </dl>
 
-      <div className="mt-4 pt-4 border-t border-slate-100">
-        <Link
-          href={`/dashboard/teams/${team.id}`}
-          className="inline-block text-sm font-semibold text-indigo-600! hover:text-indigo-800! transition-colors underline"
-        >
-          Ver detalhes →
-        </Link>
-      </div>
     </Card>
   );
 }

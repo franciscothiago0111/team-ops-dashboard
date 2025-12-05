@@ -96,7 +96,7 @@ export function TaskDetails({ id }: TaskDetailsProps) {
             {canEditTask && (
               <Link
                 href={`/dashboard/tasks/${task.id}/edit`}
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
               >
                 <Pencil className="h-4 w-4" />
                 Editar

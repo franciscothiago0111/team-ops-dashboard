@@ -5,40 +5,6 @@
 /**
  * Format date for PDF display
  */
-export function formatDate(date: string | Date | null | undefined): string {
-  if (!date) return 'N/A';
-
-  try {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }).format(dateObj);
-  } catch {
-    return 'Invalid Date';
-  }
-}
-
-/**
- * Format datetime for PDF display
- */
-export function formatDateTime(date: string | Date | null | undefined): string {
-  if (!date) return 'N/A';
-
-  try {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(dateObj);
-  } catch {
-    return 'Invalid Date';
-  }
-}
 
 /**
  * Truncate text with ellipsis

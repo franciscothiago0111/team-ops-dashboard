@@ -176,7 +176,7 @@ export function NotificationPanel() {
                     onClick={() => handleNotificationClick(notification)}
                     className={clsx(
                       "group relative cursor-pointer p-4 transition-colors hover:bg-slate-50",
-                      !notification.read && "bg-indigo-50/30"
+                      !notification.read && "bg-gray-200"
                     )}
                   >
                     <div className="flex gap-3">
