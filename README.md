@@ -26,22 +26,192 @@ The project follows a **feature-based architecture** with clear separation of co
 
 ```
 src/
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── dashboard/         # Dashboard feature module
-│   ├── login/            # Authentication feature
-│   └── signup/           # Registration feature
-├── core/                  # Core functionality (framework-agnostic)
-│   ├── api/              # HTTP client and interceptors
-│   ├── components/       # Core UI components
-│   ├── hooks/            # Reusable React hooks
-│   ├── pdf/              # PDF generation system
-│   ├── providers/        # React Context providers
-│   └── services/         # Core business services
-└── shared/               # Shared utilities and types
-    ├── components/       # Reusable UI components
-    └── types/            # TypeScript type definitions
+├── app/                           # Next.js App Router (pages & routing)
+│   ├── api/                      # API routes
+│   │   └── pdf/generate/         # Server-side PDF generation endpoint
+│   │
+│   ├── dashboard/                # Dashboard feature module
+│   │   ├── page.tsx             # Main dashboard page
+│   │   ├── layout.tsx           # Dashboard layout wrapper
+│   │   ├── _components/         # Private dashboard components
+│   │   │   ├── DashboardShell.tsx
+│   │   │   ├── DashboardNavbar.tsx
+│   │   │   ├── DashboardSidebar.tsx
+│   │   │   ├── DashboardFilters.tsx
+│   │   │   ├── AdminMetricsView.tsx
+│   │   │   ├── ManagerMetricsView.tsx
+│   │   │   └── EmployeeMetricsView.tsx
+│   │   ├── _hooks/              # Dashboard-specific hooks
+│   │   │   ├── useMetrics.ts
+│   │   │   └── useNotifications.ts
+│   │   ├── _schemas/            # Zod validation schemas
+│   │   └── _services/           # Dashboard API services
+│   │   │
+│   │   ├── tasks/               # Tasks feature (nested route)
+│   │   │   ├── page.tsx        # Tasks list page
+│   │   │   ├── new/            # Create new task
+│   │   │   │   └── page.tsx
+│   │   │   ├── [id]/           # Dynamic task detail route
+│   │   │   │   └── page.tsx
+│   │   │   ├── _components/    # Task-specific components
+│   │   │   │   ├── TasksList.tsx
+│   │   │   │   ├── TasksBoard.tsx
+│   │   │   │   ├── TaskCard.tsx
+│   │   │   │   ├── TaskDetails.tsx
+│   │   │   │   ├── TaskForm.tsx
+│   │   │   │   ├── TaskEditForm.tsx
+│   │   │   │   └── TasksFilter.tsx
+│   │   │   ├── _hooks/         # Task hooks (useTask, useTasks)
+│   │   │   ├── _schemas/       # Task validation schemas
+│   │   │   ├── _services/      # Task API service
+│   │   │   └── _utils/         # Task utilities
+│   │   │
+│   │   ├── employees/          # Employees feature (same structure)
+│   │   │   ├── page.tsx
+│   │   │   ├── new/
+│   │   │   ├── [id]/
+│   │   │   ├── _components/
+│   │   │   ├── _hooks/
+│   │   │   ├── _schemas/
+│   │   │   └── _services/
+│   │   │
+│   │   ├── teams/              # Teams feature (same structure)
+│   │   │   └── ...
+│   │   │
+│   │   └── logs/               # Activity logs (Admin only)
+│   │       └── ...
+│   │
+│   ├── login/                   # Authentication feature
+│   │   ├── page.tsx
+│   │   ├── _components/        # Login form components
+│   │   ├── _hooks/             # useLogin hook
+│   │   └── _schemas/           # Login validation
+│   │
+│   └── signup/                  # Registration feature
+│       ├── page.tsx
+│       ├── _components/
+│       ├── _hooks/
+│       ├── _schemas/
+│       └── _services/
+│
+├── core/                        # Core functionality (framework-agnostic)
+│   ├── api/                    # HTTP client layer
+│   │   ├── http.ts            # HTTP class with CRUD methods
+│   │   ├── types.ts           # API type definitions
+│   │   ├── app-error.ts       # Custom error classes
+│   │   └── interceptors/
+│   │       ├── auth.interceptor.ts    # JWT token injection
+│   │       └── error.interceptor.ts   # Error handling
+│   │
+│   ├── components/             # Core reusable components
+│   │   ├── ErrorBoundary.tsx
+│   │   └── LoadingState.tsx
+│   │
+│   ├── config/                 # Application configuration
+│   │   └── env.ts             # Environment variables
+│   │
+│   ├── hooks/                  # Global custom hooks
+│   │   ├── useAuth.ts         # Authentication hook
+│   │   ├── useToast.ts        # Toast notifications
+│   │   ├── usePDFDownload.ts  # PDF export hook
+│   │   └── useCSVDownload.ts  # CSV export hook
+│   │
+│   ├── io/                     # WebSocket/Socket.IO
+│   │
+│   ├── pdf/                    # PDF Generation System
+│   │   ├── index.ts           # Main exports
+│   │   ├── init.ts            # PDF system initialization
+│   │   ├── registry.ts        # Template registry
+│   │   ├── types.ts           # PDF type definitions
+│   │   ├── components/        # Reusable PDF components
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Table.tsx
+│   │   │   └── Charts/
+│   │   ├── templates/         # PDF templates
+│   │   │   ├── employee-report.tsx
+│   │   │   ├── task-report.tsx
+│   │   │   └── team-report.tsx
+│   │   ├── styles/            # PDF styling
+│   │   ├── utils/             # PDF utilities
+│   │   │   └── page-breaks.ts # Page break helpers
+│   │   └── examples/          # Usage examples
+│   │
+│   ├── providers/              # React Context Providers
+│   │   ├── AppProvider.tsx    # Global app state
+│   │   └── AuthProvider.tsx   # Authentication state
+│   │
+│   ├── services/               # Core business services
+│   │   ├── auth.service.ts    # Authentication logic
+│   │   ├── io.service.ts      # WebSocket management
+│   │   ├── pdf.service.ts     # PDF generation
+│   │   └── storage.service.ts # LocalStorage wrapper
+│   │
+│   └── ui/                     # Base UI component library
+│       ├── Button.tsx
+│       ├── Card.tsx
+│       ├── Input.tsx
+│       ├── Select.tsx
+│       ├── Textarea.tsx
+│       ├── Badge.tsx
+│       ├── RichTextEditor.tsx
+│       ├── index.ts           # Barrel export
+│       └── __tests__/         # Component tests
+│
+└── shared/                      # Shared across features
+    ├── components/             # Cross-feature components
+    │   ├── AsyncSelect.tsx    # Async dropdown
+    │   ├── Pagination.tsx     # Pagination control
+    │   ├── SearchFilter.tsx   # Search component
+    │   ├── Filter.tsx         # Generic filter
+    │   ├── ErrorState.tsx     # Error display
+    │   ├── LoadingState.tsx   # Loading spinner
+    │   ├── RoleGuard.tsx      # Route protection
+    │   ├── BackButton.tsx
+    │   ├── CSVDownloadButton.tsx
+    │   ├── InfoField.tsx
+    │   ├── InputsGrid.tsx
+    │   ├── RichTextDisplay.tsx
+    │   └── __tests__/
+    │
+    └── types/                  # Shared TypeScript types
+        ├── index.ts           # Main export
+        ├── base.ts            # Base interfaces
+        ├── user.ts            # User types
+        ├── task.ts            # Task types
+        ├── team.ts            # Team types
+        ├── company.ts         # Company types
+        ├── metrics.ts         # Metrics types
+        ├── notification.ts    # Notification types
+        ├── pagination.ts      # Pagination types
+        └── log-entry.ts       # Log types
 ```
+
+#### Architecture Principles
+
+**1. Feature Isolation**
+- Each feature (tasks, employees, teams) is self-contained
+- Private components prefixed with `_` are feature-scoped
+- No cross-feature component imports (use `shared/` instead)
+
+**2. Layered Architecture**
+```
+┌─────────────────────────────────────┐
+│   Presentation Layer (Components)   │
+├─────────────────────────────────────┤
+│   Business Logic (Hooks/Services)   │
+├─────────────────────────────────────┤
+│   Data Access Layer (API/HTTP)      │
+├─────────────────────────────────────┤
+│   External Services (Backend API)   │
+└─────────────────────────────────────┘
+```
+
+**3. Dependency Flow**
+- `app/` → can use `core/` and `shared/`
+- `core/` → framework-agnostic, no `app/` imports
+- `shared/` → can use `core/`, no `app/` imports
+- Features only import from their own `_folders/` or `shared/`
 
 ### Design Patterns
 
