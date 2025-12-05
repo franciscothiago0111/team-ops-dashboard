@@ -11,13 +11,14 @@ export interface SidebarLink {
   icon: LucideIcon;
 }
 
-import { LayoutDashboard, Users, CheckSquare, UsersRound } from "lucide-react";
+import { LayoutDashboard, Users, CheckSquare, UsersRound, History } from "lucide-react";
 
 export const sidebarLinks: SidebarLink[] = [
   { label: "Visão Geral", href: "/dashboard", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: LayoutDashboard },
   { label: "Colaboradores", href: "/dashboard/employees", roles: ["ADMIN", "MANAGER"], icon: Users },
   { label: "Tarefas", href: "/dashboard/tasks", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: CheckSquare },
   { label: "Times", href: "/dashboard/teams", roles: ["ADMIN", "MANAGER"], icon: UsersRound },
+  { label: "Logs", href: "/dashboard/logs", roles: ["ADMIN"], icon: History },
 ];
 
 export function filterLinksByRole(links: SidebarLink[], userRole: string): SidebarLink[] {

@@ -9,6 +9,10 @@ import { ITeamListParams } from "../_services/team.service";
 import { useTeamList } from "../_hooks/useTeamList";
 import { SkeletonList } from "@/core/components/LoadingState";
 import { useAuth } from "@/core/hooks/useAuth";
+import { useCSVDownload } from "@/core/hooks/useCSVDownload";
+import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
+import { formatDate } from "@/core/utils/formatters";
+import { stripHtmlTags } from "@/core/utils/text";
 
 interface TeamsListProps {
   title?: string;
@@ -17,6 +21,7 @@ interface TeamsListProps {
 export function TeamsList({ title = "Times" }: TeamsListProps) {
   const searchParams = useSearchParams();
   const { user } = useAuth();
+  const { generateCSV, isGenerating } = useCSVDownload();
 
   const canCreateTeam = user?.role === "ADMIN";
 
@@ -26,9 +31,37 @@ export function TeamsList({ title = "Times" }: TeamsListProps) {
     limit: searchParams.get("limit") ? Number(searchParams.get("limit")) : 10,
   };
 
+  // Separate query for CSV export with high limit
+  const filtersCsv: ITeamListParams = {
+    ...filters,
+    page: undefined,
+    limit: 10000000,
+  };
+
   const { data, isLoading, error, refetch } = useTeamList(filters);
+  const { data: dataCsv } = useTeamList(filtersCsv);
 
   const teams = data?.data ?? [];
+
+  const handleDownloadCSV = async () => {
+    if (!dataCsv?.data || dataCsv.data.length === 0) {
+      return;
+    }
+
+    const csvData = dataCsv.data.map((team) => ({
+      ID: team.id,
+      Nome: team.name,
+      Descrição: stripHtmlTags(team.description || ""),
+      Gerente: team.manager?.name || "",
+      "Número de membros": team.members?.length || 0,
+      "Número de tarefas": team.tasks?.length || 0,
+      "Criado em": formatDate(team.createdAt) || "",
+      "Atualizado em": team.updatedAt ? formatDate(team.updatedAt) : "",
+    }));
+
+    const fileName = `times_${formatDate(new Date())}.csv`;
+    await generateCSV({ data: csvData, filename: fileName });
+  };
 
   if (isLoading) {
     return (
@@ -76,14 +109,21 @@ export function TeamsList({ title = "Times" }: TeamsListProps) {
             <p className="text-xs text-slate-500">Atualizando dados...</p>
           )}
         </div>
-        {canCreateTeam && (
-          <Link
-            href="/dashboard/teams/new"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
-          >
-            Novo time
-          </Link>
-        )}
+        <div className="flex items-center gap-3">
+          <CSVDownloadButton
+            onClick={handleDownloadCSV}
+            isLoading={isGenerating}
+            disabled={!dataCsv?.data || dataCsv.data.length === 0}
+          />
+          {canCreateTeam && (
+            <Link
+              href="/dashboard/teams/new"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
+            >
+              Novo time
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
