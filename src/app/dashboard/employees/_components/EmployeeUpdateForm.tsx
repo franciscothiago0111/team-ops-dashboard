@@ -40,7 +40,6 @@ export function EmployeeUpdateForm({ employee, onSuccess, onCancel }: EmployeeUp
       name: employee.name || "",
       email: employee.email || "",
       role: employee.role || "EMPLOYEE",
-      teamId: employee.teamId || "",
     },
   });
 
@@ -89,13 +88,7 @@ export function EmployeeUpdateForm({ employee, onSuccess, onCancel }: EmployeeUp
           error={errors.role?.message}
           options={getRoleOptions()}
         />
-        <Select
-          label="Time"
-          {...form.register("teamId")}
-          error={errors.teamId?.message}
-          options={teamOptions}
-          disabled={isLoadingTeams}
-        />
+
       </InputsGrid>
 
       <div className="flex gap-3">

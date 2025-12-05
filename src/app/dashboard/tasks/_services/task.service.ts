@@ -24,12 +24,13 @@ export interface ICreateTaskData {
 export interface IUpdateTaskData {
   id: string;
   name?: string;
-  description: string;
-  assignedToId: string;
-  teamId: string;
-  priority: TaskPriority;
+  description?: string;
+  assignedToId?: string;
+  teamId?: string;
+  priority?: TaskPriority;
   dueDate?: string | null;
   status?: TaskStatus;
+  labels?: string[];
 }
 
 export const TaskService = {
