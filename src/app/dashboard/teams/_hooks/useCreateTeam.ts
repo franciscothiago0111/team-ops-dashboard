@@ -9,8 +9,7 @@ export function useCreateTeam() {
 
   const mutation = useMutation({
     mutationFn: (data: CreateTeamInput) => TeamService.create(data),
-    onSuccess: (newTeam) => {
-      console.log('newTeam', newTeam);
+    onSuccess: () => {
 
       toast.success("Time criado com sucesso!");
 

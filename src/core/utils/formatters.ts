@@ -18,7 +18,6 @@ export function formateCPF(cpf: string): string {
 }
 
 export function formatDate(date: Date | string) {
-  console.log('formatDate', date);
 
   if (!date || Number.isNaN(new Date(date).getTime())) {
     return ''; // Retorna string vazia para datas inválidas

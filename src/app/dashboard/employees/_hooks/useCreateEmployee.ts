@@ -10,8 +10,7 @@ export function useCreateEmployee() {
 
   const mutation = useMutation({
     mutationFn: (data: CreateEmployeeInput) => EmployeeService.create(data),
-    onSuccess: (newEmployee) => {
-      console.log('newEmployee', newEmployee);
+    onSuccess: () => {
 
       toast.success("Colaborador criado com sucesso!");
 
