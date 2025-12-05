@@ -14,23 +14,21 @@ export interface ITaskListParams {
 
 export interface ICreateTaskData {
   name: string;
-  description?: string;
-  assignedToId?: string;
+  description: string;
+  assignedToId: string;
   teamId: string;
   priority?: TaskPriority;
   dueDate?: string;
-  labels?: string[];
 }
 
 export interface IUpdateTaskData {
   id: string;
   name?: string;
-  description?: string;
-  assignedToId?: string;
-  teamId?: string;
-  priority?: TaskPriority;
+  description: string;
+  assignedToId: string;
+  teamId: string;
+  priority: TaskPriority;
   dueDate?: string | null;
-  labels?: string[];
   status?: TaskStatus;
 }
 

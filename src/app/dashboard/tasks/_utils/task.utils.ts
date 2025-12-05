@@ -128,3 +128,26 @@ export function getDueDateInfoDetails(dueDate: Date | string | null | undefined,
     isDueToday,
   };
 }
+
+
+export function getPriorityOptions() {
+  return [
+    { value: "LOW", label: "🟢 Baixa" },
+    { value: "MEDIUM", label: "🟡 Média" },
+    { value: "HIGH", label: "🟠 Alta" },
+    { value: "URGENT", label: "🔴 Urgente" },
+  ];
+}
+
+
+
+const statusOptions = [
+  { value: "PENDING", label: "Pendente" },
+  { value: "IN_PROGRESS", label: "Em Progresso" },
+  { value: "COMPLETED", label: "Concluída" },
+  { value: "CANCELLED", label: "Cancelada" },
+];
+
+export function getStatusOptions() {
+  return statusOptions;
+}

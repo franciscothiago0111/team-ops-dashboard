@@ -18,26 +18,12 @@ import { useAppToast } from "@/core/hooks/useToast";
 
 import { useTeamList } from "../../teams/_hooks/useTeamList";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
+import { getPriorityOptions, getStatusOptions } from "../_utils/task.utils";
 
 interface TaskEditFormProps {
   task: Task;
   onSuccess?: () => void;
 }
-
-const priorityOptions = [
-  { value: "LOW", label: "🟢 Baixa" },
-  { value: "MEDIUM", label: "🟡 Média" },
-  { value: "HIGH", label: "🟠 Alta" },
-  { value: "URGENT", label: "🔴 Urgente" },
-];
-
-const statusOptions = [
-  { value: "PENDING", label: "Pendente" },
-  { value: "IN_PROGRESS", label: "Em Progresso" },
-  { value: "COMPLETED", label: "Concluída" },
-  { value: "CANCELLED", label: "Cancelada" },
-];
-
 
 
 export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
@@ -138,14 +124,14 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
           label="Status"
           {...form.register("status")}
           error={errors.status?.message}
-          options={statusOptions}
+          options={getStatusOptions()}
         />
 
         <Select
           label="Prioridade"
           {...form.register("priority")}
           error={errors.priority?.message}
-          options={priorityOptions}
+          options={getPriorityOptions()}
         />
       </InputsGrid>
 

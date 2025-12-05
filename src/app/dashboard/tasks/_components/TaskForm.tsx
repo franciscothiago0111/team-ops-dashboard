@@ -14,17 +14,12 @@ import { CreateTaskInput, CreateTaskSchema } from "../_schemas/task.schema";
 
 import { useTeamList } from "../../teams/_hooks/useTeamList";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
+import { getPriorityOptions } from "../_utils/task.utils";
 
 interface TaskFormProps {
   onSuccess?: () => void;
 }
 
-const priorityOptions = [
-  { value: "LOW", label: "🟢 Baixa" },
-  { value: "MEDIUM", label: "🟡 Média" },
-  { value: "HIGH", label: "🟠 Alta" },
-  { value: "URGENT", label: "🔴 Urgente" },
-];
 
 export function TaskForm({ onSuccess }: TaskFormProps) {
   const { execute, isLoading } = useCreateTask();
@@ -48,7 +43,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
   async function onSubmit(values: CreateTaskInput) {
     const payload = {
       ...values,
-      assignedToId: values.assignedToId || undefined,
+      assignedToId: values.assignedToId,
       dueDate: values.dueDate || undefined,
     };
     await execute(payload);
@@ -66,6 +61,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
       value: team.id,
       label: team.name,
     })),
+    { value: "", label: "Selecione um time" },
   ];
 
   const employeeOptions = [
@@ -73,6 +69,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
       value: employee.id,
       label: employee.name,
     })),
+    { value: "", label: "Selecione um funcionário" },
   ];
 
   return (
@@ -125,7 +122,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
           label="Prioridade"
           {...form.register("priority")}
           error={errors.priority?.message}
-          options={priorityOptions}
+          options={getPriorityOptions()}
         />
 
         <Input
