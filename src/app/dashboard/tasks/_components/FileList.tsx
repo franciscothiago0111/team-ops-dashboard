@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { File as FileType } from "@/shared/types/file";
 import { ConfirmModal } from "@/core/ui/Modal";
 
@@ -13,6 +13,13 @@ interface FileListProps {
 export function FileList({ files, onDelete, isDeleting = false }: FileListProps) {
   const [deletingFileId, setDeletingFileId] = useState<string | null>(null);
   const [fileToDelete, setFileToDelete] = useState<FileType | null>(null);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const handleDeleteClick = (file: FileType) => {
     setFileToDelete(file);
@@ -24,9 +31,13 @@ export function FileList({ files, onDelete, isDeleting = false }: FileListProps)
     setDeletingFileId(fileToDelete.id);
     try {
       await onDelete(fileToDelete.id);
-      setFileToDelete(null);
+      if (isMountedRef.current) {
+        setFileToDelete(null);
+      }
     } finally {
-      setDeletingFileId(null);
+      if (isMountedRef.current) {
+        setDeletingFileId(null);
+      }
     }
   };
 
