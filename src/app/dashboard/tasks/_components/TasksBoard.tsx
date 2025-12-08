@@ -72,7 +72,9 @@ export function TasksBoard() {
   };
 
   const handleStatusChange = async (taskId: string, newStatus: TaskStatus) => {
-    await updateTask({ id: taskId, status: newStatus });
+    await updateTask({
+      data: { id: taskId, status: newStatus }
+    });
   };
 
   const handleDownloadCSV = async () => {

@@ -13,8 +13,6 @@ import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useCreateTask } from "../_hooks/useCreateTask";
 import { CreateTaskInput, CreateTaskSchema } from "../_schemas/task.schema";
 import { FileUploadInput } from "./FileUploadInput";
-import { TaskService } from "../_services/task.service";
-import { useAppToast } from "@/core/hooks/useToast";
 
 import { useTeamList } from "../../teams/_hooks/useTeamList";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
@@ -26,10 +24,8 @@ interface TaskFormProps {
 
 
 export function TaskForm({ onSuccess }: TaskFormProps) {
-  const toast = useAppToast();
   const { execute, isLoading } = useCreateTask();
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [isUploadingFiles, setIsUploadingFiles] = useState(false);
+  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
   const { data: employeesData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100, role: "EMPLOYEE" });
@@ -43,37 +39,24 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
       teamId: "",
       priority: "MEDIUM",
       dueDate: "",
-      labels: [],
     },
   });
 
-  async function onSubmit(values: CreateTaskInput) {
+  const onSubmit = async (values: CreateTaskInput) => {
     const payload = {
       ...values,
       assignedToId: values.assignedToId,
       dueDate: values.dueDate || undefined,
     };
 
-    // First, create the task
-    const createdTask = await execute(payload);
-
-    // If there are files and the task was created successfully, upload them
-    if (createdTask && selectedFiles.length > 0) {
-      setIsUploadingFiles(true);
-      try {
-        await TaskService.uploadFiles(createdTask.id, selectedFiles);
-        toast.success("Tarefa criada e arquivos enviados com sucesso!");
-      } catch (error) {
-        toast.error("Tarefa criada, mas houve erro ao enviar os arquivos.");
-      } finally {
-        setIsUploadingFiles(false);
-      }
-    }
+    await execute({
+      data: payload,
+      // files: selectedFiles.length > 0 ? selectedFiles : undefined,
+    });
 
     form.reset();
-    setSelectedFiles([]);
     onSuccess?.();
-  }
+  };
 
   const { errors } = form.formState;
 
@@ -108,6 +91,13 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
       </InputsGrid>
 
       <InputsGrid cols={1}>
+
+        {/* <Input
+          label="Descrição"
+          placeholder="Implementar nova feature"
+          {...form.register("description")}
+          error={errors.description?.message}
+        /> */}
         <Controller
           name="description"
           control={form.control}
@@ -157,16 +147,16 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
         />
       </InputsGrid>
 
-      <FileUploadInput
+      {/* <FileUploadInput
         files={selectedFiles}
         onChange={setSelectedFiles}
         label="Anexar arquivos (opcional)"
-        disabled={isLoading || isUploadingFiles}
-      />
+        disabled={isLoading}
+      /> */}
 
       <div className="flex gap-3 pt-4">
         <CancelButton className="w-full" />
-        <Button type="submit" className="w-full" isLoading={isLoading || isUploadingFiles || isLoadingTeams || isLoadingEmployees}>
+        <Button type="submit" className="w-full" isLoading={isLoading || isLoadingTeams || isLoadingEmployees}>
           Criar tarefa
         </Button>
       </div>

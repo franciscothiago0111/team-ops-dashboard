@@ -44,7 +44,7 @@ interface TaskDetailsProps {
 export function TaskDetails({ id }: TaskDetailsProps) {
   const { data: task, isLoading, error, refetch } = useTaskDetails(id);
   const { execute: updateTask, isLoading: isUpdating } = useUpdateTask();
-  const { execute: deleteFile, isLoading: isDeletingFile } = useDeleteTaskFile();
+  const { execute: deleteFile } = useDeleteTaskFile();
   const { user } = useAuth();
   const { generatePDF, isGenerating: isGeneratingPDF } = usePDFDownload();
   const router = useRouter();
@@ -67,7 +67,9 @@ export function TaskDetails({ id }: TaskDetailsProps) {
 
   const handleStatusChange = async () => {
     if (next) {
-      await updateTask({ id: task.id, status: next });
+      await updateTask({
+        data: { id: task.id, status: next }
+      });
     }
   };
 
@@ -87,8 +89,12 @@ export function TaskDetails({ id }: TaskDetailsProps) {
   };
 
   const handleDeleteFile = async (fileId: string) => {
-    await deleteFile({ taskId: id, fileId });
-    refetch();
+    try {
+      await deleteFile({ taskId: id, fileId });
+      refetch();
+    } catch {
+      // Error already handled by the hook
+    }
   };
 
   return (
@@ -250,7 +256,6 @@ export function TaskDetails({ id }: TaskDetailsProps) {
               <FileList
                 files={task.files}
                 onDelete={canEditTask ? handleDeleteFile : undefined}
-                isDeleting={isDeletingFile}
               />
             </div>
           </Card>

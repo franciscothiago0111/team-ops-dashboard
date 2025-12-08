@@ -14,8 +14,6 @@ import { useUpdateTask } from "../_hooks/useUpdateTask";
 import { useDeleteTaskFile } from "../_hooks/useDeleteTaskFile";
 import { UpdateTaskInput, UpdateTaskSchema } from "../_schemas/task.schema";
 import { Task } from "@/shared/types/task";
-import { TaskService } from "../_services/task.service";
-import { useAppToast } from "@/core/hooks/useToast";
 import { FileUploadInput } from "./FileUploadInput";
 import { FileList } from "./FileList";
 
@@ -30,12 +28,10 @@ interface TaskEditFormProps {
 
 
 export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
-  const toast = useAppToast();
   const { execute, isLoading } = useUpdateTask();
-  const { execute: executeDeleteFile, isLoading: isDeletingFile } = useDeleteTaskFile();
+  const { execute: executeDeleteFile } = useDeleteTaskFile();
 
   const [newFiles, setNewFiles] = useState<File[]>([]);
-  const [isUploadingFiles, setIsUploadingFiles] = useState(false);
 
   const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
   const { data: employeesData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100 });
@@ -54,37 +50,26 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
     },
   });
 
-  async function onSubmit(values: UpdateTaskInput) {
-    const payload = {
-      ...values,
-      id: task.id,
-      assignedToId: values.assignedToId || undefined,
-      dueDate: values.dueDate || null,
-    };
-    await execute(payload);
+  const onSubmit = async (values: UpdateTaskInput) => {
+    await execute({
+      data: {
+        ...values,
+        id: task.id,
+        assignedToId: values.assignedToId || undefined,
+        dueDate: values.dueDate || null,
+      },
+      files: newFiles.length > 0 ? newFiles : undefined,
+    });
 
-    // Upload new files if any (no need to wait for task ID, we already have it)
-    if (newFiles.length > 0) {
-      setIsUploadingFiles(true);
-      try {
-        await TaskService.uploadFiles(task.id, newFiles);
-        toast.success("Alterações salvas e arquivos enviados com sucesso!");
-        setNewFiles([]);
-      } catch (error) {
-        toast.error("Alterações salvas, mas houve erro ao enviar os arquivos.");
-      } finally {
-        setIsUploadingFiles(false);
-      }
-    }
-
+    setNewFiles([]);
     onSuccess?.();
-  }
+  };
 
   const handleDeleteFile = async (fileId: string) => {
     try {
       await executeDeleteFile({ taskId: task.id, fileId });
       onSuccess?.(); // Refresh task data
-    } catch (error) {
+    } catch {
       // Error already handled by the hook
     }
   };
@@ -130,6 +115,7 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
             />
           )}
         />
+
       </InputsGrid>
 
       <InputsGrid>
@@ -183,7 +169,6 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
           <FileList
             files={task.files || []}
             onDelete={handleDeleteFile}
-            isDeleting={isDeletingFile}
           />
         </div>
 
@@ -191,7 +176,7 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
           files={newFiles}
           onChange={setNewFiles}
           label="Adicionar novos arquivos"
-          disabled={isLoading || isUploadingFiles}
+          disabled={isLoading}
         />
       </div>
 
@@ -203,7 +188,7 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
         <Button
           type="submit"
           className="w-full"
-          isLoading={isLoading || isUploadingFiles || isLoadingTeams || isLoadingEmployees}
+          isLoading={isLoading || isLoadingTeams || isLoadingEmployees}
         >
           Salvar alterações
         </Button>

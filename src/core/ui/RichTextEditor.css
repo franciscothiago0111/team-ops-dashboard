@@ -1,66 +1,60 @@
-/**
- * Custom styles for react-draft-wysiwyg editor
- */
-
-/* Override default styles to match design system */
-.rich-text-editor .rdw-editor-toolbar {
-  background-color: rgb(248 250 252);
-  border: 0;
-  border-bottom: 1px solid rgb(226 232 240);
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-  margin-bottom: 0;
-  padding: 8px;
+/* Editor.js Styles */
+.codex-editor {
+  width: 100%;
 }
 
-.rich-text-editor .rdw-option-wrapper {
-  border: 1px solid rgb(226 232 240);
-  background-color: white;
-  min-width: 30px;
-  height: 30px;
-  border-radius: 4px;
-  margin: 0 4px;
+.codex-editor__redactor {
+  padding-bottom: 0 !important;
 }
 
-.rich-text-editor .rdw-option-wrapper:hover {
-  background-color: rgb(241 245 249);
+.ce-block__content,
+.ce-toolbar__content {
+  max-width: none !important;
 }
 
-.rich-text-editor .rdw-option-active {
-  background-color: rgb(219 234 254);
-  border-color: rgb(147 197 253);
+.ce-toolbar__actions {
+  right: 0.5rem;
 }
 
-.rich-text-editor .rdw-dropdown-wrapper {
-  border: 1px solid rgb(226 232 240);
-  background-color: white;
-  border-radius: 4px;
-  height: 30px;
+.ce-paragraph {
+  color: rgb(51 65 85);
+  line-height: 1.75;
 }
 
-.rich-text-editor .rdw-dropdown-optionwrapper {
-  border: 1px solid rgb(226 232 240);
-  background-color: white;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  border-radius: 4px;
+.ce-header {
+  font-weight: 600;
+  color: rgb(15 23 42);
 }
 
-.rich-text-editor .rdw-editor-main {
-  background-color: white;
-  min-height: 128px;
+.ce-block {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
-.rich-text-editor .public-DraftEditor-content {
-  min-height: 128px;
-  padding: 12px 16px;
-  color: rgb(0 0 0);
+.cdx-list {
+  color: rgb(51 65 85);
 }
 
-.rich-text-editor .public-DraftStyleDefault-block {
-  color: rgb(0 0 0);
+.cdx-list__item {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
-/* Error state */
+/* Placeholder styling */
+.codex-editor--empty .ce-block:first-child .ce-paragraph[data-placeholder]:empty::before {
+  color: rgb(148 163 184);
+}
+
+/* Link styling */
+.ce-inline-tool--link {
+  color: rgb(37 99 235);
+  text-decoration: underline;
+}
+
+/* Underline styling */
+.cdx-underline {
+  text-decoration: underline;
+}
 .rich-text-editor-error {
   border-color: rgb(239 68 68);
 }

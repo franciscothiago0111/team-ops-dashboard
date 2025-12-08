@@ -7,10 +7,9 @@ import { ConfirmModal } from "@/core/ui/Modal";
 interface FileListProps {
   files: FileType[];
   onDelete?: (fileId: string) => Promise<void>;
-  isDeleting?: boolean;
 }
 
-export function FileList({ files, onDelete, isDeleting = false }: FileListProps) {
+export function FileList({ files, onDelete }: FileListProps) {
   const [deletingFileId, setDeletingFileId] = useState<string | null>(null);
   const [fileToDelete, setFileToDelete] = useState<FileType | null>(null);
   const isMountedRef = useRef(true);
@@ -28,15 +27,17 @@ export function FileList({ files, onDelete, isDeleting = false }: FileListProps)
   const handleConfirmDelete = async () => {
     if (!onDelete || !fileToDelete) return;
 
-    setDeletingFileId(fileToDelete.id);
+    const fileId = fileToDelete.id;
+    setDeletingFileId(fileId);
+
     try {
-      await onDelete(fileToDelete.id);
-      if (isMountedRef.current) {
-        setFileToDelete(null);
-      }
+      await onDelete(fileId);
+    } catch (error) {
+      console.error('Error deleting file:', error);
     } finally {
       if (isMountedRef.current) {
         setDeletingFileId(null);
+        setFileToDelete(null);
       }
     }
   };
@@ -143,7 +144,7 @@ export function FileList({ files, onDelete, isDeleting = false }: FileListProps)
                 <button
                   type="button"
                   onClick={() => handleDeleteClick(file)}
-                  disabled={isDeleting || deletingFileId === file.id}
+                  disabled={deletingFileId === file.id}
                   className="text-red-600 hover:text-red-800 disabled:opacity-50 disabled:cursor-not-allowed p-1"
                   aria-label="Remover arquivo"
                 >
@@ -198,7 +199,7 @@ export function FileList({ files, onDelete, isDeleting = false }: FileListProps)
         confirmText="Remover"
         cancelText="Cancelar"
         variant="danger"
-        isLoading={!!deletingFileId}
+        isLoading={deletingFileId === fileToDelete?.id}
       />
     </div>
   );
