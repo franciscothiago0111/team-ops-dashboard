@@ -25,7 +25,7 @@ interface TaskFormProps {
 
 export function TaskForm({ onSuccess }: TaskFormProps) {
   const { execute, isLoading } = useCreateTask();
-  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [newFiles, setNewFiles] = useState<File[]>([]);
 
   const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
   const { data: employeesData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100, role: "EMPLOYEE" });
@@ -51,6 +51,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
 
     await execute({
       data: payload,
+      files: newFiles.length > 0 ? newFiles : undefined,
       // files: selectedFiles.length > 0 ? selectedFiles : undefined,
     });
 
@@ -147,12 +148,12 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
         />
       </InputsGrid>
 
-      {/* <FileUploadInput
-        files={selectedFiles}
-        onChange={setSelectedFiles}
+      <FileUploadInput
+        files={newFiles}
+        onChange={setNewFiles}
         label="Anexar arquivos (opcional)"
         disabled={isLoading}
-      /> */}
+      />
 
       <div className="flex gap-3 pt-4">
         <CancelButton className="w-full" />
