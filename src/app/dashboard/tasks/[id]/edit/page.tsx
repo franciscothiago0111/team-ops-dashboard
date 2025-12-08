@@ -38,7 +38,11 @@ export default function EditTaskPage({ params }: EditTaskPageProps) {
   }
 
   if (isLoading) {
-    return <LoadingState message="Carregando tarefa..." />;
+    return (
+      <DashboardShell title="Editar Tarefa">
+        <LoadingState message="Carregando tarefa..." />
+      </DashboardShell>
+    );
   }
 
   if (error || !task) {
