@@ -11,10 +11,13 @@ import { RichTextEditor } from "@/core/ui/RichTextEditor";
 import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useUpdateTask } from "../_hooks/useUpdateTask";
+import { useDeleteTaskFile } from "../_hooks/useDeleteTaskFile";
 import { UpdateTaskInput, UpdateTaskSchema } from "../_schemas/task.schema";
 import { Task } from "@/shared/types/task";
 import { TaskService } from "../_services/task.service";
 import { useAppToast } from "@/core/hooks/useToast";
+import { FileUploadInput } from "./FileUploadInput";
+import { FileList } from "./FileList";
 
 import { useTeamList } from "../../teams/_hooks/useTeamList";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
@@ -29,6 +32,7 @@ interface TaskEditFormProps {
 export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
   const toast = useAppToast();
   const { execute, isLoading } = useUpdateTask();
+  const { execute: executeDeleteFile, isLoading: isDeletingFile } = useDeleteTaskFile();
 
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const [isUploadingFiles, setIsUploadingFiles] = useState(false);
@@ -59,15 +63,15 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
     };
     await execute(payload);
 
-    // Upload new files if any
+    // Upload new files if any (no need to wait for task ID, we already have it)
     if (newFiles.length > 0) {
       setIsUploadingFiles(true);
       try {
         await TaskService.uploadFiles(task.id, newFiles);
-        toast.success("Arquivos enviados com sucesso!");
+        toast.success("Alterações salvas e arquivos enviados com sucesso!");
         setNewFiles([]);
-      } catch {
-        toast.error("Erro ao enviar arquivos.");
+      } catch (error) {
+        toast.error("Alterações salvas, mas houve erro ao enviar os arquivos.");
       } finally {
         setIsUploadingFiles(false);
       }
@@ -75,6 +79,15 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
 
     onSuccess?.();
   }
+
+  const handleDeleteFile = async (fileId: string) => {
+    try {
+      await executeDeleteFile({ taskId: task.id, fileId });
+      onSuccess?.(); // Refresh task data
+    } catch (error) {
+      // Error already handled by the hook
+    }
+  };
 
 
   const { errors } = form.formState;
@@ -161,6 +174,26 @@ export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
           error={errors.dueDate?.message}
         />
       </InputsGrid>
+
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-sm font-medium text-slate-700 mb-3">
+            Arquivos anexados
+          </h3>
+          <FileList
+            files={task.files || []}
+            onDelete={handleDeleteFile}
+            isDeleting={isDeletingFile}
+          />
+        </div>
+
+        <FileUploadInput
+          files={newFiles}
+          onChange={setNewFiles}
+          label="Adicionar novos arquivos"
+          disabled={isLoading || isUploadingFiles}
+        />
+      </div>
 
 
 

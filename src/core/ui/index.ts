@@ -16,3 +16,6 @@ export { RichTextEditor } from "./RichTextEditor";
 export { Card } from "./Card";
 
 export { Badge } from "./Badge";
+
+export { Modal, ConfirmModal } from "./Modal";
+export type { ModalProps, ConfirmModalProps } from "./Modal";

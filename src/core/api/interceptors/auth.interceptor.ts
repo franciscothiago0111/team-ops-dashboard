@@ -21,7 +21,6 @@ export function applyAuthInterceptor(): HeadersInit {
   }
 
   return {
-    "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
   };
 }

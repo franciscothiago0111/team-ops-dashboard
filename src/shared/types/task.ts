@@ -1,4 +1,5 @@
 import { BaseEntity } from ".";
+import { File } from "./file";
 import { Team } from "./team";
 import { User } from "./user";
 
@@ -17,6 +18,8 @@ export interface Task extends BaseEntity {
   teamId: string;
   team?: Team;
   createdBy?: User;
+
+  files?: File[];
 
 
 

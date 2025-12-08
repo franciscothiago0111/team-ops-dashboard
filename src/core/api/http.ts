@@ -35,7 +35,7 @@ class Http {
       ...fetchOptions,
       headers: {
         ...this.headers(),
-        ...fetchOptions.headers,
+        ...(fetchOptions.headers || {}),
       },
     };
 
@@ -51,26 +51,32 @@ class Http {
   }
 
   post<T>(url: string, body: unknown, options?: RequestConfig): Promise<T> {
+    const isFormData = body instanceof FormData;
     return this.request<T>(url, {
       ...options,
       method: "POST",
-      body: JSON.stringify(body),
+      body: isFormData ? body : JSON.stringify(body),
+      headers: isFormData ? options?.headers : { "Content-Type": "application/json", ...options?.headers },
     });
   }
 
   put<T>(url: string, body: unknown, options?: RequestConfig): Promise<T> {
+    const isFormData = body instanceof FormData;
     return this.request<T>(url, {
       ...options,
       method: "PUT",
-      body: JSON.stringify(body),
+      body: isFormData ? body : JSON.stringify(body),
+      headers: isFormData ? options?.headers : { "Content-Type": "application/json", ...options?.headers },
     });
   }
 
   patch<T>(url: string, body: unknown, options?: RequestConfig): Promise<T> {
+    const isFormData = body instanceof FormData;
     return this.request<T>(url, {
       ...options,
       method: "PATCH",
-      body: JSON.stringify(body),
+      body: isFormData ? body : JSON.stringify(body),
+      headers: isFormData ? options?.headers : { "Content-Type": "application/json", ...options?.headers },
     });
   }
 

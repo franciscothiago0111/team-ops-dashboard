@@ -5,11 +5,13 @@ import { Card } from "@/core/ui/Card";
 import { Button } from "@/core/ui/Button";
 import { useTaskDetails } from "../_hooks/useTaskDetails";
 import { useUpdateTask } from "../_hooks/useUpdateTask";
+import { useDeleteTaskFile } from "../_hooks/useDeleteTaskFile";
 import { DashboardShell } from "../../_components/DashboardShell";
 import { LoadingState } from "@/shared/components/LoadingState";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { BackButton } from "@/shared/components/BackButton";
 import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
+import { FileList } from "./FileList";
 import { formatDate } from "@/core/utils/formatters";
 import {
   statusConfig,
@@ -27,9 +29,11 @@ import {
   ArrowRight,
   Pencil,
   Download,
+  FileText,
 } from "lucide-react";
 import clsx from "clsx";
 import { usePDFDownload } from "@/core/hooks/usePDFDownload";
+import { useRouter } from "next/navigation";
 
 
 interface TaskDetailsProps {
@@ -38,10 +42,12 @@ interface TaskDetailsProps {
 
 
 export function TaskDetails({ id }: TaskDetailsProps) {
-  const { data: task, isLoading, error } = useTaskDetails(id);
+  const { data: task, isLoading, error, refetch } = useTaskDetails(id);
   const { execute: updateTask, isLoading: isUpdating } = useUpdateTask();
+  const { execute: deleteFile, isLoading: isDeletingFile } = useDeleteTaskFile();
   const { user } = useAuth();
   const { generatePDF, isGenerating: isGeneratingPDF } = usePDFDownload();
+  const router = useRouter();
 
   const canEditTask = user?.role === "MANAGER" || user?.role === "ADMIN";
   const isAssignedToCurrentUser = user?.id === task?.assignedToId;
@@ -80,11 +86,16 @@ export function TaskDetails({ id }: TaskDetailsProps) {
     });
   };
 
+  const handleDeleteFile = async (fileId: string) => {
+    await deleteFile({ taskId: id, fileId });
+    refetch();
+  };
+
   return (
     <DashboardShell title="Detalhes da Tarefa">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <BackButton />
+          <BackButton onClick={() => router.push("/dashboard/tasks")} />
           <div className="flex items-center gap-2">
 
 
@@ -225,6 +236,58 @@ export function TaskDetails({ id }: TaskDetailsProps) {
             </div>
 
 
+          </div>
+        </Card>
+
+        {/* Files Section */}
+        {task.files && task.files.length > 0 && (
+          <Card>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-slate-600" />
+                <h2 className="text-lg font-semibold text-slate-900">Arquivos Anexados</h2>
+              </div>
+              <FileList
+                files={task.files}
+                onDelete={canEditTask ? handleDeleteFile : undefined}
+                isDeleting={isDeletingFile}
+              />
+            </div>
+          </Card>
+        )}
+
+        {/* Activity Timeline */}
+        <Card>
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-slate-900">Informações Adicionais</h2>
+
+            <div className="space-y-3">
+              {task.createdBy && (
+                <div className="flex items-start gap-3 text-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
+                    <User className="h-4 w-4 text-blue-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-slate-900">
+                      <span className="font-medium">{task.createdBy.name}</span> criou esta tarefa
+                    </p>
+                    <p className="text-xs text-slate-500">{formatDate(task.createdAt)}</p>
+                  </div>
+                </div>
+              )}
+
+              {task.updatedAt && task.updatedAt !== task.createdAt && (
+                <div className="flex items-start gap-3 text-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100">
+                    <Pencil className="h-4 w-4 text-slate-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-slate-900">Última atualização</p>
+                    <p className="text-xs text-slate-500">{formatDate(task.updatedAt)}</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </Card>
 

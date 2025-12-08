@@ -59,12 +59,12 @@ export const TaskService = {
   uploadFiles: async (taskId: string, files: File[]): Promise<Task> => {
     const formData = new FormData();
     files.forEach((file) => {
-      formData.append("files", file);
+      formData.append("files", file, file.name);
     });
-    return await api.post<Task>(`/tasks/${taskId}/files`, formData);
+    return await api.post<Task>(`/tasks/${taskId}/upload`, formData);
   },
 
-  deleteFile: async (taskId: string, fileId: string): Promise<void> => {
-    await api.delete<void>(`/tasks/${taskId}/files/${fileId}`);
+  deleteFile: async (taskId: string, fileId: string): Promise<Task> => {
+    return await api.delete<Task>(`/tasks/${taskId}/files/${fileId}`);
   },
 };

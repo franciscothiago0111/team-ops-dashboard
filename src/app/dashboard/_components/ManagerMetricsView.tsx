@@ -48,13 +48,13 @@ export function ManagerMetricsView({ data }: ManagerMetricsViewProps) {
       <div className="grid gap-6 md:grid-cols-4">
         <Card className="bg-linear-to-br from-slate-900 to-slate-700 text-white">
           <p className="text-sm text-slate-300">Time</p>
-          <p className="text-2xl font-bold">{data.team.name}</p>
-          <p className="text-xs text-emerald-300">{data.team.memberCount} membros</p>
+          <p className="text-2xl font-bold">{data?.team?.name}</p>
+          <p className="text-xs text-emerald-300">{data?.team?.memberCount} membros</p>
         </Card>
 
         <Card className="bg-linear-to-br from-blue-600 to-blue-400 text-white">
           <p className="text-sm text-blue-100">Subordinados Diretos</p>
-          <p className="text-4xl font-bold">{data.directReports.total}</p>
+          <p className="text-4xl font-bold">{data?.directReports?.total}</p>
         </Card>
 
         <Card className="bg-linear-to-br from-emerald-600 to-emerald-400 text-white">
@@ -115,11 +115,11 @@ export function ManagerMetricsView({ data }: ManagerMetricsViewProps) {
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Tarefas Concluídas no Período</p>
-            <p className="text-2xl font-bold text-slate-900">{data.teamProductivity.tasksCompletedInPeriod}</p>
+            <p className="text-2xl font-bold text-slate-900">{data?.teamProductivity?.tasksCompletedInPeriod}</p>
           </div>
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Média por Membro</p>
-            <p className="text-2xl font-bold text-slate-900">{data.teamProductivity.averageTasksPerMember.toFixed(1)}</p>
+            <p className="text-2xl font-bold text-slate-900">{data?.teamProductivity?.averageTasksPerMember.toFixed(1)}</p>
           </div>
           <div className="rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">Tarefas Atrasadas</p>
@@ -130,7 +130,7 @@ export function ManagerMetricsView({ data }: ManagerMetricsViewProps) {
         <div className="mt-6">
           <h4 className="mb-3 text-sm font-semibold text-slate-900">Top Performers</h4>
           <div className="space-y-2">
-            {data.teamProductivity.topPerformers.map((user, index) => (
+            {data?.teamProductivity?.topPerformers.map((user, index) => (
               <div
                 key={user.userId}
                 className="flex items-center justify-between rounded-lg bg-slate-50 p-3"
