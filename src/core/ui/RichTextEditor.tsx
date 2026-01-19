@@ -6,12 +6,7 @@
 "use client";
 
 import React, { forwardRef, useEffect, useRef } from 'react';
-import EditorJS, { OutputData } from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Link from '@editorjs/link';
-import Underline from '@editorjs/underline';
-import edjsHTML from 'editorjs-html';
+import type { OutputData } from '@editorjs/editorjs';
 import './RichTextEditor.css';
 
 interface RichTextEditorProps {
@@ -23,11 +18,25 @@ interface RichTextEditorProps {
   disabled?: boolean;
 }
 
-const edjsParser = edjsHTML();
+let edjsParser: any = null;
+
+// Dynamically load editorjs-html only on client
+const getEdjsParser = async () => {
+  if (!edjsParser && typeof window !== 'undefined') {
+    const edjsHTML = (await import('editorjs-html')).default;
+    edjsParser = edjsHTML();
+  }
+  return edjsParser;
+};
 
 // Helper to convert HTML to Editor.js blocks (basic implementation)
 const htmlToEditorJS = (html: string): OutputData => {
   if (!html || html === '<p></p>' || html === '') {
+    return { blocks: [] };
+  }
+
+  // Only run in browser environment
+  if (typeof window === 'undefined') {
     return { blocks: [] };
   }
 
@@ -96,53 +105,67 @@ const htmlToEditorJS = (html: string): OutputData => {
 
 export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>(
   ({ value, onChange, placeholder, label, error, disabled }, ref) => {
-    const editorRef = useRef<EditorJS | null>(null);
+    const editorRef = useRef<any>(null);
     const holderRef = useRef<HTMLDivElement>(null);
     const isInitialized = useRef(false);
 
     useEffect(() => {
       if (!holderRef.current || isInitialized.current) return;
 
-      const initData = value ? htmlToEditorJS(value) : { blocks: [] };
+      const initEditor = async () => {
+        // Dynamically import EditorJS and plugins
+        const [EditorJS, Header, List, Link, Underline] = await Promise.all([
+          import('@editorjs/editorjs').then(mod => mod.default),
+          import('@editorjs/header').then(mod => mod.default),
+          import('@editorjs/list').then(mod => mod.default),
+          import('@editorjs/link').then(mod => mod.default),
+          import('@editorjs/underline').then(mod => mod.default),
+        ]);
 
-      editorRef.current = new EditorJS({
-        holder: holderRef.current,
-        placeholder: placeholder || 'Digite aqui...',
-        readOnly: disabled,
-        data: initData,
-        tools: {
-          header: {
-            // @ts-expect-error - EditorJS type incompatibility with plugin versions
-            class: Header,
-            config: {
-              placeholder: 'Digite um título...',
-              levels: [2, 3],
-              defaultLevel: 2
+        const initData = value ? htmlToEditorJS(value) : { blocks: [] };
+
+        editorRef.current = new EditorJS({
+          holder: holderRef.current!,
+          placeholder: placeholder || 'Digite aqui...',
+          readOnly: disabled,
+          data: initData,
+          tools: {
+            header: {
+              // @ts-expect-error - EditorJS type incompatibility with plugin versions
+              class: Header,
+              config: {
+                placeholder: 'Digite um título...',
+                levels: [2, 3],
+                defaultLevel: 2
+              }
+            },
+            list: {
+              class: List,
+              inlineToolbar: true,
+            },
+            link: {
+              class: Link,
+            },
+            underline: Underline,
+          },
+          onChange: async () => {
+            if (editorRef.current && !disabled) {
+              try {
+                const outputData = await editorRef.current.save();
+                const parser = await getEdjsParser();
+                const html = parser.parse(outputData);
+                onChange(Array.isArray(html) ? html.join('') : html);
+              } catch (error) {
+                console.error('Error saving editor content:', error);
+              }
             }
           },
-          list: {
-            class: List,
-            inlineToolbar: true,
-          },
-          link: {
-            class: Link,
-          },
-          underline: Underline,
-        },
-        onChange: async () => {
-          if (editorRef.current && !disabled) {
-            try {
-              const outputData = await editorRef.current.save();
-              const html = edjsParser.parse(outputData);
-              onChange(Array.isArray(html) ? html.join('') : html);
-            } catch (error) {
-              console.error('Error saving editor content:', error);
-            }
-          }
-        },
-      });
+        });
 
-      isInitialized.current = true;
+        isInitialized.current = true;
+      };
+
+      initEditor();
 
       return () => {
         if (editorRef.current && typeof editorRef.current.destroy === 'function') {
