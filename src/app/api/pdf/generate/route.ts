@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
+    console.log('error');
     console.error('PDF generation error:', error);
 
     return NextResponse.json(
