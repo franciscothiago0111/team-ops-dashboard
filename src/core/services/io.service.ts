@@ -143,7 +143,7 @@ export function joinCompany(companyId: string): Promise<SocketResponse> {
 
     socket.emit('joinCompany', { companyId }, (response: SocketResponse) => {
       if (response.success) {
-        console.log(`✅ Entrou na sala da empresa: ${companyId}`);
+        console.log(`✅ Entrou na sala da empresa : ${companyId}`);
         resolve(response);
       } else {
         console.error(`❌ Erro ao entrar na sala da empresa: ${response.message}`);
