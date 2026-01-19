@@ -3,8 +3,8 @@ import { LoginForm } from "./_components/LoginForm";
 
 export default function LoginPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-      <div className="grid w-full max-w-5xl grid-cols-1 gap-12 rounded-4xl bg-white/60 p-8 shadow-xl shadow-slate-200 backdrop-blur md:grid-cols-2 md:p-16">
+    <main className="flex min-h-screen items-center justify-center bg-red-500 px-4 py-12">
+      <div className="grid w-full max-w-5xl grid-cols-1 gap-12 rounded-4xl bg-white/60 p-8 shadow-2xl shadow-slate-300 backdrop-blur md:grid-cols-2 md:p-16">
         <section className="space-y-8">
           <div className="space-y-4">
             <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">

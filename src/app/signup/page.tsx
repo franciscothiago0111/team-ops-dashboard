@@ -3,7 +3,7 @@ import { SignupForm } from "./_components/SignupForm";
 
 export default function SignupPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-indigo-50 via-white to-blue-50 px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-indigo-50 via-white to-blue-500 px-4 py-12">
       <div className="w-full max-w-2xl">
         <div className="mb-8 text-center">
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-r from-indigo-600 to-blue-600 text-2xl font-bold text-white shadow-lg">
@@ -17,10 +17,10 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="rounded-2xl border border-slate-200 bg-red-500 p-8 shadow-xl">
           <SignupForm />
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center bg-amber-300">
             <p className="text-sm text-slate-600">
               Já tem uma conta?{" "}
               <Link

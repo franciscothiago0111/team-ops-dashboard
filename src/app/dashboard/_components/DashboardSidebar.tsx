@@ -47,7 +47,7 @@ export function DashboardSidebar({
         <div className="space-y-1">
           {isSidebarOpen ? (
             <>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600">
+              <p className="text-lg font-bold uppercase tracking-[0.2em] text-indigo-600">
                 Team Ops
               </p>
               <h2 className="text-3xl font-bold bg-linear-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
