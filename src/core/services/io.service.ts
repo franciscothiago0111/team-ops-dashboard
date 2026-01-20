@@ -48,6 +48,7 @@ export function initSocket(): Socket | null {
 
     socket.on('connect', () => {
       console.log('✅ Socket conectado! ID:', socket?.id);
+      console.log('🌐 Transportes disponíveis:', socket?.io.engine.transport);
     });
 
     // Listen for successful authentication (auto-registered from token)
