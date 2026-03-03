@@ -95,7 +95,7 @@ function parseQuillHTML(html: string): React.ReactNode[] {
 
   while ((match = blockRegex.exec(html)) !== null) {
     const [, tag, content] = match;
-    
+
     if (tag === 'p') {
       // Parse inline elements within paragraph
       const inlineElements = parseInlineContent(content, `p-${key}`);
@@ -250,7 +250,7 @@ export function htmlToPDFElements(html: string): React.ReactNode {
 
   try {
     const elements = parseQuillHTML(html);
-    
+
     if (!elements || elements.length === 0) {
       // Fallback to plain text if parsing fails
       const plainText = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -289,7 +289,7 @@ interface RichTextPDFProps {
 
 export const RichTextPDF: React.FC<RichTextPDFProps> = ({ html }) => {
   const content = htmlToPDFElements(html);
-  
+
   if (!content) {
     return null;
   }
