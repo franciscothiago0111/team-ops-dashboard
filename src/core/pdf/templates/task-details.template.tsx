@@ -8,7 +8,7 @@ import { Task } from '@/shared/types/task';
 import { commonStyles } from '../styles/common.styles';
 import { Header, Section, Field, Badge, Footer } from '../components/common';
 import { formatStatus, formatPriority } from '../utils/formatters';
-import { htmlToPlainText } from '../utils/html-to-text';
+import { RichTextPDF } from '../utils/html-to-pdf';
 import { PDFTemplate, PDFGenerationOptions } from '../types';
 import { KeepTogether, NoBreak } from '../utils/page-breaks';
 import { formatDate } from '@/core/utils/formatters';
@@ -93,7 +93,7 @@ const TaskDetailsPDF: React.FC<TaskDetailsPDFProps> = ({ task, options }) => {
               <Text style={commonStyles.sectionTitle}>Descrição</Text>
             </View>
             <View wrap minPresenceAhead={50}>
-              <Text style={commonStyles.fieldValue}>{htmlToPlainText(task.description)}</Text>
+              <RichTextPDF html={task.description} />
             </View>
           </View>
         )}
