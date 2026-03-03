@@ -1,8 +1,20 @@
 import { z } from "zod";
 
+// Helper to strip HTML tags and check if there's actual content
+function hasTextContent(html: string): boolean {
+  if (!html) return false;
+  // Remove HTML tags and trim
+  const textContent = html.replace(/<[^>]*>/g, '').trim();
+  // Check if there's any actual text content
+  return textContent.length > 0;
+}
+
 export const CreateTaskSchema = z.object({
   name: z.string().min(3, "Título deve ter no mínimo 3 caracteres"),
-  description: z.string().min(1, "Descrição é obrigatória"),
+  description: z.string().refine(
+    (value) => hasTextContent(value),
+    { message: "Descrição é obrigatória" }
+  ),
   assignedToId: z.string().min(1, "Funcionário é obrigatório"),
   teamId: z.string().min(1, "Time é obrigatório"),
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional(),

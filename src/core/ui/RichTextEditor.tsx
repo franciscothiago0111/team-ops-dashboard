@@ -1,13 +1,20 @@
 /**
  * Rich Text Editor Component
- * Wrapper around Editor.js for rich text editing
+ * Wrapper around React Quill for rich text editing
  */
 
 "use client";
 
-import React, { forwardRef, useEffect, useRef } from 'react';
-import type { OutputData } from '@editorjs/editorjs';
+import React, { forwardRef, useMemo } from 'react';
+import dynamic from 'next/dynamic';
+import 'quill/dist/quill.snow.css';
 import './RichTextEditor.css';
+
+// Dynamically import ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import('react-quill-new'), {
+  ssr: false,
+  loading: () => <div className="border rounded-lg min-h-32 bg-slate-50 animate-pulse" />
+});
 
 interface RichTextEditorProps {
   value: string | undefined;
@@ -18,179 +25,33 @@ interface RichTextEditorProps {
   disabled?: boolean;
 }
 
-let edjsParser: any = null;
-
-// Dynamically load editorjs-html only on client
-const getEdjsParser = async () => {
-  if (!edjsParser && typeof window !== 'undefined') {
-    const edjsHTML = (await import('editorjs-html')).default;
-    edjsParser = edjsHTML();
-  }
-  return edjsParser;
-};
-
-// Helper to convert HTML to Editor.js blocks (basic implementation)
-const htmlToEditorJS = (html: string): OutputData => {
-  if (!html || html === '<p></p>' || html === '') {
-    return { blocks: [] };
-  }
-
-  // Only run in browser environment
-  if (typeof window === 'undefined') {
-    return { blocks: [] };
-  }
-
-  // Basic HTML parsing - this is a simplified version
-  const blocks: Array<{
-    type: string;
-    data: Record<string, unknown>;
-  }> = [];
-  const div = document.createElement('div');
-  div.innerHTML = html;
-
-  const processNode = (node: ChildNode) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.textContent?.trim();
-      if (text) {
-        blocks.push({
-          type: 'paragraph',
-          data: { text }
-        });
-      }
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      const element = node as HTMLElement;
-
-      if (element.tagName === 'P') {
-        blocks.push({
-          type: 'paragraph',
-          data: { text: element.innerHTML }
-        });
-      } else if (element.tagName === 'H1' || element.tagName === 'H2' || element.tagName === 'H3') {
-        blocks.push({
-          type: 'header',
-          data: {
-            text: element.textContent,
-            level: parseInt(element.tagName[1])
-          }
-        });
-      } else if (element.tagName === 'UL') {
-        const items = Array.from(element.querySelectorAll('li')).map(li => li.innerHTML);
-        blocks.push({
-          type: 'list',
-          data: {
-            style: 'unordered',
-            items
-          }
-        });
-      } else if (element.tagName === 'OL') {
-        const items = Array.from(element.querySelectorAll('li')).map(li => li.innerHTML);
-        blocks.push({
-          type: 'list',
-          data: {
-            style: 'ordered',
-            items
-          }
-        });
-      } else {
-        // Process children
-        Array.from(element.childNodes).forEach(processNode);
-      }
-    }
-  };
-
-  Array.from(div.childNodes).forEach(processNode);
-
-  return { blocks };
-};
-
 export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>(
   ({ value, onChange, placeholder, label, error, disabled }, ref) => {
-    const editorRef = useRef<any>(null);
-    const holderRef = useRef<HTMLDivElement>(null);
-    const isInitialized = useRef(false);
 
-    useEffect(() => {
-      if (!holderRef.current || isInitialized.current) return;
+    // Quill modules configuration
+    const modules = useMemo(() => ({
+      toolbar: [
+        [{ 'header': [2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+      ],
+    }), []);
 
-      const initEditor = async () => {
-        // Dynamically import EditorJS and plugins
-        const [EditorJS, Header, List, Link, Underline] = await Promise.all([
-          import('@editorjs/editorjs').then(mod => mod.default),
-          import('@editorjs/header').then(mod => mod.default),
-          import('@editorjs/list').then(mod => mod.default),
-          import('@editorjs/link').then(mod => mod.default),
-          import('@editorjs/underline').then(mod => mod.default),
-        ]);
+    const formats = [
+      'header',
+      'bold', 'italic', 'underline',
+      'list', 'bullet',
+      'link'
+    ];
 
-        const initData = value ? htmlToEditorJS(value) : { blocks: [] };
-
-        editorRef.current = new EditorJS({
-          holder: holderRef.current!,
-          placeholder: placeholder || 'Digite aqui...',
-          readOnly: disabled,
-          data: initData,
-          tools: {
-            header: {
-              // @ts-expect-error - EditorJS type incompatibility with plugin versions
-              class: Header,
-              config: {
-                placeholder: 'Digite um título...',
-                levels: [2, 3],
-                defaultLevel: 2
-              }
-            },
-            list: {
-              class: List,
-              inlineToolbar: true,
-            },
-            link: {
-              class: Link,
-            },
-            underline: Underline,
-          },
-          onChange: async () => {
-            if (editorRef.current && !disabled) {
-              try {
-                const outputData = await editorRef.current.save();
-                const parser = await getEdjsParser();
-                const html = parser.parse(outputData);
-                onChange(Array.isArray(html) ? html.join('') : html);
-              } catch (error) {
-                console.error('Error saving editor content:', error);
-              }
-            }
-          },
-        });
-
-        isInitialized.current = true;
-      };
-
-      initEditor();
-
-      return () => {
-        if (editorRef.current && typeof editorRef.current.destroy === 'function') {
-          try {
-            editorRef.current.destroy();
-          } catch (error) {
-            console.error('Error destroying editor:', error);
-          }
-          editorRef.current = null;
-          isInitialized.current = false;
-        }
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    // Update readOnly state when disabled prop changes
-    useEffect(() => {
-      if (editorRef.current && isInitialized.current && editorRef.current.readOnly) {
-        try {
-          editorRef.current.readOnly.toggle(disabled || false);
-        } catch (error) {
-          console.error('Error toggling readOnly:', error);
-        }
-      }
-    }, [disabled]);
+    const handleChange = (content: string) => {
+      console.log('📝 Quill onChange - Content:', content);
+      // Quill always returns at least <p><br></p> for empty content
+      // We need to pass this through so validation can handle it
+      onChange(content);
+    };
 
     return (
       <div ref={ref} className="space-y-1">
@@ -200,11 +61,16 @@ export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>(
           </label>
         )}
         <div
-          className={`rich-text-editor border rounded-lg min-h-32 ${error ? 'border-red-500' : 'border-slate-200'} ${disabled ? 'opacity-50 cursor-not-allowed bg-slate-50' : ''}`}
+          className={`rich-text-editor ${error ? 'rich-text-editor-error' : ''} ${disabled ? 'disabled' : ''}`}
         >
-          <div
-            ref={holderRef}
-            className="px-4 py-2"
+          <ReactQuill
+            theme="snow"
+            value={value || ''}
+            onChange={handleChange}
+            modules={modules}
+            formats={formats}
+            placeholder={placeholder || 'Digite aqui...'}
+            readOnly={disabled}
           />
         </div>
         {error && (

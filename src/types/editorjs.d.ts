@@ -1,3 +1,2 @@
-declare module '@editorjs/link';
-declare module '@editorjs/underline';
-declare module 'editorjs-html';
+// Type declarations file - currently not in use
+

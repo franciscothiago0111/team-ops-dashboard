@@ -18,9 +18,10 @@ interface TaskBoardCardProps {
   task: Task;
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   currentStatus: TaskStatus;
+  showDescription?: boolean;
 }
 
-export function TaskBoardCard({ task, onStatusChange, currentStatus }: TaskBoardCardProps) {
+export function TaskBoardCard({ task, onStatusChange, currentStatus, showDescription = false }: TaskBoardCardProps) {
   const { user } = useAuth();
   const priority = priorityConfigCard[task.priority];
   const next = nextStatus[currentStatus];
@@ -55,8 +56,8 @@ export function TaskBoardCard({ task, onStatusChange, currentStatus }: TaskBoard
       </Link>
 
       {/* Description */}
-      {task.description && (
-        <div className="mt-2 text-xs text-slate-500 line-clamp-2">
+      {showDescription && task.description && (
+        <div className="mt-2 text-xs text-slate-500 line-clamp-2 overflow-hidden">
           <RichTextDisplay content={task.description} />
         </div>
       )}

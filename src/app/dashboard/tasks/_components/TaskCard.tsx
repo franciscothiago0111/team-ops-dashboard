@@ -10,10 +10,11 @@ import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 
 interface TaskCardProps {
   task: Task;
+  showDescription?: boolean;
 }
 
 
-export function TaskCard({ task }: TaskCardProps) {
+export function TaskCard({ task, showDescription = false }: TaskCardProps) {
   const status = statusConfig[task.status];
   const priority = priorityConfigDetails[task.priority];
 
@@ -61,8 +62,8 @@ export function TaskCard({ task }: TaskCardProps) {
       </div>
 
       {/* Description */}
-      {task.description && (
-        <div className="mt-2 text-sm text-slate-600 line-clamp-2">
+      {showDescription && task.description && (
+        <div className="mt-2 text-sm text-slate-600 line-clamp-2 overflow-hidden">
           <RichTextDisplay content={task.description} />
         </div>
       )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/core/ui/Button";
@@ -43,6 +43,10 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
   });
 
   const onSubmit = async (values: CreateTaskInput) => {
+    console.log('✅ Validation PASSED - Form values:', values);
+    console.log('Description value:', values.description);
+    console.log('Description length:', values.description?.length);
+
     const payload = {
       ...values,
       assignedToId: values.assignedToId,
@@ -57,6 +61,12 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
 
     form.reset();
     onSuccess?.();
+  };
+
+  const onError = (errors: FieldErrors<CreateTaskInput>) => {
+    console.log('❌ Validation FAILED - Errors:', errors);
+    console.log('Current form values:', form.getValues());
+    console.log('Description value:', form.getValues('description'));
   };
 
   const { errors } = form.formState;
@@ -81,7 +91,14 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
   ];
 
   return (
-    <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      className="space-y-6"
+      onSubmit={(e) => {
+        console.log('🚀 Form submit triggered');
+        console.log('Form values before validation:', form.getValues());
+        form.handleSubmit(onSubmit, onError)(e);
+      }}
+    >
       <InputsGrid cols={1}>
         <Input
           label="Título"
@@ -107,7 +124,10 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
               label="Descrição"
               placeholder="Descreva os detalhes da tarefa..."
               value={field.value}
-              onChange={field.onChange}
+              onChange={(value) => {
+                console.log('RichTextEditor onChange called with:', value);
+                field.onChange(value);
+              }}
               error={errors.description?.message}
             />
           )}
