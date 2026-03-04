@@ -11,13 +11,17 @@ import { SkeletonList } from "@/core/components/LoadingState";
 import { useCSVDownload } from "@/core/hooks/useCSVDownload";
 import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
 import { formatDate } from "@/core/utils/formatters";
+import { usePersistedFilters } from "@/core/hooks/usePersistedFilters";
 
 interface EmployeesListProps {
   title?: string;
 }
 
+const EMPLOYEE_FILTER_KEYS = ["name", "role"];
+
 export function EmployeesList({ title = "Colaboradores" }: EmployeesListProps) {
   const searchParams = useSearchParams();
+  usePersistedFilters("employees-filters", EMPLOYEE_FILTER_KEYS);
   const { generateCSV, isGenerating } = useCSVDownload();
 
   const filters: IEmployeeListParams = {

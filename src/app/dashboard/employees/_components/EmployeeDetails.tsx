@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { Card } from "@/core/ui/Card";
-import { Button } from "@/core/ui/Button";
 import { useEmployeeDetails } from "../_hooks/useEmployeeDetails";
 import { DashboardShell } from "../../_components/DashboardShell";
 import { LoadingState } from "@/shared/components/LoadingState";
@@ -10,14 +10,12 @@ import { BackButton } from "@/shared/components/BackButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { InfoField } from "@/shared/components/InfoField";
 import { RoleGuard } from "@/shared/components/RoleGuard";
-import { useRouter } from "next/navigation";
 
 interface EmployeeDetailsProps {
   id: string;
 }
 
 export function EmployeeDetails({ id }: EmployeeDetailsProps) {
-  const router = useRouter();
   const { data: employee, isLoading, error } = useEmployeeDetails(id);
 
   if (isLoading) {
@@ -32,7 +30,7 @@ export function EmployeeDetails({ id }: EmployeeDetailsProps) {
     <RoleGuard allowedRoles={["ADMIN", "MANAGER"]}>
       <DashboardShell title="Detalhes do Colaborador">
         <div className="space-y-6">
-          <BackButton onClick={() => router.push("/dashboard/employees")} />
+          <BackButton />
 
           <Card>
             <div className="flex flex-col gap-6 md:flex-row md:justify-between">
@@ -40,9 +38,12 @@ export function EmployeeDetails({ id }: EmployeeDetailsProps) {
                 <h1 className="text-3xl font-semibold text-slate-900">{employee.name}</h1>
               </div>
               <div>
-                <Button onClick={() => router.push(`/dashboard/employees/${id}/edit`)}>
+                <Link
+                  href={`/dashboard/employees/${id}/edit`}
+                  className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+                >
                   Editar
-                </Button>
+                </Link>
               </div>
             </div>
 

@@ -15,7 +15,7 @@ export function EmployeesFilter() {
         },
 
         {
-          name: "position",
+          name: "role",
           label: "Cargo",
           placeholder: "Cargo...",
           type: "text",

@@ -101,7 +101,7 @@ export function TaskDetails({ id }: TaskDetailsProps) {
     <DashboardShell title="Detalhes da Tarefa">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <BackButton onClick={() => router.push("/dashboard/tasks")} />
+          <BackButton />
           <div className="flex items-center gap-2">
 
 

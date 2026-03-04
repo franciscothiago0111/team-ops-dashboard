@@ -9,14 +9,18 @@ import { ITaskListParams } from "../_services/task.service";
 import { useTaskList } from "../_hooks/useTaskList";
 import { SkeletonList } from "@/core/components/LoadingState";
 import { useAuth } from "@/core/hooks/useAuth";
+import { usePersistedFilters } from "@/core/hooks/usePersistedFilters";
 
 interface TasksListProps {
   title?: string;
 }
 
+const TASK_FILTER_KEYS = ["name", "priority", "status", "assignedToId"];
+
 export function TasksList({ title = "Tarefas" }: TasksListProps) {
   const searchParams = useSearchParams();
   const { user } = useAuth();
+  usePersistedFilters("tasks-filters", TASK_FILTER_KEYS);
 
   const canCreateTask = user?.role === "MANAGER" || user?.role === "ADMIN";
 
