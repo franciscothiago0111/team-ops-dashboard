@@ -94,8 +94,7 @@ export function TaskForm({ onSuccess }: TaskFormProps) {
     <form
       className="space-y-6"
       onSubmit={(e) => {
-        console.log('🚀 Form submit triggered');
-        console.log('Form values before validation:', form.getValues());
+
         form.handleSubmit(onSubmit, onError)(e);
       }}
     >
