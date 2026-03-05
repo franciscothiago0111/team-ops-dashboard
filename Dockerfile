@@ -37,7 +37,8 @@ COPY --from=builder /app/next.config.ts ./
 RUN yarn install --production && yarn cache clean
 
 # Expose the port
+ENV PORT=3002
 EXPOSE 3002
 
 # Start the application
-CMD ["yarn", "start"]
+CMD ["yarn", "start", "-p", "3002"]
