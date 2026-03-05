@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 
 # Install dependencies
-RUN yarn install
+RUN yarn install && yarn cache clean
 
 # Copy source code
 COPY . .
@@ -34,7 +34,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.ts ./
 
 # Install only production dependencies
-RUN yarn install --production
+RUN yarn install --production && yarn cache clean
 
 # Expose the port
 EXPOSE 3000
