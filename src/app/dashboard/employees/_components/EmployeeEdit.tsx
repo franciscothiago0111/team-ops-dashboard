@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { Card } from "@/core/ui/Card";
-import { DashboardShell } from "../../_components/DashboardShell";
 import { useEmployeeDetails } from "../_hooks/useEmployeeDetails";
 import { LoadingState } from "@/shared/components/LoadingState";
 import { ErrorState } from "@/shared/components/ErrorState";
@@ -27,33 +26,27 @@ export function EmployeeEdit({ id }: EmployeeEditProps) {
 
   if (isLoading) {
     return (
-      <DashboardShell title="Editar Colaborador">
-        <LoadingState />
-      </DashboardShell>
+      <LoadingState />
     );
   }
 
   if (error || !employee) {
     return (
-      <DashboardShell title="Editar Colaborador">
-        <ErrorState message="Não foi possível carregar os dados do colaborador" />
-      </DashboardShell>
+      <ErrorState message="Não foi possível carregar os dados do colaborador" />
     );
   }
 
   return (
     <RoleGuard allowedRoles={["ADMIN", "MANAGER"]}>
-      <DashboardShell title="Editar Colaborador">
-        <div className="space-y-6">
-          <Card>
-            <EmployeeUpdateForm
-              employee={employee}
-              onSuccess={handleSuccess}
-              onCancel={handleCancel}
-            />
-          </Card>
-        </div>
-      </DashboardShell>
+      <div className="space-y-6">
+        <Card>
+          <EmployeeUpdateForm
+            employee={employee}
+            onSuccess={handleSuccess}
+            onCancel={handleCancel}
+          />
+        </Card>
+      </div>
     </RoleGuard>
   );
 }

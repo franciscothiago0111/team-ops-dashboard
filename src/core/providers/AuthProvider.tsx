@@ -2,6 +2,7 @@
 
 import { createContext, useState, ReactNode, useEffect } from "react";
 import { getToken, removeToken, saveUser, getUser, removeUser, clearAuthData } from "../services/storage.service";
+import { AuthService } from "../services/auth.service";
 import { initSocket, closeSocket } from "../services/io.service";
 import { jwtDecode } from "jwt-decode";
 
@@ -27,7 +28,7 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User | null>(() => {
     if (typeof window === "undefined") return null;
 
@@ -51,10 +52,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return null;
   });
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   // Initialize WebSocket when user is authenticated
   useEffect(() => {
     if (user) {
@@ -67,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [user]);
 
   const logout = () => {
-    clearAuthData();
+    AuthService.logout();
     closeSocket();
     setUser(null);
   };

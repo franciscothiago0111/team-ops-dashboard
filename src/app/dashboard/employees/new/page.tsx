@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { Card } from "@/core/ui/Card";
 import { EmployeeForm } from "../_components/EmployeeForm";
-import { DashboardShell } from "../../_components/DashboardShell";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 
 export default function EmployeesNewPage() {
@@ -15,15 +14,13 @@ export default function EmployeesNewPage() {
 
   return (
     <RoleGuard allowedRoles={["ADMIN", "MANAGER"]}>
-      <DashboardShell title="Novo Colaborador">
-        <div className="space-y-6">
+      <div className="space-y-6">
 
 
-          <Card>
-            <EmployeeForm onSuccess={handleSuccess} />
-          </Card>
-        </div>
-      </DashboardShell>
+        <Card>
+          <EmployeeForm onSuccess={handleSuccess} />
+        </Card>
+      </div>
     </RoleGuard>
   );
 }

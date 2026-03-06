@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { useAuth } from "@/core/hooks/useAuth";
+import { isTokenExpired } from "@/core/services/storage.service";
 import { useSidebarState } from "../_hooks/useSidebarState";
 import { sidebarLinks, filterLinksByRole } from "./sidebar-config";
 import { DashboardSidebar } from "./DashboardSidebar";
@@ -12,16 +13,16 @@ import { DashboardLoadingState } from "./DashboardLoadingState";
 
 interface DashboardShellProps {
   children: ReactNode;
-  title?: string;
 }
 
-export function DashboardShell({ children, title }: DashboardShellProps) {
+function DashboardShellInner({ children }: DashboardShellProps) {
   const { user, logout } = useAuth();
   const router = useRouter();
   const { isSidebarOpen, toggleSidebar, closeSidebarOnMobile } = useSidebarState();
 
   useEffect(() => {
-    if (!user) {
+    if (!user || isTokenExpired()) {
+      logout();
       router.replace("/login");
     }
   }, [user, router]);
@@ -41,7 +42,7 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50" suppressHydrationWarning>
       <div className="flex min-h-screen">
         <DashboardSidebar
           user={user}
@@ -56,16 +57,21 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
         <div
           className={clsx(
             "flex min-h-screen w-full flex-1 flex-col transition-all duration-300",
-            "lg:ml-20",
-            isSidebarOpen && "lg:ml-80"
+            isSidebarOpen ? "lg:ml-64" : "lg:ml-[72px]"
           )}
         >
-          <DashboardNavbar user={user} title={title} onToggleSidebar={toggleSidebar} />
+          <DashboardNavbar user={user} onToggleSidebar={toggleSidebar} />
 
           {/* Page Content */}
           <main className="flex-1 px-4 py-8 md:px-8 md:py-10">{children}</main>
         </div>
       </div>
     </div>
+  );
+}
+
+export function DashboardShell({ children }: DashboardShellProps) {
+  return (
+    <DashboardShellInner>{children}</DashboardShellInner>
   );
 }

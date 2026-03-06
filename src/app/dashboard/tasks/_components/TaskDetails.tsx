@@ -6,7 +6,7 @@ import { Button } from "@/core/ui/Button";
 import { useTaskDetails } from "../_hooks/useTaskDetails";
 import { useUpdateTask } from "../_hooks/useUpdateTask";
 import { useDeleteTaskFile } from "../_hooks/useDeleteTaskFile";
-import { DashboardShell } from "../../_components/DashboardShell";
+
 import { LoadingState } from "@/shared/components/LoadingState";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { BackButton } from "@/shared/components/BackButton";
@@ -98,206 +98,204 @@ export function TaskDetails({ id }: TaskDetailsProps) {
   };
 
   return (
-    <DashboardShell title="Detalhes da Tarefa">
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <BackButton />
-          <div className="flex items-center gap-2">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <BackButton />
+        <div className="flex items-center gap-2">
 
 
-            <Button onClick={handleDownloadPDF}
-              isLoading={isGeneratingPDF} leftIcon={<Download className="h-4 w-4" />}>
-              Download PDF
-            </Button>
+          <Button onClick={handleDownloadPDF}
+            isLoading={isGeneratingPDF} leftIcon={<Download className="h-4 w-4" />}>
+            Download PDF
+          </Button>
 
-            {canEditTask && (
-              <Link
-                href={`/dashboard/tasks/${task.id}/edit`}
-                className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
-              >
-                <Pencil className="h-4 w-4" />
-                Editar
-              </Link>
-            )}
-          </div>
+          {canEditTask && (
+            <Link
+              href={`/dashboard/tasks/${task.id}/edit`}
+              className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+            >
+              <Pencil className="h-4 w-4" />
+              Editar
+            </Link>
+          )}
         </div>
+      </div>
 
-        {/* Main Card */}
-        <Card>
-          <div className="space-y-6">
-            {/* Header */}
-            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-              <div className="space-y-3">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className={clsx(
-                      "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium",
-                      status.bgColor,
-                      status.color
-                    )}
-                  >
-                    <status.icon className="h-4 w-4" />
-                    {status.label}
-                  </span>
-                  <span className={clsx("flex items-center gap-1 text-sm font-medium", priority.color)}>
-                    <span>{priority.icon}</span>
-                    {priority.label}
-                  </span>
-                </div>
-                <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">{task.name}</h1>
-              </div>
-
-              {next && (
-                <Button
-                  onClick={handleStatusChange}
-                  isLoading={isUpdating}
-                  disabled={!isAssignedToCurrentUser}
-                  className="whitespace-nowrap"
-                >
-                  {nextStatusLabelDetails[task.status]}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              )}
-            </div>
-
-            {/* Description */}
-            {task.description && (
-              <div className="rounded-lg bg-slate-50 p-4">
-                <h3 className="mb-2 text-sm font-medium text-slate-500">Descrição</h3>
-                <RichTextDisplay content={task.description} />
-              </div>
-            )}
-
-            {/* Info Grid */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {dueDateInfo && (
-                <div
+      {/* Main Card */}
+      <Card>
+        <div className="space-y-6">
+          {/* Header */}
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
                   className={clsx(
-                    "flex items-center gap-3 rounded-lg border p-4",
-                    dueDateInfo.isOverdue
-                      ? "border-red-200 bg-red-50"
-                      : dueDateInfo.isDueToday
-                        ? "border-amber-200 bg-amber-50"
-                        : "border-slate-200 bg-white"
+                    "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium",
+                    status.bgColor,
+                    status.color
                   )}
                 >
-                  <Calendar
-                    className={clsx(
-                      "h-5 w-5",
-                      dueDateInfo.isOverdue
-                        ? "text-red-500"
-                        : dueDateInfo.isDueToday
-                          ? "text-amber-500"
-                          : "text-slate-400"
-                    )}
-                  />
-                  <div>
-                    <p className="text-xs text-slate-500">Data de Entrega</p>
-                    <p
-                      className={clsx(
-                        "font-medium",
-                        dueDateInfo.isOverdue
-                          ? "text-red-700"
-                          : dueDateInfo.isDueToday
-                            ? "text-amber-700"
-                            : "text-slate-900"
-                      )}
-                    >
-                      {dueDateInfo.formatted}
-                      {dueDateInfo.isOverdue && " (atrasada)"}
-                    </p>
-                  </div>
-                </div>
-              )}
+                  <status.icon className="h-4 w-4" />
+                  {status.label}
+                </span>
+                <span className={clsx("flex items-center gap-1 text-sm font-medium", priority.color)}>
+                  <span>{priority.icon}</span>
+                  {priority.label}
+                </span>
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">{task.name}</h1>
+            </div>
 
-              {task.assignedTo && (
-                <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
-                  <User className="h-5 w-5 text-slate-400" />
-                  <div>
-                    <p className="text-xs text-slate-500">Responsável</p>
-                    <p className="font-medium text-slate-900">{task.assignedTo.name}</p>
-                  </div>
-                </div>
-              )}
+            {next && (
+              <Button
+                onClick={handleStatusChange}
+                isLoading={isUpdating}
+                disabled={!isAssignedToCurrentUser}
+                className="whitespace-nowrap"
+              >
+                {nextStatusLabelDetails[task.status]}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            )}
+          </div>
 
-              {task.team && (
-                <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
-                  <Users className="h-5 w-5 text-slate-400" />
-                  <div>
-                    <p className="text-xs text-slate-500">Time</p>
-                    <p className="font-medium text-slate-900">{task.team.name}</p>
-                  </div>
-                </div>
-              )}
+          {/* Description */}
+          {task.description && (
+            <div className="rounded-lg bg-slate-50 p-4">
+              <h3 className="mb-2 text-sm font-medium text-slate-500">Descrição</h3>
+              <RichTextDisplay content={task.description} />
+            </div>
+          )}
 
-              <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
-                <Calendar className="h-5 w-5 text-slate-400" />
+          {/* Info Grid */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {dueDateInfo && (
+              <div
+                className={clsx(
+                  "flex items-center gap-3 rounded-lg border p-4",
+                  dueDateInfo.isOverdue
+                    ? "border-red-200 bg-red-50"
+                    : dueDateInfo.isDueToday
+                      ? "border-amber-200 bg-amber-50"
+                      : "border-slate-200 bg-white"
+                )}
+              >
+                <Calendar
+                  className={clsx(
+                    "h-5 w-5",
+                    dueDateInfo.isOverdue
+                      ? "text-red-500"
+                      : dueDateInfo.isDueToday
+                        ? "text-amber-500"
+                        : "text-slate-400"
+                  )}
+                />
                 <div>
-                  <p className="text-xs text-slate-500">Criado em</p>
-                  <p className="font-medium text-slate-900">
-                    {formatDate(task.createdAt)}
+                  <p className="text-xs text-slate-500">Data de Entrega</p>
+                  <p
+                    className={clsx(
+                      "font-medium",
+                      dueDateInfo.isOverdue
+                        ? "text-red-700"
+                        : dueDateInfo.isDueToday
+                          ? "text-amber-700"
+                          : "text-slate-900"
+                    )}
+                  >
+                    {dueDateInfo.formatted}
+                    {dueDateInfo.isOverdue && " (atrasada)"}
                   </p>
                 </div>
               </div>
-            </div>
+            )}
 
-
-          </div>
-        </Card>
-
-        {/* Files Section */}
-        {task.files && task.files.length > 0 && (
-          <Card>
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-slate-600" />
-                <h2 className="text-lg font-semibold text-slate-900">Arquivos Anexados</h2>
+            {task.assignedTo && (
+              <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
+                <User className="h-5 w-5 text-slate-400" />
+                <div>
+                  <p className="text-xs text-slate-500">Responsável</p>
+                  <p className="font-medium text-slate-900">{task.assignedTo.name}</p>
+                </div>
               </div>
-              <FileList
-                files={task.files}
-                onDelete={canEditTask ? handleDeleteFile : undefined}
-              />
-            </div>
-          </Card>
-        )}
+            )}
 
-        {/* Activity Timeline */}
+            {task.team && (
+              <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
+                <Users className="h-5 w-5 text-slate-400" />
+                <div>
+                  <p className="text-xs text-slate-500">Time</p>
+                  <p className="font-medium text-slate-900">{task.team.name}</p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
+              <Calendar className="h-5 w-5 text-slate-400" />
+              <div>
+                <p className="text-xs text-slate-500">Criado em</p>
+                <p className="font-medium text-slate-900">
+                  {formatDate(task.createdAt)}
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </Card>
+
+      {/* Files Section */}
+      {task.files && task.files.length > 0 && (
         <Card>
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-slate-900">Informações Adicionais</h2>
-
-            <div className="space-y-3">
-              {task.createdBy && (
-                <div className="flex items-start gap-3 text-sm">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
-                    <User className="h-4 w-4 text-blue-600" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-slate-900">
-                      <span className="font-medium">{task.createdBy.name}</span> criou esta tarefa
-                    </p>
-                    <p className="text-xs text-slate-500">{formatDate(task.createdAt)}</p>
-                  </div>
-                </div>
-              )}
-
-              {task.updatedAt && task.updatedAt !== task.createdAt && (
-                <div className="flex items-start gap-3 text-sm">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100">
-                    <Pencil className="h-4 w-4 text-slate-600" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-slate-900">Última atualização</p>
-                    <p className="text-xs text-slate-500">{formatDate(task.updatedAt)}</p>
-                  </div>
-                </div>
-              )}
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-slate-600" />
+              <h2 className="text-lg font-semibold text-slate-900">Arquivos Anexados</h2>
             </div>
+            <FileList
+              files={task.files}
+              onDelete={canEditTask ? handleDeleteFile : undefined}
+            />
           </div>
         </Card>
+      )}
+
+      {/* Activity Timeline */}
+      <Card>
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-slate-900">Informações Adicionais</h2>
+
+          <div className="space-y-3">
+            {task.createdBy && (
+              <div className="flex items-start gap-3 text-sm">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
+                  <User className="h-4 w-4 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-slate-900">
+                    <span className="font-medium">{task.createdBy.name}</span> criou esta tarefa
+                  </p>
+                  <p className="text-xs text-slate-500">{formatDate(task.createdAt)}</p>
+                </div>
+              </div>
+            )}
+
+            {task.updatedAt && task.updatedAt !== task.createdAt && (
+              <div className="flex items-start gap-3 text-sm">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100">
+                  <Pencil className="h-4 w-4 text-slate-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-slate-900">Última atualização</p>
+                  <p className="text-xs text-slate-500">{formatDate(task.updatedAt)}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </Card>
 
 
-      </div>
-    </DashboardShell>
+    </div>
   );
 }

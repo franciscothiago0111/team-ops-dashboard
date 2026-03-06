@@ -1,6 +1,7 @@
 import { env } from "../config/env";
+import { clearAuthData } from "../services/storage.service";
 import { applyAuthInterceptor } from "./interceptors/auth.interceptor";
-import { applyErrorInterceptor } from "./interceptors/error.interceptor";
+import { ApiError, applyErrorInterceptor } from "./interceptors/error.interceptor";
 
 export interface RequestConfig extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>;
@@ -40,7 +41,19 @@ class Http {
     };
 
     const response = await fetch(this.baseURL + finalUrl, finalOptions);
-    const result = await applyErrorInterceptor<T>(response);
+
+    let result;
+    try {
+      result = await applyErrorInterceptor<T>(response);
+    } catch (err) {
+      if (err instanceof ApiError && err.statusCode === 401) {
+        clearAuthData();
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+      }
+      throw err;
+    }
 
     // Return the payload directly, which is the data the services expect
     return result.payload as T;

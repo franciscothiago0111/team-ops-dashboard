@@ -38,9 +38,15 @@ export const AuthService = {
     return response;
   },
 
-  logout: () => {
-    removeToken();
-    removeRefreshToken();
+  logout: async () => {
+    try {
+      await api.post("/auth/logout", {});
+    } catch {
+      // Ignore errors — always clear local auth data
+    } finally {
+      removeToken();
+      removeRefreshToken();
+    }
   },
 
   refreshToken: async (): Promise<string | null> => {

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { DashboardShell } from "./_components/DashboardShell";
 import { DashboardFilters } from "./_components/DashboardFilters";
 import { AdminMetricsView } from "./_components/AdminMetricsView";
 import { ManagerMetricsView } from "./_components/ManagerMetricsView";
@@ -44,66 +43,64 @@ export default function DashboardPage() {
   };
 
   return (
-    <DashboardShell title="Dashboard">
-      <div className="space-y-6">
-        <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-3xl font-semibold text-slate-900">
-              Dashboard de Métricas
-            </h1>
-            <p className="text-sm text-slate-500">
-              {user?.role === "ADMIN" && "Visão completa da empresa"}
-              {user?.role === "MANAGER" && "Visão do seu time e subordinados"}
-              {user?.role === "EMPLOYEE" && "Suas métricas e performance"}
-            </p>
+    <div className="space-y-6">
+      <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-semibold text-slate-900">
+            Dashboard de Métricas
+          </h1>
+          <p className="text-sm text-slate-500">
+            {user?.role === "ADMIN" && "Visão completa da empresa"}
+            {user?.role === "MANAGER" && "Visão do seu time e subordinados"}
+            {user?.role === "EMPLOYEE" && "Suas métricas e performance"}
+          </p>
+        </div>
+
+        <div className="flex gap-3">
+          {user?.role === "ADMIN" && (
+            <>
+              <Link
+                href="/dashboard/employees"
+                className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-black transition hover:bg-slate-50"
+              >
+                Ver colaboradores
+              </Link>
+              <Link
+                href="/dashboard/teams"
+                className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-black transition hover:bg-slate-50"
+              >
+                Ver times
+              </Link>
+            </>
+          )}
+          <Link
+            href="/dashboard/tasks"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            Ver tarefas
+          </Link>
+        </div>
+      </header>
+
+      {user && <DashboardFilters onFilterChange={handleFilterChange} userRole={user.role as Role} />}
+
+      {isLoading && (
+        <div className="flex items-center justify-center py-12">
+          <div className="space-y-3 text-center">
+            <LoadingSpinner size="lg" />
+            <p className="text-sm text-slate-500">Carregando métricas...</p>
           </div>
+        </div>
+      )}
 
-          <div className="flex gap-3">
-            {user?.role === "ADMIN" && (
-              <>
-                <Link
-                  href="/dashboard/employees"
-                  className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-black transition hover:bg-slate-50"
-                >
-                  Ver colaboradores
-                </Link>
-                <Link
-                  href="/dashboard/teams"
-                  className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-black transition hover:bg-slate-50"
-                >
-                  Ver times
-                </Link>
-              </>
-            )}
-            <Link
-              href="/dashboard/tasks"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              Ver tarefas
-            </Link>
-          </div>
-        </header>
+      {error && (
+        <ErrorState
+          message="Erro ao carregar métricas. Tente novamente."
+          showBackButton={false}
+        />
+      )}
 
-        {user && <DashboardFilters onFilterChange={handleFilterChange} userRole={user.role as Role} />}
-
-        {isLoading && (
-          <div className="flex items-center justify-center py-12">
-            <div className="space-y-3 text-center">
-              <LoadingSpinner size="lg" />
-              <p className="text-sm text-slate-500">Carregando métricas...</p>
-            </div>
-          </div>
-        )}
-
-        {error && (
-          <ErrorState
-            message="Erro ao carregar métricas. Tente novamente."
-            showBackButton={false}
-          />
-        )}
-
-        {!isLoading && !error && renderMetricsView()}
-      </div>
-    </DashboardShell>
+      {!isLoading && !error && renderMetricsView()}
+    </div>
   );
 }

@@ -18,7 +18,6 @@ export function RoleGuard({
   children,
   allowedRoles,
   redirectTo = "/dashboard",
-  title = "Acesso Negado"
 }: RoleGuardProps) {
   const { user } = useAuth();
   const router = useRouter();
@@ -31,7 +30,7 @@ export function RoleGuard({
 
   if (!user || !allowedRoles.includes(user.role as Role)) {
     return (
-      <DashboardShell title={title}>
+      <DashboardShell>
         <ErrorState
           message="Você não tem permissão para acessar esta página."
           showBackButton={true}

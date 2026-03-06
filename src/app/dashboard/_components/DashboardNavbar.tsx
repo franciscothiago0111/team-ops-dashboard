@@ -9,11 +9,10 @@ interface User {
 
 interface DashboardNavbarProps {
   user: User;
-  title?: string;
   onToggleSidebar: () => void;
 }
 
-export function DashboardNavbar({ user, title, onToggleSidebar }: DashboardNavbarProps) {
+export function DashboardNavbar({ user, onToggleSidebar }: DashboardNavbarProps) {
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white shadow-sm">
       <div className="flex items-center justify-between px-4 py-4 md:px-8">
@@ -30,7 +29,10 @@ export function DashboardNavbar({ user, title, onToggleSidebar }: DashboardNavba
             </svg>
           </button>
 
-          {title && <h1 className="text-xl font-semibold text-slate-900 md:text-2xl">{title}</h1>}
+          {/* Team Ops Dashboard */}
+          <div className="hidden lg:block">
+            <h1 className="text-lg font-bold text-slate-900">Team Ops Dashboard</h1>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -39,11 +41,11 @@ export function DashboardNavbar({ user, title, onToggleSidebar }: DashboardNavba
           <div className="hidden md:block">
             <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
               <div className="text-right">
-                <p className="text-sm font-semibold text-slate-900">{user.name}</p>
+                <p className="text-sm font-semibold text-slate-900">{user.name ?? "—"}</p>
                 <p className="text-xs text-slate-500">{user.role}</p>
               </div>
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
-                {user.name.charAt(0).toUpperCase()}
+                {user.name?.charAt(0).toUpperCase() ?? "?"}
               </div>
             </div>
           </div>
