@@ -31,7 +31,7 @@ ENV NODE_ENV=production
 COPY --from=builder /app/package.json /app/yarn.lock ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.ts ./
+COPY --from=builder /app/next.config.mjs ./
 
 # Install only production dependencies
 RUN yarn install --production && yarn cache clean
