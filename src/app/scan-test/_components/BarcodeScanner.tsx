@@ -14,7 +14,7 @@ interface IScannedBarcode {
 export function BarcodeScanner() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isScanning, setIsScanning] = useState(false);
-  const [scannedCodes, setScannedCodes] = useState<ScannedBarcode[]>([]);
+  const [scannedCodes, setScannedCodes] = useState<IScannedBarcode[]>([]);
   const [lastScannedCode, setLastScannedCode] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);

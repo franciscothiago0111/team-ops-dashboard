@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 import { TeamCard } from "./TeamCard";
 import { Paginate } from "@/shared/components/Pagination";
-import { ITeamListParams } from "../_services/team.service";
+import type { ITeamListParams } from "../_services/team.service";
 import { useTeamList } from "../_hooks/useTeamList";
 import { SkeletonList } from "@/core/components/LoadingState";
 import { useAuth } from "@/core/hooks/useAuth";
@@ -18,7 +18,7 @@ interface ITeamsListProps {
   title?: string;
 }
 
-export function TeamsList({ title = "Times" }: TeamsListProps) {
+export function TeamsList({ title = "Times" }: ITeamsListProps) {
   const searchParams = useSearchParams();
   const { user } = useAuth();
   const { generateCSV, isGenerating } = useCSVDownload();

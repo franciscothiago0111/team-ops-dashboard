@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { TeamService } from "../_services/team.service";
-import { User } from "@/shared/types";
+import type { IUser } from "@/shared/types";
 
 export function useTeamMembers(teamId: string) {
-  const query = useQuery<User[], Error>({
+  const query = useQuery<IUser[], Error>({
     queryKey: ["teams", teamId, "members"],
     queryFn: () => TeamService.getMembers(teamId),
     enabled: !!teamId,

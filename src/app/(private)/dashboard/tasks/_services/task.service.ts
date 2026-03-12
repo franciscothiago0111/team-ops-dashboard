@@ -1,8 +1,8 @@
 import { api } from "@/core/api/http";
-import { Task, TaskPriority, TaskStatus } from "@/shared/types/task";
-import { IPagination } from "@/shared/types/pagination";
+import type { ITask, TaskPriority, TaskStatus } from "@/shared/types/task";
+import type { IPagination } from "@/shared/types/pagination";
 
-export interface IITaskListParams {
+export interface ITaskListParams {
   page?: number;
   limit?: number;
   name?: string;
@@ -12,7 +12,7 @@ export interface IITaskListParams {
   priority?: string;
 }
 
-export interface IICreateTaskData {
+export interface ICreateTaskData {
   name: string;
   description: string;
   assignedToId: string;
@@ -21,7 +21,7 @@ export interface IICreateTaskData {
   dueDate?: string;
 }
 
-export interface IIUpdateTaskData {
+export interface IUpdateTaskData {
   id: string;
   name?: string;
   description?: string;
@@ -34,37 +34,37 @@ export interface IIUpdateTaskData {
 }
 
 export const TaskService = {
-  list: async (params: ITaskListParams = {}): Promise<IPagination<Task>> => {
-    return await api.get<IPagination<Task>>("/tasks", {
+  list: async (params: ITaskListParams = {}): Promise<IPagination<ITask>> => {
+    return await api.get<IPagination<ITask>>("/tasks", {
       params: { ...params },
     });
   },
 
-  getById: async (id: string): Promise<Task> => {
-    return await api.get<Task>(`/tasks/${id}`);
+  getById: async (id: string): Promise<ITask> => {
+    return await api.get<ITask>(`/tasks/${id}`);
   },
 
-  create: async (data: ICreateTaskData): Promise<Task> => {
-    return await api.post<Task>("/tasks", data);
+  create: async (data: ICreateTaskData): Promise<ITask> => {
+    return await api.post<ITask>("/tasks", data);
   },
 
-  update: async ({ id, ...data }: IUpdateTaskData): Promise<Task> => {
-    return await api.put<Task>(`/tasks/${id}`, data);
+  update: async ({ id, ...data }: IUpdateTaskData): Promise<ITask> => {
+    return await api.put<ITask>(`/tasks/${id}`, data);
   },
 
   delete: async (id: string): Promise<void> => {
     await api.delete<void>(`/tasks/${id}`);
   },
 
-  uploadFiles: async (taskId: string, files: File[]): Promise<Task> => {
+  uploadFiles: async (taskId: string, files: File[]): Promise<ITask> => {
     const formData = new FormData();
     files.forEach((file) => {
       formData.append("files", file, file.name);
     });
-    return await api.post<Task>(`/tasks/${taskId}/upload`, formData);
+    return await api.post<ITask>(`/tasks/${taskId}/upload`, formData);
   },
 
-  deleteFile: async (taskId: string, fileId: string): Promise<Task> => {
-    return await api.delete<Task>(`/tasks/${taskId}/files/${fileId}`);
+  deleteFile: async (taskId: string, fileId: string): Promise<ITask> => {
+    return await api.delete<ITask>(`/tasks/${taskId}/files/${fileId}`);
   },
 };

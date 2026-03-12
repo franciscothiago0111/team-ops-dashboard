@@ -28,7 +28,7 @@ class Http {
     return queryString ? `${url}?${queryString}` : url;
   }
 
-  async request<T>(url: string, options: RequestConfig = {}): Promise<T> {
+  async request<T>(url: string, options: IRequestConfig = {}): Promise<T> {
     const { params, ...fetchOptions } = options;
     const finalUrl = this.buildUrl(url, params);
 
@@ -59,11 +59,11 @@ class Http {
     return result.payload as T;
   }
 
-  get<T>(url: string, options?: RequestConfig): Promise<T> {
+  get<T>(url: string, options?: IRequestConfig): Promise<T> {
     return this.request<T>(url, { ...options, method: "GET" });
   }
 
-  post<T>(url: string, body: unknown, options?: RequestConfig): Promise<T> {
+  post<T>(url: string, body: unknown, options?: IRequestConfig): Promise<T> {
     const isFormData = body instanceof FormData;
     return this.request<T>(url, {
       ...options,
@@ -73,7 +73,7 @@ class Http {
     });
   }
 
-  put<T>(url: string, body: unknown, options?: RequestConfig): Promise<T> {
+  put<T>(url: string, body: unknown, options?: IRequestConfig): Promise<T> {
     const isFormData = body instanceof FormData;
     return this.request<T>(url, {
       ...options,
@@ -83,7 +83,7 @@ class Http {
     });
   }
 
-  patch<T>(url: string, body: unknown, options?: RequestConfig): Promise<T> {
+  patch<T>(url: string, body: unknown, options?: IRequestConfig): Promise<T> {
     const isFormData = body instanceof FormData;
     return this.request<T>(url, {
       ...options,
@@ -93,7 +93,7 @@ class Http {
     });
   }
 
-  delete<T>(url: string, options?: RequestConfig): Promise<T> {
+  delete<T>(url: string, options?: IRequestConfig): Promise<T> {
     return this.request<T>(url, { ...options, method: "DELETE" });
   }
 }

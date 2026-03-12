@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
-import { UpdateTaskInput } from "../_schemas/task.schema";
+import type { UpdateTaskInput } from "../_schemas/task.schema";
 import { TaskService } from "../_services/task.service";
 
 interface IUpdateTaskWithFilesInput {
@@ -13,7 +13,7 @@ export function useUpdateTask() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ data, files }: UpdateTaskWithFilesInput) => {
+    mutationFn: async ({ data, files }: IUpdateTaskWithFilesInput) => {
       // First, update the task
       const updatedTask = await TaskService.update(data);
 

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface ILoadingStateProps {
   isLoading: boolean;
@@ -6,7 +6,7 @@ interface ILoadingStateProps {
   fallback?: ReactNode;
 }
 
-export function LoadingState({ isLoading, children, fallback }: LoadingStateProps) {
+export function LoadingState({ isLoading, children, fallback }: ILoadingStateProps) {
   if (isLoading) {
     return (
       <>
@@ -30,7 +30,7 @@ interface ILoadingSpinnerProps {
   className?: string;
 }
 
-export function LoadingSpinner({ size = "md", className = "" }: LoadingSpinnerProps) {
+export function LoadingSpinner({ size = "md", className = "" }: ILoadingSpinnerProps) {
   const sizeClasses = {
     sm: "h-4 w-4 border-2",
     md: "h-8 w-8 border-4",
@@ -52,7 +52,7 @@ interface ILoadingOverlayProps {
   message?: string;
 }
 
-export function LoadingOverlay({ isLoading, children, message }: LoadingOverlayProps) {
+export function LoadingOverlay({ isLoading, children, message }: ILoadingOverlayProps) {
   return (
     <div className="relative">
       {children}

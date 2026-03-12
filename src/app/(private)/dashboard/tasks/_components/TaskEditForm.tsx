@@ -12,8 +12,9 @@ import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useUpdateTask } from "../_hooks/useUpdateTask";
 import { useDeleteTaskFile } from "../_hooks/useDeleteTaskFile";
-import { UpdateTaskInput, UpdateTaskSchema } from "../_schemas/task.schema";
-import { Task } from "@/shared/types/task";
+import type { UpdateTaskInput } from "../_schemas/task.schema";
+import { UpdateTaskSchema } from "../_schemas/task.schema";
+import type { ITask } from "@/shared/types/task";
 import { FileUploadInput } from "./FileUploadInput";
 import { FileList } from "./FileList";
 
@@ -22,12 +23,12 @@ import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
 import { getPriorityOptions, getStatusOptions } from "../_utils/task.utils";
 
 interface ITaskEditFormProps {
-  task: Task;
+  task: ITask;
   onSuccess?: () => void;
 }
 
 
-export function TaskEditForm({ task, onSuccess }: TaskEditFormProps) {
+export function TaskEditForm({ task, onSuccess }: ITaskEditFormProps) {
   const { execute, isLoading } = useUpdateTask();
   const { execute: executeDeleteFile } = useDeleteTaskFile();
 

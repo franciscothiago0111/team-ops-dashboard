@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Task } from "@/shared/types/task";
+import type { ITask } from "@/shared/types/task";
 import { Card } from "@/core/ui/Card";
-import { Calendar, User, Paperclip, Flag, ChevronRight } from "lucide-react";
+import { Calendar, User, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 import { statusConfig, priorityConfigDetails } from "../_utils/task.utils";
 import { isPast, isToday, formatDate } from "@/core/utils/formatters";
@@ -9,12 +9,12 @@ import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 
 
 interface ITaskCardProps {
-  task: Task;
+  task: ITask;
   showDescription?: boolean;
 }
 
 
-export function TaskCard({ task, showDescription = false }: TaskCardProps) {
+export function TaskCard({ task, showDescription = false }: ITaskCardProps) {
   const status = statusConfig[task.status];
   const priority = priorityConfigDetails[task.priority];
 

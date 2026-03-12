@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
-import { CreateTeamInput } from "../_schemas/team.schema";
+import type { CreateTeamInput } from "../_schemas/team.schema";
 import { TeamService } from "../_services/team.service";
 
 export function useCreateTeam() {

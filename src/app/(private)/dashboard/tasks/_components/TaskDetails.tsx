@@ -33,7 +33,6 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import { usePDFDownload } from "@/core/hooks/usePDFDownload";
-import { useRouter } from "next/navigation";
 
 
 interface ITaskDetailsProps {
@@ -41,13 +40,13 @@ interface ITaskDetailsProps {
 }
 
 
-export function TaskDetails({ id }: TaskDetailsProps) {
+export function TaskDetails({ id }: ITaskDetailsProps) {
   const { data: task, isLoading, error, refetch } = useTaskDetails(id);
   const { execute: updateTask, isLoading: isUpdating } = useUpdateTask();
   const { execute: deleteFile } = useDeleteTaskFile();
   const { user } = useAuth();
   const { generatePDF, isGenerating: isGeneratingPDF } = usePDFDownload();
-  const router = useRouter();
+
 
   const canEditTask = user?.role === "MANAGER" || user?.role === "ADMIN";
   const isAssignedToCurrentUser = user?.id === task?.assignedToId;

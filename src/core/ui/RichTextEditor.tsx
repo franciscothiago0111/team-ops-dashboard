@@ -25,7 +25,7 @@ interface IRichTextEditorProps {
   disabled?: boolean;
 }
 
-export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>(
+export const RichTextEditor = forwardRef<HTMLDivElement, IRichTextEditorProps>(
   ({ value, onChange, placeholder, label, error, disabled }, ref) => {
 
     // Quill modules configuration

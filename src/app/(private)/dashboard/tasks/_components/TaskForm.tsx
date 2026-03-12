@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, Controller, FieldErrors } from "react-hook-form";
+import type { FieldErrors } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/core/ui/Button";
@@ -11,7 +12,8 @@ import { RichTextEditor } from "@/core/ui/RichTextEditor";
 import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useCreateTask } from "../_hooks/useCreateTask";
-import { CreateTaskInput, CreateTaskSchema } from "../_schemas/task.schema";
+import type { CreateTaskInput } from "../_schemas/task.schema";
+import { CreateTaskSchema } from "../_schemas/task.schema";
 import { FileUploadInput } from "./FileUploadInput";
 
 import { useTeamList } from "../../teams/_hooks/useTeamList";
@@ -23,7 +25,7 @@ interface ITaskFormProps {
 }
 
 
-export function TaskForm({ onSuccess }: TaskFormProps) {
+export function TaskForm({ onSuccess }: ITaskFormProps) {
   const { execute, isLoading } = useCreateTask();
   const [newFiles, setNewFiles] = useState<File[]>([]);
 

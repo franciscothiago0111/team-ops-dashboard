@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Calendar, User, Flag, ArrowRight } from "lucide-react";
 import clsx from "clsx";
-import { Task, TaskStatus } from "@/shared/types/task";
+import type { ITask, TaskStatus } from "@/shared/types/task";
 import { useAuth } from "@/core/hooks/useAuth";
 import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 import {
@@ -15,13 +15,13 @@ import {
 
 
 interface ITaskBoardCardProps {
-  task: Task;
+  task: ITask;
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   currentStatus: TaskStatus;
   showDescription?: boolean;
 }
 
-export function TaskBoardCard({ task, onStatusChange, currentStatus, showDescription = false }: TaskBoardCardProps) {
+export function TaskBoardCard({ task, onStatusChange, currentStatus, showDescription = false }: ITaskBoardCardProps) {
   const { user } = useAuth();
   const priority = priorityConfigCard[task.priority];
   const next = nextStatus[currentStatus];

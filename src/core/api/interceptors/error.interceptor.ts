@@ -1,4 +1,4 @@
-import { ISuccess } from "../types";
+import type { ISuccess } from "../types";
 
 export class ApiError extends Error {
   constructor(

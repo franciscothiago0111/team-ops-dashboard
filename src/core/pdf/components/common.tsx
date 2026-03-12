@@ -13,7 +13,7 @@ interface IFieldProps {
   minPresenceAhead?: number;
 }
 
-export const Field: React.FC<FieldProps> = ({ label, value, minPresenceAhead = 30 }) => (
+export const Field: React.FC<IFieldProps> = ({ label, value, minPresenceAhead = 30 }) => (
   <View style={commonStyles.field} wrap={false} minPresenceAhead={minPresenceAhead}>
     <Text style={commonStyles.fieldLabel}>{label}</Text>
     <Text style={commonStyles.fieldValue}>{value || 'N/A'}</Text>
@@ -25,7 +25,7 @@ interface IBadgeProps {
   variant?: 'primary' | 'success' | 'warning' | 'danger' | 'secondary';
 }
 
-export const Badge: React.FC<BadgeProps> = ({ text, variant = 'primary' }) => {
+export const Badge: React.FC<IBadgeProps> = ({ text, variant = 'primary' }) => {
   const badgeStyle = {
     primary: commonStyles.badgePrimary,
     success: commonStyles.badgeSuccess,
@@ -48,7 +48,7 @@ interface ISectionProps {
   minPresenceAhead?: number;
 }
 
-export const Section: React.FC<SectionProps> = ({
+export const Section: React.FC<ISectionProps> = ({
   title,
   children,
   wrap = true,
@@ -65,7 +65,7 @@ interface IHeaderProps {
   subtitle?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, subtitle }) => (
+export const Header: React.FC<IHeaderProps> = ({ title, subtitle }) => (
   <View style={commonStyles.header}>
     <Text style={commonStyles.headerTitle}>{title}</Text>
     {subtitle && <Text style={commonStyles.headerSubtitle}>{subtitle}</Text>}
@@ -77,7 +77,7 @@ interface IFooterProps {
   rightText?: string;
 }
 
-export const Footer: React.FC<FooterProps> = ({ leftText, rightText }) => (
+export const Footer: React.FC<IFooterProps> = ({ leftText, rightText }) => (
   <View style={commonStyles.footer} fixed>
     <Text>{leftText}</Text>
     <Text

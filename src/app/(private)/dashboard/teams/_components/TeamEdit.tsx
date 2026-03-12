@@ -20,14 +20,15 @@ import { ErrorState } from "@/shared/components/ErrorState";
 import { BackButton } from "@/shared/components/BackButton";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 import { useUpdateTeam } from "../_hooks/useUpdateTeam";
-import { UpdateTeamInput, UpdateTeamSchema } from "../_schemas/team.schema";
+import type { UpdateTeamInput } from "../_schemas/team.schema";
+import { UpdateTeamSchema } from "../_schemas/team.schema";
 import { useAppToast } from "@/core/hooks/useToast";
 
 interface ITeamEditProps {
   id: string;
 }
 
-export function TeamEdit({ id }: TeamEditProps) {
+export function TeamEdit({ id }: ITeamEditProps) {
   const router = useRouter();
   const toast = useAppToast();
   const { data: team, isLoading, error } = useTeamDetails(id);
@@ -81,9 +82,9 @@ export function TeamEdit({ id }: TeamEditProps) {
   async function onSubmit(values: UpdateTeamInput) {
     try {
       // Calculate final member IDs
-      const currentMemberIds = currentMembers.map((m) => m.id);
+      const currentMemberIds = currentMembers.map((m: { id: string }) => m.id);
       const finalMemberIds = [
-        ...currentMemberIds.filter((id) => !membersToRemove.includes(id)),
+        ...currentMemberIds.filter((id: string) => !membersToRemove.includes(id)),
         ...membersToAdd,
       ];
 
@@ -234,7 +235,7 @@ export function TeamEdit({ id }: TeamEditProps) {
                   <p className="text-sm font-semibold text-slate-700">
                     Membros atuais:
                   </p>
-                  {currentMembers.map((member) => {
+                  {currentMembers.map((member: { id: string; name: string; email: string }) => {
                     const markedForRemoval = membersToRemove.includes(member.id);
                     return (
                       <div

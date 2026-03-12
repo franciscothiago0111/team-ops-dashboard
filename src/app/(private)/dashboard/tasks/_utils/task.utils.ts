@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { TaskStatus, TaskPriority } from "@/shared/types/task";
+import type { TaskStatus, TaskPriority } from "@/shared/types/task";
 import { isPast, isToday, formatDistanceToNow, formatDate } from "@/core/utils/formatters";
 import { ClipboardList, Clock, CheckCircle2, XCircle } from "lucide-react";
 

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
-import { TaskStatus } from "@/shared/types/task";
-import { ITaskListParams } from "../_services/task.service";
+import type { TaskStatus } from "@/shared/types/task";
+import type { ITaskListParams } from "../_services/task.service";
 import { useTaskList } from "../_hooks/useTaskList";
 import { useUpdateTask } from "../_hooks/useUpdateTask";
 import { useAuth } from "@/core/hooks/useAuth";

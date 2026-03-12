@@ -13,8 +13,8 @@ import { InfoField } from "@/shared/components/InfoField";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 import { useRouter } from "next/navigation";
 import { Users, ClipboardList, UserX } from "lucide-react";
-import { Task } from "@/shared/types/task";
-import { User } from "@/shared/types";
+import type { ITask } from "@/shared/types/task";
+import type { IUser } from "@/shared/types";
 import { useAuth } from "@/core/hooks/useAuth";
 import { formatDate } from "@/core/utils/formatters";
 import { statusConfig } from "../../tasks/_utils/task.utils";
@@ -23,7 +23,7 @@ interface ITeamDetailsProps {
   id: string;
 }
 
-export function TeamDetails({ id }: TeamDetailsProps) {
+export function TeamDetails({ id }: ITeamDetailsProps) {
   const router = useRouter();
   const { data: team, isLoading, error } = useTeamDetails(id);
   const { user } = useAuth();
@@ -109,7 +109,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
             </div>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {members.map((member: User) => (
+              {members.map((member: IUser) => (
                 <div
                   key={member.id}
                   className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 transition-colors hover:bg-slate-50 cursor-pointer"
@@ -156,7 +156,7 @@ export function TeamDetails({ id }: TeamDetailsProps) {
             </div>
           ) : (
             <div className="space-y-2">
-              {tasks.map((task: Task) => {
+              {tasks.map((task: ITask) => {
                 const StatusIcon = statusConfig[task.status].icon;
                 return (
                   <div

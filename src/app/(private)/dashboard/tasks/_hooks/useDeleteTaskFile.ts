@@ -12,7 +12,7 @@ export function useDeleteTaskFile() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({ taskId, fileId }: DeleteFileParams) =>
+    mutationFn: ({ taskId, fileId }: IDeleteFileParams) =>
       TaskService.deleteFile(taskId, fileId),
     onSuccess: (_, variables) => {
       toast.success("Arquivo removido com sucesso!");

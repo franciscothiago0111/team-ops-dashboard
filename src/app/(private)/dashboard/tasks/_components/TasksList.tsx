@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 import { TaskCard } from "./TaskCard";
 import { Paginate } from "@/shared/components/Pagination";
-import { ITaskListParams } from "../_services/task.service";
+import type { ITaskListParams } from "../_services/task.service";
 import { useTaskList } from "../_hooks/useTaskList";
 import { SkeletonList } from "@/core/components/LoadingState";
 import { useAuth } from "@/core/hooks/useAuth";
@@ -17,7 +17,7 @@ interface ITasksListProps {
 
 const TASK_FILTER_KEYS = ["name", "priority", "status", "assignedToId"];
 
-export function TasksList({ title = "Tarefas" }: TasksListProps) {
+export function TasksList({ title = "Tarefas" }: ITasksListProps) {
   const searchParams = useSearchParams();
   const { user } = useAuth();
   usePersistedFilters("tasks-filters", TASK_FILTER_KEYS);

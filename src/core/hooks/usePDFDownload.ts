@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import { pdfService } from '@/core/services/pdf.service';
 import { useAppToast } from '@/core/hooks/useToast';
-import { PDFGenerationOptions } from '@/core/pdf/types';
+import type { IPDFGenerationOptions } from '@/core/pdf/types';
 
 interface IUsePDFDownloadOptions {
   onSuccess?: () => void;
@@ -16,14 +16,14 @@ interface IUsePDFDownloadOptions {
 interface IGeneratePDFParams<T> {
   template: string;
   data: T;
-  options?: PDFGenerationOptions;
+  options?: IPDFGenerationOptions;
 }
 
-export function usePDFDownload(hookOptions?: UsePDFDownloadOptions) {
+export function usePDFDownload(hookOptions?: IUsePDFDownloadOptions) {
   const [isGenerating, setIsGenerating] = useState(false);
   const toast = useAppToast();
 
-  const generatePDF = async <T = unknown>(params: GeneratePDFParams<T>) => {
+  const generatePDF = async <T = unknown>(params: IGeneratePDFParams<T>) => {
     setIsGenerating(true);
     try {
       await pdfService.generatePDF({
@@ -45,7 +45,7 @@ export function usePDFDownload(hookOptions?: UsePDFDownloadOptions) {
     }
   };
 
-  const previewPDF = async <T = unknown>(params: GeneratePDFParams<T>) => {
+  const previewPDF = async <T = unknown>(params: IGeneratePDFParams<T>) => {
     setIsGenerating(true);
     try {
       await pdfService.previewPDF({

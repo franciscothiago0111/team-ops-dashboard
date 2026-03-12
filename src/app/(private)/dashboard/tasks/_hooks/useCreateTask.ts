@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
-import { CreateTaskInput } from "../_schemas/task.schema";
+import type { CreateTaskInput } from "../_schemas/task.schema";
 import { TaskService } from "../_services/task.service";
 
 interface ICreateTaskWithFilesInput {
@@ -13,7 +13,7 @@ export function useCreateTask() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ data, files }: CreateTaskWithFilesInput) => {
+    mutationFn: async ({ data, files }: ICreateTaskWithFilesInput) => {
       // First, create the task
       const createdTask = await TaskService.create(data);
 

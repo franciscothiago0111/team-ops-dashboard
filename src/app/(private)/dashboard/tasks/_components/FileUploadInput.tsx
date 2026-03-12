@@ -21,7 +21,7 @@ export function FileUploadInput({
   multiple = true,
   disabled = false,
   error,
-}: FileUploadInputProps) {
+}: IFileUploadInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

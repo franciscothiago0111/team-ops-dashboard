@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Team } from "@/shared/types/team";
+import type { ITeam } from "@/shared/types/team";
 import { Card } from "@/core/ui/Card";
 
 interface ITeamCardProps {
-  team: Team;
+  team: ITeam;
 }
 
-export function TeamCard({ team }: TeamCardProps) {
+export function TeamCard({ team }: ITeamCardProps) {
   return (
     <Card>
       <div className="flex items-start justify-between">

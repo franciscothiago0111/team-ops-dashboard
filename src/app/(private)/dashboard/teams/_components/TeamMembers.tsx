@@ -8,13 +8,13 @@ import { LoadingState } from "@/shared/components/LoadingState";
 import { Select } from "@/core/ui/Select";
 import { useAppToast } from "@/core/hooks/useToast";
 import { useTeamMembers, useAddTeamMember, useRemoveTeamMember } from "../_hooks/useTeamMembers";
-import { User } from "@/shared/types";
+import type { IUser } from "@/shared/types";
 
 interface ITeamMembersProps {
   teamId: string;
 }
 
-export function TeamMembers({ teamId }: TeamMembersProps) {
+export function TeamMembers({ teamId }: ITeamMembersProps) {
   const toast = useAppToast();
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [isAdding, setIsAdding] = useState(false);
@@ -28,7 +28,7 @@ export function TeamMembers({ teamId }: TeamMembersProps) {
 
   // Filter out employees already in the team
   const availableEmployees = employees.filter(
-    (emp) => !members?.some((member: User) => member.id === emp.id)
+    (emp) => !members?.some((member: IUser) => member.id === emp.id)
   );
 
   const employeeOptions = [
@@ -131,7 +131,7 @@ export function TeamMembers({ teamId }: TeamMembersProps) {
         </div>
       ) : (
         <div className="space-y-2">
-          {members.map((member: User) => (
+          {members.map((member: IUser) => (
             <div
               key={member.id}
               className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-4 transition-colors hover:bg-slate-50"

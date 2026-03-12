@@ -1,17 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { File as FileType } from "@/shared/types/file";
+import type { IFile } from "@/shared/types/file";
 import { ConfirmModal } from "@/core/ui/Modal";
 
 interface IFileListProps {
-  files: FileType[];
+  files: IFile[];
   onDelete?: (fileId: string) => Promise<void>;
 }
 
-export function FileList({ files, onDelete }: FileListProps) {
+export function FileList({ files, onDelete }: IFileListProps) {
   const [deletingFileId, setDeletingFileId] = useState<string | null>(null);
-  const [fileToDelete, setFileToDelete] = useState<FileType | null>(null);
+  const [fileToDelete, setFileToDelete] = useState<IFile | null>(null);
   const isMountedRef = useRef(true);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export function FileList({ files, onDelete }: FileListProps) {
     };
   }, []);
 
-  const handleDeleteClick = (file: FileType) => {
+  const handleDeleteClick = (file: IFile) => {
     setFileToDelete(file);
   };
 
@@ -54,7 +54,7 @@ export function FileList({ files, onDelete }: FileListProps) {
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
   };
 
-  const handleDownload = (file: FileType) => {
+  const handleDownload = (file: IFile) => {
     // Create a temporary anchor element to trigger download
     const link = document.createElement("a");
     link.href = file.filepath;

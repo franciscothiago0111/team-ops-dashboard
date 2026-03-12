@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/core/ui/Button";
 import { Input } from "@/core/ui/Input";
-import { Textarea } from "@/core/ui/Textarea";
 import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useCreateTeam } from "../_hooks/useCreateTeam";
-import { CreateTeamInput, CreateTeamSchema } from "../_schemas/team.schema";
+import type { CreateTeamInput } from "../_schemas/team.schema";
+import { CreateTeamSchema } from "../_schemas/team.schema";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
 import { Select } from "@/core/ui/Select";
 
@@ -17,14 +17,13 @@ interface ITeamFormProps {
   onSuccess?: () => void;
 }
 
-export function TeamForm({ onSuccess }: TeamFormProps) {
+export function TeamForm({ onSuccess }: ITeamFormProps) {
   const { execute, isLoading } = useCreateTeam();
 
 
   const { data: ManagersData, isLoading: isLoadingEmployees } = useEmployeeList({ limit: 100, role: "MANAGER" });
 
 
-  console.log('ManagersData', ManagersData);
 
 
   const form = useForm<CreateTeamInput>({

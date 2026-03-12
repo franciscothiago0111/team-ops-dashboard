@@ -5,20 +5,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/core/ui/Button";
 import { Input } from "@/core/ui/Input";
-import { Textarea } from "@/core/ui/Textarea";
 import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useUpdateTeam } from "../_hooks/useUpdateTeam";
-import { UpdateTeamInput, UpdateTeamSchema } from "../_schemas/team.schema";
-import { Team } from "@/shared/types/team";
+import type { UpdateTeamInput } from "../_schemas/team.schema";
+import { UpdateTeamSchema } from "../_schemas/team.schema";
+import type { ITeam } from "@/shared/types/team";
 
 interface ITeamUpdateFormProps {
-  team: Team;
+  team: ITeam;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
-export function TeamUpdateForm({ team, onSuccess, onCancel }: TeamUpdateFormProps) {
+export function TeamUpdateForm({ team, onSuccess, onCancel }: ITeamUpdateFormProps) {
   const { execute, isLoading } = useUpdateTeam();
 
   const form = useForm<UpdateTeamInput>({

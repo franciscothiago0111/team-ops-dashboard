@@ -17,11 +17,11 @@ interface IGenerateCSVParams {
   filename: string;
 }
 
-export function useCSVDownload(hookOptions?: UseCSVDownloadOptions) {
+export function useCSVDownload(hookOptions?: IUseCSVDownloadOptions) {
   const [isGenerating, setIsGenerating] = useState(false);
   const toast = useAppToast();
 
-  const generateCSV = async (params: GenerateCSVParams) => {
+  const generateCSV = async (params: IGenerateCSVParams) => {
     setIsGenerating(true);
     try {
       if (!params.data || params.data.length === 0) {

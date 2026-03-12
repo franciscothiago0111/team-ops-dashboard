@@ -1,4 +1,5 @@
 import type { IBaseEntity } from ".";
+import type { IFile } from "./file";
 import type { ITeam } from "./team";
 import type { IUser } from "./user";
 
@@ -18,7 +19,7 @@ export interface ITask extends IBaseEntity {
   team?: ITeam;
   createdBy?: IUser;
 
-  files?: File[];
+  files?: IFile[];
 
 
 
