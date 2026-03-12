@@ -5,7 +5,7 @@ import { BrowserMultiFormatReader, BarcodeFormat } from "@zxing/browser";
 import { Button } from "@/core/ui/Button";
 import { Badge } from "@/core/ui/Badge";
 
-interface ScannedBarcode {
+interface IScannedBarcode {
   code: string;
   timestamp: Date;
   format: string;

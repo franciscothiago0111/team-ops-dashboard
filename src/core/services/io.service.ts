@@ -5,13 +5,13 @@ import { env } from '../config/env';
 
 let socket: Socket | null = null;
 
-interface AuthenticatedResponse {
+interface IAuthenticatedResponse {
   success: boolean;
   userId: string;
   companyId: string;
 }
 
-interface SocketResponse {
+interface ISocketResponse {
   success: boolean;
   message?: string;
   userId?: string;

@@ -15,7 +15,7 @@ import {
   FixedSection
 } from '../utils/page-breaks';
 
-interface ExampleData {
+interface IExampleData {
   title: string;
   sections: Array<{
     title: string;

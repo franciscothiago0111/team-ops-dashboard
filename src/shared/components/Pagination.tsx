@@ -1,6 +1,6 @@
 "use client";
 
-interface PaginateProps {
+interface IPaginateProps {
   totalRegisters?: number;
   registersPrePage?: number;
   register?: number;
@@ -26,7 +26,7 @@ export function Paginate({
   perPage,
   register = registersPrePage,
   itemLabel = "itens"
-}: PaginateProps) {
+}: IPaginateProps) {
   const lastPage = perPage || Math.ceil(totalRegisters / registersPrePage);
 
   // Don't show pagination if there's only one page or no pages

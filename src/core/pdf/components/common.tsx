@@ -7,7 +7,7 @@ import React from 'react';
 import { Text, View } from '@react-pdf/renderer';
 import { commonStyles } from '../styles/common.styles';
 
-interface FieldProps {
+interface IFieldProps {
   label: string;
   value: string | number | null | undefined;
   minPresenceAhead?: number;
@@ -20,7 +20,7 @@ export const Field: React.FC<FieldProps> = ({ label, value, minPresenceAhead = 3
   </View>
 );
 
-interface BadgeProps {
+interface IBadgeProps {
   text: string;
   variant?: 'primary' | 'success' | 'warning' | 'danger' | 'secondary';
 }
@@ -41,7 +41,7 @@ export const Badge: React.FC<BadgeProps> = ({ text, variant = 'primary' }) => {
   );
 };
 
-interface SectionProps {
+interface ISectionProps {
   title: string;
   children: React.ReactNode;
   wrap?: boolean;
@@ -60,7 +60,7 @@ export const Section: React.FC<SectionProps> = ({
   </View>
 );
 
-interface HeaderProps {
+interface IHeaderProps {
   title: string;
   subtitle?: string;
 }
@@ -72,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle }) => (
   </View>
 );
 
-interface FooterProps {
+interface IFooterProps {
   leftText?: string;
   rightText?: string;
 }

@@ -7,7 +7,7 @@ export type TaskStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
 export type TaskPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
 
-export interface Task extends BaseEntity {
+export interface ITask extends BaseEntity {
   name: string;
   description: string;
   status: TaskStatus;

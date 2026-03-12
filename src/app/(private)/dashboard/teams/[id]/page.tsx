@@ -3,7 +3,7 @@
 import { use } from "react";
 import { TeamDetails } from "../_components/TeamDetails";
 
-interface TeamPageProps {
+interface ITeamPageProps {
   params: Promise<{ id: string }>;
 }
 

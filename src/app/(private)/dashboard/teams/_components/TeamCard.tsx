@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Team } from "@/shared/types/team";
 import { Card } from "@/core/ui/Card";
 
-interface TeamCardProps {
+interface ITeamCardProps {
   team: Team;
 }
 

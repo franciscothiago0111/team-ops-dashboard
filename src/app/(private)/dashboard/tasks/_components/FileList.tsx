@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { File as FileType } from "@/shared/types/file";
 import { ConfirmModal } from "@/core/ui/Modal";
 
-interface FileListProps {
+interface IFileListProps {
   files: FileType[];
   onDelete?: (fileId: string) => Promise<void>;
 }

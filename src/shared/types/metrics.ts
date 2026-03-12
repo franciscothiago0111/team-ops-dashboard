@@ -1,4 +1,4 @@
-export interface TaskMetrics {
+export interface ITaskMetrics {
   total: number;
   pending: number;
   inProgress: number;
@@ -12,7 +12,7 @@ export interface TaskMetrics {
   overdue: number;
 }
 
-export interface UserMetrics {
+export interface IUserMetrics {
   total: number;
   active: number;
   byRole: {
@@ -22,7 +22,7 @@ export interface UserMetrics {
   };
 }
 
-export interface TeamMetrics {
+export interface ITeamMetrics {
   total: number;
   averageTeamSize: number;
   teamsWithMostTasks: Array<{
@@ -32,7 +32,7 @@ export interface TeamMetrics {
   }>;
 }
 
-export interface NotificationMetrics {
+export interface INotificationMetrics {
   total: number;
   unread: number;
   byType: {
@@ -43,7 +43,7 @@ export interface NotificationMetrics {
   };
 }
 
-export interface ProductivityMetrics {
+export interface IProductivityMetrics {
   tasksCompletedInPeriod: number;
   averageCompletionTime: number;
   mostProductiveUsers: Array<{
@@ -54,7 +54,7 @@ export interface ProductivityMetrics {
 }
 
 // ADMIN Metrics - Full company overview
-export interface AdminMetricsResponse {
+export interface IAdminMetricsResponse {
   period: {
     startDate: string;
     endDate: string;
@@ -63,11 +63,11 @@ export interface AdminMetricsResponse {
     id: string;
     name: string;
   };
-  users: UserMetrics;
-  teams: TeamMetrics;
-  tasks: TaskMetrics;
-  notifications: NotificationMetrics;
-  productivity: ProductivityMetrics;
+  users: IUserMetrics;
+  teams: ITeamMetrics;
+  tasks: ITaskMetrics;
+  notifications: INotificationMetrics;
+  productivity: IProductivityMetrics;
   recentActivity: {
     totalActions: number;
     topActions: Array<{
@@ -78,7 +78,7 @@ export interface AdminMetricsResponse {
 }
 
 // MANAGER Metrics - Team and direct reports overview
-export interface ManagerMetricsResponse {
+export interface IManagerMetricsResponse {
   period: {
     startDate: string;
     endDate: string;
@@ -102,7 +102,7 @@ export interface ManagerMetricsResponse {
       completionRate: number;
     }>;
   };
-  tasks: TaskMetrics;
+  tasks: ITaskMetrics;
   teamProductivity: {
     tasksCompletedInPeriod: number;
     averageTasksPerMember: number;
@@ -112,11 +112,11 @@ export interface ManagerMetricsResponse {
       tasksCompleted: number;
     }>;
   };
-  notifications: NotificationMetrics;
+  notifications: INotificationMetrics;
 }
 
 // EMPLOYEE Metrics - Personal metrics
-export interface EmployeeMetricsResponse {
+export interface IEmployeeMetricsResponse {
   period: {
     startDate: string;
     endDate: string;
@@ -126,7 +126,7 @@ export interface EmployeeMetricsResponse {
     name: string;
     role: string;
   };
-  myTasks: TaskMetrics;
+  myTasks: ITaskMetrics;
   performance: {
     tasksCompletedInPeriod: number;
     completionRate: number;
@@ -139,7 +139,7 @@ export interface EmployeeMetricsResponse {
     myRankInTeam: number;
     totalMembers: number;
   };
-  notifications: NotificationMetrics;
+  notifications: INotificationMetrics;
   upcomingDeadlines: Array<{
     taskId: string;
     title: string;
@@ -148,4 +148,4 @@ export interface EmployeeMetricsResponse {
   }>;
 }
 
-export type MetricsResponse = AdminMetricsResponse | ManagerMetricsResponse | EmployeeMetricsResponse;
+export type MetricsResponse = IAdminMetricsResponse | IManagerMetricsResponse | IEmployeeMetricsResponse;

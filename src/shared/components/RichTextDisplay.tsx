@@ -8,7 +8,7 @@
 import React from 'react';
 import './RichTextDisplay.css';
 
-interface RichTextDisplayProps {
+interface IRichTextDisplayProps {
   content: string;
   className?: string;
 }

@@ -21,7 +21,7 @@ import { useTeamList } from "../../teams/_hooks/useTeamList";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
 import { getPriorityOptions, getStatusOptions } from "../_utils/task.utils";
 
-interface TaskEditFormProps {
+interface ITaskEditFormProps {
   task: Task;
   onSuccess?: () => void;
 }

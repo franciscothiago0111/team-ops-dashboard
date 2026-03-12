@@ -2,7 +2,7 @@ import { api } from "@/core/api/http";
 import { LogEntry } from "@/shared/types/log-entry";
 import { IPagination } from "@/shared/types/pagination";
 
-export interface ILogListParams {
+export interface IILogListParams {
   page?: number;
   limit?: number;
   entity?: string;

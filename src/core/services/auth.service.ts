@@ -1,26 +1,26 @@
 import { api } from "../api/http";
 import { saveToken, removeToken, saveRefreshToken, removeRefreshToken, getRefreshToken } from "./storage.service";
 
-export interface LoginCredentials {
+export interface ILoginCredentials {
   email: string;
   password: string;
 }
 
-export interface AuthUser {
+export interface IAuthUser {
   id: string;
   name: string;
   email: string;
   role: string;
 }
 
-export interface LoginResponse {
+export interface ILoginResponse {
   access_token: string;
   refresh_token?: string;
   expires_in?: number;
   user: AuthUser;
 }
 
-export interface RefreshTokenResponse {
+export interface IRefreshTokenResponse {
   access_token: string;
   expires_in?: number;
 }

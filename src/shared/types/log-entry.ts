@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-export interface LogEntry {
+export interface ILogEntry {
   id: string;
   action: string;
   metadata: Record<string, unknown> | null;

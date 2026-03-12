@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-interface AsyncSelectProps {
+interface IAsyncSelectProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;

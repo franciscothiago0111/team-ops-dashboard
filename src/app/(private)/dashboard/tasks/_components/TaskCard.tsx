@@ -8,7 +8,7 @@ import { isPast, isToday, formatDate } from "@/core/utils/formatters";
 import { RichTextDisplay } from "@/shared/components/RichTextDisplay";
 
 
-interface TaskCardProps {
+interface ITaskCardProps {
   task: Task;
   showDescription?: boolean;
 }

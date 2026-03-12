@@ -8,7 +8,7 @@ import { ErrorState } from "@/shared/components/ErrorState";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 import { EmployeeUpdateForm } from "./EmployeeUpdateForm";
 
-interface EmployeeEditProps {
+interface IEmployeeEditProps {
   id: string;
 }
 

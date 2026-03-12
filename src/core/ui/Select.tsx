@@ -1,6 +1,7 @@
 "use client";
 
-import { SelectHTMLAttributes, forwardRef } from "react";
+import type { SelectHTMLAttributes } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 
 const sizes = {
@@ -9,7 +10,7 @@ const sizes = {
   lg: "h-12 px-5 text-base",
 };
 
-export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+export interface ISelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   error?: string;
   label?: string;
   hint?: string;
@@ -17,7 +18,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options?: Array<{ value: string | number; label: string }>;
 }
 
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(
+export const Select = forwardRef<HTMLSelectElement, ISelectProps>(
   ({
     className,
     error,

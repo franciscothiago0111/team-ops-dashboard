@@ -1,6 +1,6 @@
 import { EmployeeEdit } from "../../_components/EmployeeEdit";
 
-interface EmployeeEditRouteProps {
+interface IEmployeeEditRouteProps {
   params: Promise<{
     id: string;
   }>;

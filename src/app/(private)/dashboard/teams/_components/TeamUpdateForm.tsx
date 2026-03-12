@@ -12,7 +12,7 @@ import { useUpdateTeam } from "../_hooks/useUpdateTeam";
 import { UpdateTeamInput, UpdateTeamSchema } from "../_schemas/team.schema";
 import { Team } from "@/shared/types/team";
 
-interface TeamUpdateFormProps {
+interface ITeamUpdateFormProps {
   team: Team;
   onSuccess?: () => void;
   onCancel?: () => void;

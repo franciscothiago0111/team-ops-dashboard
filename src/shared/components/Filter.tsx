@@ -4,12 +4,12 @@ import { useState, FormEvent, ReactNode } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 
-interface FilterOption {
+interface IFilterOption {
   value: string;
   label: string;
 }
 
-interface FilterField {
+interface IFilterField {
   name: string;
   label?: string;
   placeholder?: string;
@@ -21,7 +21,7 @@ interface FilterField {
   }) => ReactNode;
 }
 
-interface FilterProps {
+interface IFilterProps {
   fields: FilterField[];
   onSubmit?: (values: Record<string, string>) => void;
 }

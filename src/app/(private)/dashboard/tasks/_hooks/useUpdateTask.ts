@@ -3,7 +3,7 @@ import { useAppToast } from "@/core/hooks/useToast";
 import { UpdateTaskInput } from "../_schemas/task.schema";
 import { TaskService } from "../_services/task.service";
 
-interface UpdateTaskWithFilesInput {
+interface IUpdateTaskWithFilesInput {
   data: UpdateTaskInput & { id: string };
   files?: File[];
 }

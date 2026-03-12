@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
-import { CreateEmployeeInput } from "../_schemas/employee.schema";
+import type { CreateEmployeeInput } from "../_schemas/employee.schema";
 import { EmployeeService } from "../_services/employee.service";
 import { ApiError } from "@/core/api/interceptors/error.interceptor";
 

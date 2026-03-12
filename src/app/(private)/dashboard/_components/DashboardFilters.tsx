@@ -4,15 +4,15 @@ import { useState } from "react";
 import { Input } from "@/core/ui/Input";
 import { Select } from "@/core/ui/Select";
 import { Button } from "@/core/ui/Button";
-import { IMetricsFilters } from "../_services/metrics.service";
-import { Role } from "@/shared/types/user";
+import type { IMetricsFilters } from "../_services/metrics.service";
+import type { Role } from "@/shared/types/user";
 
-interface DashboardFiltersProps {
+interface IDashboardFiltersProps {
   onFilterChange: (filters: IMetricsFilters) => void;
   userRole: Role;
 }
 
-export function DashboardFilters({ onFilterChange, userRole }: DashboardFiltersProps) {
+export function DashboardFilters({ onFilterChange, userRole }: IDashboardFiltersProps) {
   const [filters, setFilters] = useState<IMetricsFilters>({});
 
   const handleApplyFilters = () => {
@@ -58,7 +58,7 @@ export function DashboardFilters({ onFilterChange, userRole }: DashboardFiltersP
           </label>
           <Select
             value={filters.taskStatus || ""}
-            onChange={(e) => setFilters({ ...filters, taskStatus: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilters({ ...filters, taskStatus: e.target.value })}
           >
             <option value="">Todos</option>
             <option value="PENDING">Pendente</option>

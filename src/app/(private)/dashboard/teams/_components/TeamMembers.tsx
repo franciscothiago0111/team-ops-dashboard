@@ -10,7 +10,7 @@ import { useAppToast } from "@/core/hooks/useToast";
 import { useTeamMembers, useAddTeamMember, useRemoveTeamMember } from "../_hooks/useTeamMembers";
 import { User } from "@/shared/types";
 
-interface TeamMembersProps {
+interface ITeamMembersProps {
   teamId: string;
 }
 

@@ -10,14 +10,15 @@ import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useAuth } from "@/core/hooks/useAuth";
 import { useCreateEmployee } from "../_hooks/useCreateEmployee";
-import { CreateEmployeeInput, CreateEmployeeSchema } from "../_schemas/employee.schema";
+import type { CreateEmployeeInput } from "../_schemas/employee.schema";
+import { CreateEmployeeSchema } from "../_schemas/employee.schema";
 // import { useTeamList } from "../../teams/_hooks/useTeamList";
 
-interface EmployeeFormProps {
+interface IEmployeeFormProps {
   onSuccess?: () => void;
 }
 
-export function EmployeeForm({ onSuccess }: EmployeeFormProps) {
+export function EmployeeForm({ onSuccess }: IEmployeeFormProps) {
   const { execute, isLoading } = useCreateEmployee();
 
 

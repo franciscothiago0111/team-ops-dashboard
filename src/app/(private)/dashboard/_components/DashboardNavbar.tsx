@@ -2,17 +2,17 @@
 
 import { NotificationPanel } from "./NotificationPanel";
 
-interface User {
+interface IUser {
   name: string;
   role: string;
 }
 
-interface DashboardNavbarProps {
-  user: User;
+interface IDashboardNavbarProps {
+  user: IUser;
   onToggleSidebar: () => void;
 }
 
-export function DashboardNavbar({ user, onToggleSidebar }: DashboardNavbarProps) {
+export function DashboardNavbar({ user, onToggleSidebar }: IDashboardNavbarProps) {
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white shadow-sm">
       <div className="flex items-center justify-between px-4 py-4 md:px-8">

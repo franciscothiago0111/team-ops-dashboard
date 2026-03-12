@@ -14,7 +14,7 @@ import {
 } from "../_utils/task.utils";
 
 
-interface TaskBoardCardProps {
+interface ITaskBoardCardProps {
   task: Task;
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   currentStatus: TaskStatus;

@@ -11,7 +11,7 @@ import { SkeletonList } from "@/core/components/LoadingState";
 import { useAuth } from "@/core/hooks/useAuth";
 import { usePersistedFilters } from "@/core/hooks/usePersistedFilters";
 
-interface TasksListProps {
+interface ITasksListProps {
   title?: string;
 }
 

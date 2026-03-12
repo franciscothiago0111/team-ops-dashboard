@@ -2,7 +2,7 @@ import { BaseEntity } from ".";
 import { Task } from "./task";
 import { User } from "./user";
 
-export interface Team extends BaseEntity {
+export interface ITeam extends BaseEntity {
   name: string;
   description?: string;
   managerId: string;

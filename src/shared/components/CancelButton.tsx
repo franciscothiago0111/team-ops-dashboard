@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 
-interface CancelButtonProps {
+interface ICancelButtonProps {
   onClick?: () => void;
   text?: string;
   className?: string;

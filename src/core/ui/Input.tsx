@@ -1,6 +1,7 @@
 "use client";
 
-import { InputHTMLAttributes, forwardRef } from "react";
+import type { InputHTMLAttributes } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 
 const variants = {
@@ -15,7 +16,7 @@ const sizes = {
   lg: "h-12 px-5 text-base",
 };
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   label?: string;
   hint?: string;
@@ -25,7 +26,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   inputSize?: keyof typeof sizes;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, IInputProps>(
   ({
     className,
     error,

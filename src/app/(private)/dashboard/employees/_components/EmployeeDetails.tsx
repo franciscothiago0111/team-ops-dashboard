@@ -10,7 +10,7 @@ import { InputsGrid } from "@/shared/components/InputsGrid";
 import { InfoField } from "@/shared/components/InfoField";
 import { RoleGuard } from "@/shared/components/RoleGuard";
 
-interface EmployeeDetailsProps {
+interface IEmployeeDetailsProps {
   id: string;
 }
 

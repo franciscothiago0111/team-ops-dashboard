@@ -2,13 +2,13 @@
 
 import { Card } from "@/core/ui/Card";
 import { formatDate } from "@/core/utils/formatters";
-import { AdminMetricsResponse } from "@/shared/types/metrics";
+import type { IAdminMetricsResponse } from "@/shared/types/metrics";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 // import { format } from "date-fns";
 // import { ptBR } from "date-fns/locale";
 
-interface AdminMetricsViewProps {
-  data: AdminMetricsResponse;
+interface IAdminMetricsViewProps {
+  data: IAdminMetricsResponse;
 }
 
 const COLORS = {
@@ -22,7 +22,7 @@ const COLORS = {
 
 const PIE_COLORS = [COLORS.primary, COLORS.secondary, COLORS.info, COLORS.warning];
 
-export function AdminMetricsView({ data }: AdminMetricsViewProps) {
+export function AdminMetricsView({ data }: IAdminMetricsViewProps) {
   // Task Status Data
   const taskStatusData = [
     { name: "Pendentes", value: data.tasks.pending, color: COLORS.warning },

@@ -7,12 +7,12 @@ import { useState } from 'react';
 import { downloadCSV } from '@/core/utils/csv';
 import { useAppToast } from '@/core/hooks/useToast';
 
-interface UseCSVDownloadOptions {
+interface IUseCSVDownloadOptions {
   onSuccess?: () => void;
   onError?: (error: Error) => void;
 }
 
-interface GenerateCSVParams {
+interface IGenerateCSVParams {
   data: Record<string, unknown>[];
   filename: string;
 }

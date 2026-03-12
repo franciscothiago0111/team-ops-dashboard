@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 import { EmployeeCard } from "./EmployeeCard";
 import { Paginate } from "@/shared/components/Pagination";
-import { IEmployeeListParams } from "../_services/employee.service";
+import type { IEmployeeListParams } from "../_services/employee.service";
 import { useEmployeeList } from "../_hooks/useEmployeeList";
 import { SkeletonList } from "@/core/components/LoadingState";
 import { useCSVDownload } from "@/core/hooks/useCSVDownload";
@@ -13,13 +13,13 @@ import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
 import { formatDate } from "@/core/utils/formatters";
 import { usePersistedFilters } from "@/core/hooks/usePersistedFilters";
 
-interface EmployeesListProps {
+interface IEmployeesListProps {
   title?: string;
 }
 
 const EMPLOYEE_FILTER_KEYS = ["name", "role"];
 
-export function EmployeesList({ title = "Colaboradores" }: EmployeesListProps) {
+export function EmployeesList({ title = "Colaboradores" }: IEmployeesListProps) {
   const searchParams = useSearchParams();
   usePersistedFilters("employees-filters", EMPLOYEE_FILTER_KEYS);
   const { generateCSV, isGenerating } = useCSVDownload();

@@ -10,7 +10,7 @@ import { LoadingState } from "@/shared/components/LoadingState";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { TaskEditForm } from "../../_components/TaskEditForm";
 
-interface EditTaskPageProps {
+interface IEditTaskPageProps {
   params: Promise<{ id: string }>;
 }
 

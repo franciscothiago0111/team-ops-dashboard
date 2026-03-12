@@ -4,7 +4,7 @@ export type Role = "ADMIN" | "MANAGER" | "EMPLOYEE";
 
 export const allowedRoles: Role[] = ["ADMIN", "MANAGER", "EMPLOYEE"];
 
-export interface SidebarLink {
+export interface ISidebarLink {
   label: string;
   href: string;
   roles: Role[];

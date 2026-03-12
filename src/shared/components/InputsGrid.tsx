@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface InputsGridProps {
+interface IInputsGridProps {
   children: ReactNode;
   cols?: 1 | 2 | 3 | 4;
   className?: string;

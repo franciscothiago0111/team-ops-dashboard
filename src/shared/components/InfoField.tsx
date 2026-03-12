@@ -1,4 +1,4 @@
-interface InfoFieldProps {
+interface IInfoFieldProps {
   label: string;
   value: string | number | null | undefined;
   placeholder?: string;

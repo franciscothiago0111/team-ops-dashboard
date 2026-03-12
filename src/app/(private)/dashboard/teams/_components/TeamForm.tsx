@@ -13,7 +13,7 @@ import { CreateTeamInput, CreateTeamSchema } from "../_schemas/team.schema";
 import { useEmployeeList } from "../../employees/_hooks/useEmployeeList";
 import { Select } from "@/core/ui/Select";
 
-interface TeamFormProps {
+interface ITeamFormProps {
   onSuccess?: () => void;
 }
 

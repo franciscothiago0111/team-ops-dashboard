@@ -1,5 +1,5 @@
 import { api } from "@/core/api/http";
-import { MetricsResponse } from "@/shared/types/metrics";
+import type { MetricsResponse } from "@/shared/types/metrics";
 
 export interface IMetricsFilters {
   startDate?: string;

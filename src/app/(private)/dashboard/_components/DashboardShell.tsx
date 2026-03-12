@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, useEffect, useMemo } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { useAuth } from "@/core/hooks/useAuth";
@@ -11,11 +12,11 @@ import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardNavbar } from "./DashboardNavbar";
 import { DashboardLoadingState } from "./DashboardLoadingState";
 
-interface DashboardShellProps {
+interface IDashboardShellProps {
   children: ReactNode;
 }
 
-function DashboardShellInner({ children }: DashboardShellProps) {
+function DashboardShellInner({ children }: IDashboardShellProps) {
   const { user, logout } = useAuth();
   const router = useRouter();
   const { isSidebarOpen, toggleSidebar, closeSidebarOnMobile } = useSidebarState();
@@ -70,7 +71,7 @@ function DashboardShellInner({ children }: DashboardShellProps) {
   );
 }
 
-export function DashboardShell({ children }: DashboardShellProps) {
+export function DashboardShell({ children }: IDashboardShellProps) {
   return (
     <DashboardShellInner>{children}</DashboardShellInner>
   );

@@ -3,7 +3,7 @@ import { LogEntry } from "@/shared/types/log-entry";
 import { formatDate } from "@/core/utils/formatters";
 import clsx from "clsx";
 
-interface LogCardProps {
+interface ILogCardProps {
   log: LogEntry;
 }
 

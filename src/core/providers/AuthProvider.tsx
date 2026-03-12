@@ -6,14 +6,14 @@ import { AuthService } from "../services/auth.service";
 import { initSocket, closeSocket } from "../services/io.service";
 import { jwtDecode } from "jwt-decode";
 
-interface User {
+interface IUser {
   id: string;
   name: string;
   email: string;
   role: string;
 }
 
-interface AuthContextType {
+interface IAuthContextType {
   user: User | null;
   setUser: (user: User | null) => void;
   logout: () => void;
@@ -23,7 +23,7 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-interface AuthProviderProps {
+interface IAuthProviderProps {
   children: ReactNode;
 }
 

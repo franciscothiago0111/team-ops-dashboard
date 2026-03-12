@@ -7,15 +7,15 @@ import { AdminMetricsView } from "./_components/AdminMetricsView";
 import { ManagerMetricsView } from "./_components/ManagerMetricsView";
 import { EmployeeMetricsView } from "./_components/EmployeeMetricsView";
 import { useMetrics } from "./_hooks/useMetrics";
-import { IMetricsFilters } from "./_services/metrics.service";
+import type { IMetricsFilters } from "./_services/metrics.service";
 import { useAuth } from "@/core/hooks/useAuth";
 import { LoadingSpinner } from "@/core/components/LoadingState";
 import { ErrorState } from "@/shared/components/ErrorState";
-import { Role } from "@/shared/types/user";
-import {
-  AdminMetricsResponse,
-  ManagerMetricsResponse,
-  EmployeeMetricsResponse
+import type { Role } from "@/shared/types/user";
+import type {
+  IAdminMetricsResponse,
+  IManagerMetricsResponse,
+  IEmployeeMetricsResponse
 } from "@/shared/types/metrics";
 
 export default function DashboardPage() {
@@ -32,11 +32,11 @@ export default function DashboardPage() {
 
     switch (user?.role) {
       case "ADMIN":
-        return <AdminMetricsView data={data as AdminMetricsResponse} />;
+        return <AdminMetricsView data={data as IAdminMetricsResponse} />;
       case "MANAGER":
-        return <ManagerMetricsView data={data as ManagerMetricsResponse} />;
+        return <ManagerMetricsView data={data as IManagerMetricsResponse} />;
       case "EMPLOYEE":
-        return <EmployeeMetricsView data={data as EmployeeMetricsResponse} />;
+        return <EmployeeMetricsView data={data as IEmployeeMetricsResponse} />;
       default:
         return <ErrorState message="Tipo de usuário não reconhecido" showBackButton={false} />;
     }

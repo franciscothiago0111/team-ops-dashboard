@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
-import { UpdateEmployeeInput } from "../_schemas/employee.schema";
+import type { UpdateEmployeeInput } from "../_schemas/employee.schema";
 import { EmployeeService } from "../_services/employee.service";
 
 export function useUpdateEmployee(id: string) {

@@ -3,7 +3,7 @@ import { clearAuthData } from "../services/storage.service";
 import { applyAuthInterceptor } from "./interceptors/auth.interceptor";
 import { ApiError, applyErrorInterceptor } from "./interceptors/error.interceptor";
 
-export interface RequestConfig extends RequestInit {
+export interface IRequestConfig extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>;
 }
 

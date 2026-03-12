@@ -19,7 +19,7 @@ import { useAuth } from "@/core/hooks/useAuth";
 import { formatDate } from "@/core/utils/formatters";
 import { statusConfig } from "../../tasks/_utils/task.utils";
 
-interface TeamDetailsProps {
+interface ITeamDetailsProps {
   id: string;
 }
 

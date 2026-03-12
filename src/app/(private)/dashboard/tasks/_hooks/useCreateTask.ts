@@ -3,7 +3,7 @@ import { useAppToast } from "@/core/hooks/useToast";
 import { CreateTaskInput } from "../_schemas/task.schema";
 import { TaskService } from "../_services/task.service";
 
-interface CreateTaskWithFilesInput {
+interface ICreateTaskWithFilesInput {
   data: CreateTaskInput;
   files?: File[];
 }

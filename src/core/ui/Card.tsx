@@ -16,7 +16,7 @@ const paddings = {
   lg: "p-8",
 };
 
-interface CardProps {
+interface ICardProps {
   title?: string;
   description?: string;
   className?: string;

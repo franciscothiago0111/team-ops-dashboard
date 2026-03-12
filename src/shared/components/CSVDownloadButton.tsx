@@ -6,7 +6,7 @@
 import { Download } from 'lucide-react';
 import { Button } from '@/core/ui/Button';
 
-interface CSVDownloadButtonProps {
+interface ICSVDownloadButtonProps {
   onClick: () => void;
   isLoading?: boolean;
   disabled?: boolean;

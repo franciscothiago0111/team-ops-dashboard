@@ -4,17 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import clsx from "clsx";
-import type { SidebarLink } from "./sidebar-config";
+import type { ISidebarLink } from "./sidebar-config";
+import type { IUser } from "@/shared/types";
 
-interface User {
-  name: string;
-  email: string;
-  role: string;
-}
 
-interface DashboardSidebarProps {
-  user: User;
-  filteredLinks: SidebarLink[];
+interface IDashboardSidebarProps {
+  user: IUser;
+  filteredLinks: ISidebarLink[];
   isSidebarOpen: boolean;
   onToggleSidebar: () => void;
   onLinkClick: () => void;
@@ -34,7 +30,7 @@ export function DashboardSidebar({
   onToggleSidebar,
   onLinkClick,
   onLogout,
-}: DashboardSidebarProps) {
+}: IDashboardSidebarProps) {
   const pathname = usePathname();
   const initials = user.name
     ? user.name

@@ -7,7 +7,7 @@ import { ErrorState } from "./ErrorState";
 import { Role } from "@/shared/types/user";
 import { DashboardShell } from "@/app/(private)/dashboard/_components/DashboardShell";
 
-interface RoleGuardProps {
+interface IRoleGuardProps {
   children: ReactNode;
   allowedRoles: Role[];
   redirectTo?: string;

@@ -1,12 +1,12 @@
 // Generic API response wrapper
-export interface ISuccess<T> {
+export interface IISuccess<T> {
   success: boolean;
   payload?: T;
   message?: string;
 }
 
 // API error response
-export interface IError {
+export interface IIError {
   statusCode: number;
   message: string;
   error: string | Record<string, unknown>;

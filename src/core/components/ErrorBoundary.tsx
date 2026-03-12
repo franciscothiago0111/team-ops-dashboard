@@ -2,12 +2,12 @@
 
 import { Component, ReactNode } from "react";
 
-interface ErrorBoundaryProps {
+interface IErrorBoundaryProps {
   children: ReactNode;
   fallback?: (error: Error, reset: () => void) => ReactNode;
 }
 
-interface ErrorBoundaryState {
+interface IErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
 }

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-interface ErrorStateProps {
+interface IErrorStateProps {
   message?: string;
   showBackButton?: boolean;
   backButtonText?: string;

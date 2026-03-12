@@ -16,7 +16,7 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
   loading: () => <div className="border rounded-lg min-h-32 bg-slate-50 animate-pulse" />
 });
 
-interface RichTextEditorProps {
+interface IRichTextEditorProps {
   value: string | undefined;
   onChange: (value: string) => void;
   placeholder?: string;

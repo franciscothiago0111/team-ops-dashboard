@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { Button } from "@/core/ui/Button";
 
-interface FileUploadInputProps {
+interface IFileUploadInputProps {
   files: File[];
   onChange: (files: File[]) => void;
   label?: string;

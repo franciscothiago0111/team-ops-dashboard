@@ -1,9 +1,9 @@
+import type { IBaseEntity } from "./base";
 
 
 
-import { BaseEntity } from "./base";
 
-export interface Notification extends BaseEntity {
+export interface INotification extends IBaseEntity {
   userId: string;
   title: string;
   message: string;

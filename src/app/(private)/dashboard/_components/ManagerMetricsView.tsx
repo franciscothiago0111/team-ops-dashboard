@@ -2,12 +2,12 @@
 
 import { Card } from "@/core/ui/Card";
 import { formatDate } from "@/core/utils/formatters";
-import { ManagerMetricsResponse } from "@/shared/types/metrics";
+import type { IManagerMetricsResponse } from "@/shared/types/metrics";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 
-interface ManagerMetricsViewProps {
-  data: ManagerMetricsResponse;
+interface IManagerMetricsViewProps {
+  data: IManagerMetricsResponse;
 }
 
 const COLORS = {
@@ -19,7 +19,7 @@ const COLORS = {
   info: "#3b82f6",
 };
 
-export function ManagerMetricsView({ data }: ManagerMetricsViewProps) {
+export function ManagerMetricsView({ data }: IManagerMetricsViewProps) {
   // Task Status Data
   const taskStatusData = [
     { name: "Pendentes", value: data?.tasks?.pending, color: COLORS.warning },

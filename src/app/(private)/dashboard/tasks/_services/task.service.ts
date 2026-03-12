@@ -2,7 +2,7 @@ import { api } from "@/core/api/http";
 import { Task, TaskPriority, TaskStatus } from "@/shared/types/task";
 import { IPagination } from "@/shared/types/pagination";
 
-export interface ITaskListParams {
+export interface IITaskListParams {
   page?: number;
   limit?: number;
   name?: string;
@@ -12,7 +12,7 @@ export interface ITaskListParams {
   priority?: string;
 }
 
-export interface ICreateTaskData {
+export interface IICreateTaskData {
   name: string;
   description: string;
   assignedToId: string;
@@ -21,7 +21,7 @@ export interface ICreateTaskData {
   dueDate?: string;
 }
 
-export interface IUpdateTaskData {
+export interface IIUpdateTaskData {
   id: string;
   name?: string;
   description?: string;

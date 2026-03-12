@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Bell, Check, X } from "lucide-react";
 import clsx from "clsx";
 import { useNotifications, useMarkAsRead, useMarkAllAsRead, useUnreadCount } from "../_hooks/useNotifications";
-import { Notification } from "@/shared/types/notification";
+import type { INotification } from "@/shared/types/notification";
 import { formatDayDateToHour } from "@/core/utils/formatters";
 
 
@@ -57,7 +57,7 @@ export function NotificationPanel() {
     return route ? `/dashboard/${route}/${entityId}` : null;
   };
 
-  const handleNotificationClick = (notification: Notification) => {
+  const handleNotificationClick = (notification: INotification) => {
     // Mark as read if unread
     if (!notification.read) {
       markAsRead.mutate(notification.id);
@@ -71,7 +71,7 @@ export function NotificationPanel() {
     }
   };
 
-  const getNotificationIcon = (type: Notification["type"]) => {
+  const getNotificationIcon = (type: INotification["type"]) => {
     switch (type) {
       case "SUCCESS":
         return "✅";
@@ -84,7 +84,7 @@ export function NotificationPanel() {
     }
   };
 
-  const getNotificationColor = (type: Notification["type"]) => {
+  const getNotificationColor = (type: INotification["type"]) => {
     switch (type) {
       case "SUCCESS":
         return "text-green-600 bg-green-50";

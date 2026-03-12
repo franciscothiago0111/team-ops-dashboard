@@ -22,7 +22,7 @@ const sizes = {
   lg: "h-12 px-6 text-base font-semibold",
 };
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
   isLoading?: boolean;

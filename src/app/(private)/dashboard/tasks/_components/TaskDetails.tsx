@@ -36,7 +36,7 @@ import { usePDFDownload } from "@/core/hooks/usePDFDownload";
 import { useRouter } from "next/navigation";
 
 
-interface TaskDetailsProps {
+interface ITaskDetailsProps {
   id: string;
 }
 

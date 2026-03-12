@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
-import { IPagination } from "@/shared/types/pagination";
+import type { IPagination } from "@/shared/types/pagination";
 import { EmployeeService } from "../_services/employee.service";
-import { User } from "@/shared/types";
+import type { IUser } from "@/shared/types";
 
 export function useDeleteEmployee() {
   const toast = useAppToast();
@@ -14,7 +14,7 @@ export function useDeleteEmployee() {
       toast.success("Colaborador removido com sucesso!");
 
       // Remove the employee from cache instead of invalidating
-      queryClient.setQueryData<IPagination<User>>(
+      queryClient.setQueryData<IPagination<IUser>>(
         ["employees", {}],
         (oldData) => {
           if (!oldData) return oldData;

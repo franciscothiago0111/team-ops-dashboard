@@ -3,7 +3,7 @@
 import { use } from "react";
 import { TaskDetails } from "../_components/TaskDetails";
 
-interface TaskPageProps {
+interface ITaskPageProps {
   params: Promise<{ id: string }>;
 }
 

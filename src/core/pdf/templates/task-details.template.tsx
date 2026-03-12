@@ -13,7 +13,7 @@ import { PDFTemplate, PDFGenerationOptions } from '../types';
 import { KeepTogether, NoBreak } from '../utils/page-breaks';
 import { formatDate } from '@/core/utils/formatters';
 
-interface TaskDetailsPDFProps {
+interface ITaskDetailsPDFProps {
   task: Task;
   options?: PDFGenerationOptions;
 }

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/core/ui/Input";
 import { Button } from "@/core/ui/Button";
 
-interface SearchFilterProps {
+interface ISearchFilterProps {
   paramName?: string;
   placeholder?: string;
   defaultValue?: string;

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-interface BackButtonProps {
+interface IBackButtonProps {
   onClick?: () => void;
   text?: string;
   className?: string;

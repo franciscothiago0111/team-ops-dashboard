@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { X } from "lucide-react";
 import clsx from "clsx";
 
-export interface ModalProps {
+export interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -95,7 +95,7 @@ export function Modal({
   );
 }
 
-export interface ConfirmModalProps {
+export interface IConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void | Promise<void>;

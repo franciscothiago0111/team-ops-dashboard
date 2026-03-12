@@ -283,7 +283,7 @@ export function htmlToPDFElements(html: string): React.ReactNode {
 /**
  * Simple wrapper component for rich text in PDFs
  */
-interface RichTextPDFProps {
+interface IRichTextPDFProps {
   html: string;
 }
 

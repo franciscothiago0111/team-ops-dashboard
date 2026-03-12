@@ -11,7 +11,7 @@ import { useCSVDownload } from "@/core/hooks/useCSVDownload";
 import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
 import { formatDate } from "@/core/utils/formatters";
 
-interface LogsListProps {
+interface ILogsListProps {
   title?: string;
 }
 

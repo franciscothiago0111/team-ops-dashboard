@@ -23,7 +23,7 @@ import { useUpdateTeam } from "../_hooks/useUpdateTeam";
 import { UpdateTeamInput, UpdateTeamSchema } from "../_schemas/team.schema";
 import { useAppToast } from "@/core/hooks/useToast";
 
-interface TeamEditProps {
+interface ITeamEditProps {
   id: string;
 }
 

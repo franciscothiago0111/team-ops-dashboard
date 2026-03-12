@@ -14,7 +14,7 @@ import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
 import { formatDate } from "@/core/utils/formatters";
 import { stripHtmlTags } from "@/core/utils/text";
 
-interface TeamsListProps {
+interface ITeamsListProps {
   title?: string;
 }
 

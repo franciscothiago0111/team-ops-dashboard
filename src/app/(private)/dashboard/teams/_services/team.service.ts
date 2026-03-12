@@ -3,19 +3,19 @@ import { Team } from "@/shared/types/team";
 import { IPagination } from "@/shared/types/pagination";
 import { User } from "@/shared/types";
 
-export interface ITeamListParams {
+export interface IITeamListParams {
   page?: number;
   limit?: number;
   name?: string;
 }
 
-export interface ICreateTeamData {
+export interface IICreateTeamData {
   name: string;
   description?: string;
   memberIds?: string[];
 }
 
-export interface IUpdateTeamData extends Partial<ICreateTeamData> {
+export interface IIUpdateTeamData extends Partial<ICreateTeamData> {
   id: string;
 }
 

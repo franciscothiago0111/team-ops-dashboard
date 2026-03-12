@@ -6,13 +6,13 @@
 import { api } from '@/core/api/http';
 import { PDFGenerationOptions } from '@/core/pdf/types';
 
-export interface GeneratePDFParams<T = unknown> {
+export interface IGeneratePDFParams<T = unknown> {
   template: string;
   data: T;
   options?: PDFGenerationOptions;
 }
 
-export interface AvailableTemplatesResponse {
+export interface IAvailableTemplatesResponse {
   success: boolean;
   templates: string[];
   count: number;

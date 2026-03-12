@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface LoadingStateProps {
+interface ILoadingStateProps {
   isLoading: boolean;
   children: ReactNode;
   fallback?: ReactNode;
@@ -25,7 +25,7 @@ export function LoadingState({ isLoading, children, fallback }: LoadingStateProp
   return <>{children}</>;
 }
 
-interface LoadingSpinnerProps {
+interface ILoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -46,7 +46,7 @@ export function LoadingSpinner({ size = "md", className = "" }: LoadingSpinnerPr
   );
 }
 
-interface LoadingOverlayProps {
+interface ILoadingOverlayProps {
   isLoading: boolean;
   children: ReactNode;
   message?: string;

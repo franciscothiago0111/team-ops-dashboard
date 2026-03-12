@@ -14,7 +14,7 @@ import { UpdateEmployeeInput, UpdateEmployeeSchema } from "../_schemas/employee.
 import { useTeamList } from "../../teams/_hooks/useTeamList";
 import { User } from "@/shared/types";
 
-interface EmployeeUpdateFormProps {
+interface IEmployeeUpdateFormProps {
   employee: User;
   onSuccess?: () => void;
   onCancel?: () => void;

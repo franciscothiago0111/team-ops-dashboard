@@ -2,7 +2,7 @@ import { api } from "@/core/api/http";
 import { Notification } from "@/shared/types/notification";
 import { IPagination } from "@/shared/types/pagination";
 
-export interface INotificationListParams {
+export interface IINotificationListParams {
   page?: number;
   limit?: number;
   isRead?: boolean;

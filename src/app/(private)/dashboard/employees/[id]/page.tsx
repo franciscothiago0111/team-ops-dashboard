@@ -1,6 +1,6 @@
 import { EmployeeDetails } from "../_components/EmployeeDetails";
 
-interface EmployeeRouteProps {
+interface IEmployeeRouteProps {
   params: Promise<{
     id: string;
   }>;

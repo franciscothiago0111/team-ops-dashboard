@@ -1,14 +1,14 @@
 "use client";
 
 import { Card } from "@/core/ui/Card";
-import { EmployeeMetricsResponse } from "@/shared/types/metrics";
+import type { IEmployeeMetricsResponse } from "@/shared/types/metrics";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 import Link from "next/link";
 import { formatDate } from "@/core/utils/formatters";
 
-interface EmployeeMetricsViewProps {
-  data: EmployeeMetricsResponse;
+interface IEmployeeMetricsViewProps {
+  data: IEmployeeMetricsResponse;
 }
 
 const COLORS = {
@@ -20,7 +20,7 @@ const COLORS = {
   info: "#3b82f6",
 };
 
-export function EmployeeMetricsView({ data }: EmployeeMetricsViewProps) {
+export function EmployeeMetricsView({ data }: IEmployeeMetricsViewProps) {
   // Task Status Data
   const taskStatusData = [
     { name: "Pendentes", value: data?.myTasks?.pending, color: COLORS.warning },

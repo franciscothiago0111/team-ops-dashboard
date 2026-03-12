@@ -3,7 +3,7 @@
 import { TextareaHTMLAttributes, forwardRef } from "react";
 import clsx from "clsx";
 
-export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface ITextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: string;
   label?: string;
   hint?: string;

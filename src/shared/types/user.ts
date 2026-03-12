@@ -1,21 +1,21 @@
-import { BaseEntity } from "./base";
-import { Company } from "./company";
-import { Task } from "./task";
-import { Team } from "./team";
+import type { IBaseEntity } from "./base";
+import type { ICompany } from "./company";
+import type { ITask } from "./task";
+import type { ITeam } from "./team";
 
 export type Role = "ADMIN" | "MANAGER" | "EMPLOYEE";
 
-export interface User extends BaseEntity {
+export interface IUser extends IBaseEntity {
   email: string;
   password: string;
   name: string;
   role: Role;
   companyId: string | null;
   teamId: string | null;
-  tasks?: Task[];
+  tasks?: ITask[];
 
   adminCompanyId?: string | null;
 
-  adminCompany?: Company;
-  team?: Team;
+  adminCompany?: ICompany;
+  team?: ITeam;
 }

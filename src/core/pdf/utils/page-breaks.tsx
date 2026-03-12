@@ -17,7 +17,7 @@ export const PageBreak: React.FC = () => <View break />;
  * NoBreak Component
  * Prevents content inside from breaking across pages
  */
-interface NoBreakProps {
+interface INoBreakProps {
   children: React.ReactNode;
 }
 
@@ -37,7 +37,7 @@ export const KeepTogether: React.FC<NoBreakProps> = ({ children }) => (
  * PageSection Component
  * Section that tries to stay together but can break if needed
  */
-interface PageSectionProps {
+interface IPageSectionProps {
   title?: string;
   children: React.ReactNode;
   wrap?: boolean;
@@ -58,7 +58,7 @@ export const PageSection: React.FC<PageSectionProps> = ({
  * ContentBlock Component
  * Generic content block with break control
  */
-interface ContentBlockProps {
+interface IContentBlockProps {
   children: React.ReactNode;
   wrap?: boolean;
   minPresenceAhead?: number;
@@ -78,7 +78,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = ({
  * TableRow Component
  * Row that prevents breaking in the middle
  */
-interface TableRowProps {
+interface ITableRowProps {
   children: React.ReactNode;
 }
 
@@ -92,7 +92,7 @@ export const TableRow: React.FC<TableRowProps> = ({ children }) => (
  * BreakableSection Component
  * Section that allows content to break naturally
  */
-interface BreakableSectionProps {
+interface IBreakableSectionProps {
   title?: string;
   children: React.ReactNode;
 }
@@ -115,7 +115,7 @@ export const BreakableSection: React.FC<BreakableSectionProps> = ({
  * OrphanControl Component
  * Prevents content from breaking awkwardly
  */
-interface OrphanControlProps {
+interface IOrphanControlProps {
   children: React.ReactNode;
 }
 
@@ -131,7 +131,7 @@ export const OrphanControl: React.FC<OrphanControlProps> = ({
  * FixedSection Component
  * Section that must appear entirely on one page
  */
-interface FixedSectionProps {
+interface IFixedSectionProps {
   children: React.ReactNode;
   minPresenceAhead?: number;
 }

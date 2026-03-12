@@ -3,7 +3,7 @@ import { Card } from "@/core/ui/Card";
 import clsx from "clsx";
 import { User } from "@/shared/types";
 
-interface EmployeeCardProps {
+interface IEmployeeCardProps {
   employee: User;
 }
 

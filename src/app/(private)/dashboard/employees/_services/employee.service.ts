@@ -1,6 +1,6 @@
 import { api } from "@/core/api/http";
-import { User } from "@/shared/types";
-import { IPagination } from "@/shared/types/pagination";
+import type { IUser } from "@/shared/types";
+import type { IPagination } from "@/shared/types/pagination";
 
 export interface IEmployeeListParams {
   page?: number;
@@ -22,22 +22,22 @@ export interface IUpdateEmployeeData extends Partial<ICreateEmployeeData> {
 }
 
 export const EmployeeService = {
-  list: async (params: IEmployeeListParams = {}): Promise<IPagination<User>> => {
-    return await api.get<IPagination<User>>("/users", {
+  list: async (params: IEmployeeListParams = {}): Promise<IPagination<IUser>> => {
+    return await api.get<IPagination<IUser>>("/users", {
       params: { ...params },
     });
   },
 
-  getById: async (id: string): Promise<User> => {
-    return await api.get<User>(`/users/${id}`);
+  getById: async (id: string): Promise<IUser> => {
+    return await api.get<IUser>(`/users/${id}`);
   },
 
-  create: async (data: ICreateEmployeeData): Promise<User> => {
-    return await api.post<User>("/users", data);
+  create: async (data: ICreateEmployeeData): Promise<IUser> => {
+    return await api.post<IUser>("/users", data);
   },
 
-  update: async ({ id, ...data }: IUpdateEmployeeData): Promise<User> => {
-    return await api.put<User>(`/users/${id}`, data);
+  update: async ({ id, ...data }: IUpdateEmployeeData): Promise<IUser> => {
+    return await api.put<IUser>(`/users/${id}`, data);
   },
 
   delete: async (id: string): Promise<void> => {

@@ -8,12 +8,12 @@ import { pdfService } from '@/core/services/pdf.service';
 import { useAppToast } from '@/core/hooks/useToast';
 import { PDFGenerationOptions } from '@/core/pdf/types';
 
-interface UsePDFDownloadOptions {
+interface IUsePDFDownloadOptions {
   onSuccess?: () => void;
   onError?: (error: Error) => void;
 }
 
-interface GeneratePDFParams<T> {
+interface IGeneratePDFParams<T> {
   template: string;
   data: T;
   options?: PDFGenerationOptions;

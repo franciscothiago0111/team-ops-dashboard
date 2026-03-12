@@ -3,7 +3,7 @@
 import { use } from "react";
 import { TeamEdit } from "../../_components/TeamEdit";
 
-interface TeamEditPageProps {
+interface ITeamEditPageProps {
   params: Promise<{ id: string }>;
 }
 

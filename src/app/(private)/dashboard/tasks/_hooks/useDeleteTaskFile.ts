@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppToast } from "@/core/hooks/useToast";
 import { TaskService } from "../_services/task.service";
 
-interface DeleteFileParams {
+interface IDeleteFileParams {
   taskId: string;
   fileId: string;
 }
