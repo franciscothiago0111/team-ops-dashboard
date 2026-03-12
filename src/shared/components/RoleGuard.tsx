@@ -3,9 +3,9 @@
 import { useEffect, ReactNode } from "react";
 import { useAuth } from "@/core/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { DashboardShell } from "@/app/dashboard/_components/DashboardShell";
 import { ErrorState } from "./ErrorState";
 import { Role } from "@/shared/types/user";
+import { DashboardShell } from "@/app/(private)/dashboard/_components/DashboardShell";
 
 interface RoleGuardProps {
   children: ReactNode;
