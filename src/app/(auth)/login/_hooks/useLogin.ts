@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AuthService } from "@/core/services/auth.service";
 import { useAppToast } from "@/core/hooks/useToast";
 import { useRouter } from "next/navigation";
-import { LoginInput } from "../_schemas/login.schema";
+import type { LoginInput } from "../_schemas/login.schema";
 import { useAuth } from "@/core/hooks/useAuth";
 
 export function useLogin() {

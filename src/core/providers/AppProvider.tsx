@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, useState, useEffect } from "react";
+import type { ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { AuthProvider } from "./AuthProvider";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,7 +11,7 @@ interface IAppProviderProps {
   children: ReactNode;
 }
 
-export function AppProvider({ children }: AppProviderProps) {
+export function AppProvider({ children }: IAppProviderProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({

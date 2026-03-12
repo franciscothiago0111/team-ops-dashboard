@@ -1,3 +1,4 @@
+import type { IUser } from "@/shared/types";
 import { api } from "../api/http";
 import { saveToken, removeToken, saveRefreshToken, removeRefreshToken, getRefreshToken } from "./storage.service";
 
@@ -6,18 +7,12 @@ export interface ILoginCredentials {
   password: string;
 }
 
-export interface IAuthUser {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
 
 export interface ILoginResponse {
   access_token: string;
   refresh_token?: string;
   expires_in?: number;
-  user: AuthUser;
+  user: IUser;
 }
 
 export interface IRefreshTokenResponse {
@@ -26,8 +21,8 @@ export interface IRefreshTokenResponse {
 }
 
 export const AuthService = {
-  login: async (credentials: LoginCredentials): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>("/auth/signin", credentials);
+  login: async (credentials: ILoginCredentials): Promise<ILoginResponse> => {
+    const response = await api.post<ILoginResponse>("/auth/signin", credentials);
     const { access_token, refresh_token, expires_in } = response;
 
     saveToken(access_token, expires_in);
@@ -54,7 +49,7 @@ export const AuthService = {
     if (!refreshToken) return null;
 
     try {
-      const response = await api.post<RefreshTokenResponse>("/auth/refresh", {
+      const response = await api.post<IRefreshTokenResponse>("/auth/refresh", {
         refresh_token: refreshToken,
       });
 
@@ -70,7 +65,7 @@ export const AuthService = {
     }
   },
 
-  me: async (): Promise<AuthUser> => {
-    return await api.get<AuthUser>('/auth/me');
+  me: async (): Promise<IUser> => {
+    return await api.get<IUser>('/auth/me');
   },
 };

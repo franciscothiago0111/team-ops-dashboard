@@ -4,12 +4,12 @@
  */
 
 import { api } from '@/core/api/http';
-import { PDFGenerationOptions } from '@/core/pdf/types';
+import type { IPDFGenerationOptions } from '@/core/pdf/types';
 
 export interface IGeneratePDFParams<T = unknown> {
   template: string;
   data: T;
-  options?: PDFGenerationOptions;
+  options?: IPDFGenerationOptions;
 }
 
 export interface IAvailableTemplatesResponse {
@@ -24,7 +24,7 @@ class PDFService {
   /**
    * Generate and download a PDF
    */
-  async generatePDF<T = unknown>(params: GeneratePDFParams<T>): Promise<void> {
+  async generatePDF<T = unknown>(params: IGeneratePDFParams<T>): Promise<void> {
     try {
       // Make request with fetch directly for blob response
       const response = await fetch(`${this.baseUrl}/generate`, {
@@ -64,7 +64,7 @@ class PDFService {
    */
   async getAvailableTemplates(): Promise<string[]> {
     try {
-      const response = await api.get<AvailableTemplatesResponse>(
+      const response = await api.get<IAvailableTemplatesResponse>(
         `${this.baseUrl}/generate`
       );
       return response.templates;
@@ -77,7 +77,7 @@ class PDFService {
   /**
    * Generate PDF in new tab (for preview)
    */
-  async previewPDF<T = unknown>(params: GeneratePDFParams<T>): Promise<void> {
+  async previewPDF<T = unknown>(params: IGeneratePDFParams<T>): Promise<void> {
     try {
       // Make request with fetch directly for blob response
       const response = await fetch(`${this.baseUrl}/generate`, {

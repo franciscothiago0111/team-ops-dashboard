@@ -26,7 +26,7 @@ interface IExampleData {
 /**
  * Example PDF with Page Break Handling
  */
-export const PageBreakExamplePDF: React.FC<{ data: ExampleData }> = ({ data }) => {
+export const PageBreakExamplePDF: React.FC<{ data: IExampleData }> = ({ data }) => {
   return (
     <Document>
       <Page size="A4" style={commonStyles.page}>

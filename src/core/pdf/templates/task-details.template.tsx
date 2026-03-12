@@ -4,21 +4,21 @@
 
 import React from 'react';
 import { Document, Page, Text, View, pdf } from '@react-pdf/renderer';
-import { Task } from '@/shared/types/task';
+import type { ITask } from '@/shared/types/task';
 import { commonStyles } from '../styles/common.styles';
 import { Header, Section, Field, Badge, Footer } from '../components/common';
 import { formatStatus, formatPriority } from '../utils/formatters';
 import { RichTextPDF } from '../utils/html-to-pdf';
-import { PDFTemplate, PDFGenerationOptions } from '../types';
+import type { IPDFTemplate, IPDFGenerationOptions } from '../types';
 import { KeepTogether, NoBreak } from '../utils/page-breaks';
 import { formatDate } from '@/core/utils/formatters';
 
 interface ITaskDetailsPDFProps {
-  task: Task;
-  options?: PDFGenerationOptions;
+  task: ITask;
+  options?: IPDFGenerationOptions;
 }
 
-const TaskDetailsPDF: React.FC<TaskDetailsPDFProps> = ({ task, options }) => {
+const TaskDetailsPDF: React.FC<ITaskDetailsPDFProps> = ({ task, options }) => {
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case 'COMPLETED':
@@ -140,8 +140,8 @@ const TaskDetailsPDF: React.FC<TaskDetailsPDFProps> = ({ task, options }) => {
  * Generate Task Details PDF
  */
 const generateTaskDetailsPDF = async (
-  data: Task,
-  options?: PDFGenerationOptions
+  data: ITask,
+  options?: IPDFGenerationOptions
 ): Promise<Buffer> => {
   const document = <TaskDetailsPDF task={data} options={options} />;
   const asPdf = pdf(document);
@@ -153,7 +153,7 @@ const generateTaskDetailsPDF = async (
 /**
  * Task Details PDF Template Export
  */
-export const taskDetailsPDFTemplate: PDFTemplate<Task> = {
+export const taskDetailsPDFTemplate: IPDFTemplate<ITask> = {
   name: 'task-details',
   generate: generateTaskDetailsPDF,
 };

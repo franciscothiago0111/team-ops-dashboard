@@ -287,7 +287,7 @@ interface IRichTextPDFProps {
   html: string;
 }
 
-export const RichTextPDF: React.FC<RichTextPDFProps> = ({ html }) => {
+export const RichTextPDF: React.FC<IRichTextPDFProps> = ({ html }) => {
   const content = htmlToPDFElements(html);
 
   if (!content) {

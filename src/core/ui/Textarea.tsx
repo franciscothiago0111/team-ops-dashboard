@@ -1,6 +1,7 @@
 "use client";
 
-import { TextareaHTMLAttributes, forwardRef } from "react";
+import type { TextareaHTMLAttributes } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 
 export interface ITextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -9,7 +10,7 @@ export interface ITextareaProps extends TextareaHTMLAttributes<HTMLTextAreaEleme
   hint?: string;
 }
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
   ({ className, error, label, hint, id, ...props }, ref) => {
     const textareaId = id || props.name;
 

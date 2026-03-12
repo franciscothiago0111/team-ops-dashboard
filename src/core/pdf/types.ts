@@ -14,8 +14,9 @@ export interface IPDFTemplate<T = Record<string, unknown>> {
   generate: (data: T, options?: IPDFGenerationOptions) => Promise<Buffer>;
 }
 
-export interface IPDFTemplateRegistry {
-  [key: string]: IPDFTemplate;
+export type IPDFTemplateRegistry = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: IPDFTemplate<any>;
 }
 
 export interface IPDFGenerationRequest<T = Record<string, unknown>> {

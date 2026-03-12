@@ -21,7 +21,7 @@ interface INoBreakProps {
   children: React.ReactNode;
 }
 
-export const NoBreak: React.FC<NoBreakProps> = ({ children }) => (
+export const NoBreak: React.FC<INoBreakProps> = ({ children }) => (
   <View style={commonStyles.breakAvoid}>{children}</View>
 );
 
@@ -29,7 +29,7 @@ export const NoBreak: React.FC<NoBreakProps> = ({ children }) => (
  * KeepTogether Component
  * Keeps content together on the same page
  */
-export const KeepTogether: React.FC<NoBreakProps> = ({ children }) => (
+export const KeepTogether: React.FC<INoBreakProps> = ({ children }) => (
   <View wrap={false}>{children}</View>
 );
 
@@ -43,7 +43,7 @@ interface IPageSectionProps {
   wrap?: boolean;
 }
 
-export const PageSection: React.FC<PageSectionProps> = ({
+export const PageSection: React.FC<IPageSectionProps> = ({
   title,
   children,
   wrap = true
@@ -64,7 +64,7 @@ interface IContentBlockProps {
   minPresenceAhead?: number;
 }
 
-export const ContentBlock: React.FC<ContentBlockProps> = ({
+export const ContentBlock: React.FC<IContentBlockProps> = ({
   children,
   wrap = true,
   minPresenceAhead = 0,
@@ -82,7 +82,7 @@ interface ITableRowProps {
   children: React.ReactNode;
 }
 
-export const TableRow: React.FC<TableRowProps> = ({ children }) => (
+export const TableRow: React.FC<ITableRowProps> = ({ children }) => (
   <View wrap={false} style={commonStyles.tableRow}>
     {children}
   </View>
@@ -97,7 +97,7 @@ interface IBreakableSectionProps {
   children: React.ReactNode;
 }
 
-export const BreakableSection: React.FC<BreakableSectionProps> = ({
+export const BreakableSection: React.FC<IBreakableSectionProps> = ({
   title,
   children
 }) => (
@@ -119,7 +119,7 @@ interface IOrphanControlProps {
   children: React.ReactNode;
 }
 
-export const OrphanControl: React.FC<OrphanControlProps> = ({
+export const OrphanControl: React.FC<IOrphanControlProps> = ({
   children,
 }) => (
   <View wrap={false} minPresenceAhead={50}>
@@ -136,7 +136,7 @@ interface IFixedSectionProps {
   minPresenceAhead?: number;
 }
 
-export const FixedSection: React.FC<FixedSectionProps> = ({
+export const FixedSection: React.FC<IFixedSectionProps> = ({
   children,
   minPresenceAhead = 100,
 }) => (

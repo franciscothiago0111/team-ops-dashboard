@@ -3,15 +3,15 @@
  * Central registry for all PDF templates
  */
 
-import { PDFTemplate, PDFTemplateRegistry } from './types';
+import type { IPDFTemplate, IPDFTemplateRegistry } from './types';
 
 class PDFRegistry {
-  private templates: PDFTemplateRegistry = {};
+  private templates: IPDFTemplateRegistry = {};
 
   /**
    * Register a new PDF template
    */
-  register<T = unknown>(template: PDFTemplate<T>): void {
+  register<T = unknown>(template: IPDFTemplate<T>): void {
     if (this.templates[template.name]) {
       console.warn(`Template "${template.name}" is already registered. Overwriting...`);
     }
@@ -21,8 +21,8 @@ class PDFRegistry {
   /**
    * Get a template by name
    */
-  getTemplate<T = unknown>(name: string): PDFTemplate<T> | undefined {
-    return this.templates[name] as PDFTemplate<T> | undefined;
+  getTemplate<T = unknown>(name: string): IPDFTemplate<T> | undefined {
+    return this.templates[name] as IPDFTemplate<T> | undefined;
   }
 
   /**

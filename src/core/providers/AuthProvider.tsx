@@ -1,39 +1,36 @@
 "use client";
 
-import { createContext, useState, ReactNode, useEffect } from "react";
-import { getToken, removeToken, saveUser, getUser, removeUser, clearAuthData } from "../services/storage.service";
+import type { ReactNode } from "react";
+import { createContext, useState, useEffect } from "react";
+import { getToken, saveUser, getUser, removeUser, clearAuthData } from "../services/storage.service";
 import { AuthService } from "../services/auth.service";
 import { initSocket, closeSocket } from "../services/io.service";
 import { jwtDecode } from "jwt-decode";
+import type { IUser } from "@/shared/types";
 
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
+
 
 interface IAuthContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: IUser | null;
+  setUser: (user: IUser | null) => void;
   logout: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
 
-export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const AuthContext = createContext<IAuthContextType>({} as IAuthContextType);
 
 interface IAuthProviderProps {
   children: ReactNode;
 }
 
-export function AuthProvider({ children }: AuthProviderProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(() => {
+export function AuthProvider({ children }: IAuthProviderProps) {
+  const [isLoading,] = useState(false);
+  const [user, setUser] = useState<IUser | null>(() => {
     if (typeof window === "undefined") return null;
 
     const token = getToken();
-    const savedUser = getUser<User>();
+    const savedUser = getUser<IUser>();
 
     if (token && savedUser) {
       return savedUser;
@@ -41,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token) {
       try {
-        const decoded = jwtDecode<User>(token);
+        const decoded = jwtDecode<IUser>(token);
         return decoded;
       } catch (error) {
         console.error("Invalid token", error);
@@ -69,7 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(null);
   };
 
-  const updateUser = (newUser: User | null) => {
+  const updateUser = (newUser: IUser | null) => {
     setUser(newUser);
     if (newUser) {
       saveUser(newUser);

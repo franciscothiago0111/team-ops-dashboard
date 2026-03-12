@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import type { ReactNode } from "react";
+import { useEffect } from "react";
 import { Button } from "./Button";
 import { X } from "lucide-react";
 import clsx from "clsx";
@@ -23,7 +24,7 @@ export function Modal({
   footer,
   size = "md",
   showCloseButton = true,
-}: ModalProps) {
+}: IModalProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -117,7 +118,7 @@ export function ConfirmModal({
   cancelText = "Cancelar",
   variant = "danger",
   isLoading = false,
-}: ConfirmModalProps) {
+}: IConfirmModalProps) {
   const handleConfirm = async () => {
     await onConfirm();
     if (!isLoading) {

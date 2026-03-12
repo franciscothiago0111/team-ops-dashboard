@@ -1,6 +1,7 @@
-import { io, Socket } from 'socket.io-client';
+import type { Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { getToken } from './storage.service';
-import { Notification } from '@/shared/types/notification';
+import type { INotification } from '@/shared/types/notification';
 import { env } from '../config/env';
 
 let socket: Socket | null = null;
@@ -19,7 +20,7 @@ interface ISocketResponse {
 }
 
 // Callback for new notifications
-type NotificationCallback = (notification: Notification) => void;
+type NotificationCallback = (notification: INotification) => void;
 let notificationCallbacks: NotificationCallback[] = [];
 
 export function initSocket(): Socket | null {
@@ -53,7 +54,7 @@ export function initSocket(): Socket | null {
     });
 
     // Listen for successful authentication (auto-registered from token)
-    socket.on('authenticated', (data: AuthenticatedResponse) => {
+    socket.on('authenticated', (data: IAuthenticatedResponse) => {
       console.log('✅ Autenticado com sucesso:', data);
       // User is auto-registered and auto-joined to company room
       // data contains: { success: true, userId: '...', companyId: '...' }
@@ -73,7 +74,7 @@ export function initSocket(): Socket | null {
     });
 
     // Listen for notifications
-    socket.on('notification', (notification: Notification) => {
+    socket.on('notification', (notification: INotification) => {
       console.log('🔔 Nova notificação recebida:', notification);
       // Trigger all registered callbacks
       notificationCallbacks.forEach((callback) => callback(notification));
@@ -96,14 +97,14 @@ export function onNotification(callback: NotificationCallback): () => void {
 }
 
 // Helper to join team room
-export function joinTeam(teamId: string): Promise<SocketResponse> {
+export function joinTeam(teamId: string): Promise<ISocketResponse> {
   return new Promise((resolve, reject) => {
     if (!socket?.connected) {
       reject(new Error('Socket não conectado'));
       return;
     }
 
-    socket.emit('joinTeam', { teamId }, (response: SocketResponse) => {
+    socket.emit('joinTeam', { teamId }, (response: ISocketResponse) => {
       if (response.success) {
         console.log(`✅ Entrou na sala da equipe: ${teamId}`);
         resolve(response);
@@ -116,14 +117,14 @@ export function joinTeam(teamId: string): Promise<SocketResponse> {
 }
 
 // Helper to leave team room
-export function leaveTeam(teamId: string): Promise<SocketResponse> {
+export function leaveTeam(teamId: string): Promise<ISocketResponse> {
   return new Promise((resolve, reject) => {
     if (!socket?.connected) {
       reject(new Error('Socket não conectado'));
       return;
     }
 
-    socket.emit('leaveTeam', { teamId }, (response: SocketResponse) => {
+    socket.emit('leaveTeam', { teamId }, (response: ISocketResponse) => {
       if (response.success) {
         console.log(`✅ Saiu da sala da equipe: ${teamId}`);
         resolve(response);
@@ -136,14 +137,14 @@ export function leaveTeam(teamId: string): Promise<SocketResponse> {
 }
 
 // Helper to join company room (usually auto-joined on connection)
-export function joinCompany(companyId: string): Promise<SocketResponse> {
+export function joinCompany(companyId: string): Promise<ISocketResponse> {
   return new Promise((resolve, reject) => {
     if (!socket?.connected) {
       reject(new Error('Socket não conectado'));
       return;
     }
 
-    socket.emit('joinCompany', { companyId }, (response: SocketResponse) => {
+    socket.emit('joinCompany', { companyId }, (response: ISocketResponse) => {
       if (response.success) {
         console.log(`✅ Entrou na sala da empresa : ${companyId}`);
         resolve(response);

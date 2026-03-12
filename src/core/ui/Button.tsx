@@ -1,6 +1,7 @@
 "use client";
 
-import { ButtonHTMLAttributes, forwardRef } from "react";
+import type { ButtonHTMLAttributes } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 import { LoadingSpinner } from "../components/LoadingState";
 
@@ -31,7 +32,7 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, IButtonProps>(
   (
     {
       className,
