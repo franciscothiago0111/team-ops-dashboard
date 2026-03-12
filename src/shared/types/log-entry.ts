@@ -1,4 +1,4 @@
-import { User } from "./user";
+import type { IUser } from "./user";
 
 export interface ILogEntry {
   id: string;
@@ -7,5 +7,5 @@ export interface ILogEntry {
   companyId: string;
   createdAt: string;
   entity: string;
-  user?: User | null;
+  user?: IUser | null;
 }

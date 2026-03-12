@@ -9,7 +9,7 @@ interface ICancelButtonProps {
   className?: string;
 }
 
-export function CancelButton({ onClick, text = "Cancelar", className = "" }: CancelButtonProps) {
+export function CancelButton({ onClick, text = "Cancelar", className = "" }: ICancelButtonProps) {
   const router = useRouter();
 
   const handleClick = () => {

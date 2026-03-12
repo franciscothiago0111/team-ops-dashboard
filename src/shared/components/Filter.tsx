@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, FormEvent, ReactNode } from "react";
+import type { FormEvent, ReactNode } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 
@@ -14,7 +15,7 @@ interface IFilterField {
   label?: string;
   placeholder?: string;
   type?: "text" | "select" | "date" | "custom";
-  options?: FilterOption[];
+  options?: IFilterOption[];
   renderCustom?: (props: {
     value: string;
     onChange: (value: string) => void;
@@ -22,11 +23,11 @@ interface IFilterField {
 }
 
 interface IFilterProps {
-  fields: FilterField[];
+  fields: IFilterField[];
   onSubmit?: (values: Record<string, string>) => void;
 }
 
-export function Filter({ fields, onSubmit }: FilterProps) {
+export function Filter({ fields, onSubmit }: IFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

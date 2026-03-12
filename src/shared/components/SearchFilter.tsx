@@ -15,7 +15,7 @@ export function SearchFilter({
   paramName = "search",
   placeholder = "Buscar...",
   defaultValue
-}: SearchFilterProps) {
+}: ISearchFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(

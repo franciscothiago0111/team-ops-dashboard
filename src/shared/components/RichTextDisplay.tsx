@@ -13,7 +13,7 @@ interface IRichTextDisplayProps {
   className?: string;
 }
 
-export function RichTextDisplay({ content, className = '' }: RichTextDisplayProps) {
+export function RichTextDisplay({ content, className = '' }: IRichTextDisplayProps) {
   // Remove empty paragraphs and clean up the HTML
   const cleanHtml = content
     .replace(/<p><br><\/p>/g, '')

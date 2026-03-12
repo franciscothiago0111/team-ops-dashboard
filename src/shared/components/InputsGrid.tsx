@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface IInputsGridProps {
   children: ReactNode;
@@ -6,7 +6,7 @@ interface IInputsGridProps {
   className?: string;
 }
 
-export function InputsGrid({ children, cols = 2, className = "" }: InputsGridProps) {
+export function InputsGrid({ children, cols = 2, className = "" }: IInputsGridProps) {
   const colsClass = {
     1: "md:grid-cols-1",
     2: "md:grid-cols-2",

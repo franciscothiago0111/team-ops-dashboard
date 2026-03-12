@@ -1,12 +1,12 @@
-import { BaseEntity } from ".";
-import { Team } from "./team";
-import { User } from "./user";
+import type { IBaseEntity } from ".";
+import type { ITeam } from "./team";
+import type { IUser } from "./user";
 
-export interface ICompany extends BaseEntity {
+export interface ICompany extends IBaseEntity {
   name: string;
   adminId: string;
 
 
-  users?: User[];
-  teams?: Team[];
+  users?: IUser[];
+  teams?: ITeam[];
 }

@@ -8,7 +8,7 @@ interface IBackButtonProps {
   className?: string;
 }
 
-export function BackButton({ onClick, text = "Voltar", className = "" }: BackButtonProps) {
+export function BackButton({ onClick, text = "Voltar", className = "" }: IBackButtonProps) {
   const router = useRouter();
 
   const handleClick = () => {

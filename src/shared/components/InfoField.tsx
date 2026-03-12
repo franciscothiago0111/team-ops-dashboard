@@ -4,7 +4,7 @@ interface IInfoFieldProps {
   placeholder?: string;
 }
 
-export function InfoField({ label, value, placeholder = "—" }: InfoFieldProps) {
+export function InfoField({ label, value, placeholder = "—" }: IInfoFieldProps) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">

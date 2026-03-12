@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, ReactNode } from "react";
+import type { ReactNode } from "react";
+import { useEffect } from "react";
 import { useAuth } from "@/core/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ErrorState } from "./ErrorState";
-import { Role } from "@/shared/types/user";
+import type { Role } from "@/shared/types/user";
 import { DashboardShell } from "@/app/(private)/dashboard/_components/DashboardShell";
 
 interface IRoleGuardProps {
@@ -18,7 +19,7 @@ export function RoleGuard({
   children,
   allowedRoles,
   redirectTo = "/dashboard",
-}: RoleGuardProps) {
+}: IRoleGuardProps) {
   const { user } = useAuth();
   const router = useRouter();
 

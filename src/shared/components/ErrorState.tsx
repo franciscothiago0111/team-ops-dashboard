@@ -14,7 +14,7 @@ export function ErrorState({
   showBackButton = true,
   backButtonText = "Voltar",
   onBack,
-}: ErrorStateProps) {
+}: IErrorStateProps) {
   const router = useRouter();
 
   const handleBack = () => {

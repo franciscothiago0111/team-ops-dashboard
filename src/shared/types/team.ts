@@ -1,13 +1,13 @@
-import { BaseEntity } from ".";
-import { Task } from "./task";
-import { User } from "./user";
+import type { IBaseEntity } from ".";
+import type { ITask } from "./task";
+import type { IUser } from "./user";
 
-export interface ITeam extends BaseEntity {
+export interface ITeam extends IBaseEntity {
   name: string;
   description?: string;
   managerId: string;
-  manager?: User;
+  manager?: IUser;
   companyId: string;
-  members?: User[];
-  tasks?: Task[];
+  members?: IUser[];
+  tasks?: ITask[];
 }

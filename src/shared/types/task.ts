@@ -1,23 +1,22 @@
-import { BaseEntity } from ".";
-import { File } from "./file";
-import { Team } from "./team";
-import { User } from "./user";
+import type { IBaseEntity } from ".";
+import type { ITeam } from "./team";
+import type { IUser } from "./user";
 
 export type TaskStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
 export type TaskPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
 
-export interface ITask extends BaseEntity {
+export interface ITask extends IBaseEntity {
   name: string;
   description: string;
   status: TaskStatus;
   assignedToId: string;
-  assignedTo?: User;
+  assignedTo?: IUser;
 
   createdById: string;
   teamId: string;
-  team?: Team;
-  createdBy?: User;
+  team?: ITeam;
+  createdBy?: IUser;
 
   files?: File[];
 

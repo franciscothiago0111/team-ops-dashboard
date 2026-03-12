@@ -22,7 +22,7 @@ export function CSVDownloadButton({
   label = 'Exportar CSV',
   variant = 'secondary',
   className,
-}: CSVDownloadButtonProps) {
+}: ICSVDownloadButtonProps) {
   return (
     <Button
       onClick={onClick}
