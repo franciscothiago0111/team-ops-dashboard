@@ -3,15 +3,16 @@
  * POST /api/pdf/generate
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { pdfRegistry } from '@/core/pdf/registry';
-import { PDFGenerationRequest } from '@/core/pdf/types';
+import type { IPDFGenerationRequest } from '@/core/pdf/types';
 // Import templates to ensure registration
 import '@/core/pdf/templates';
 
 export async function POST(request: NextRequest) {
   try {
-    const body: PDFGenerationRequest = await request.json();
+    const body: IPDFGenerationRequest = await request.json();
     const { template, data, options } = body;
 
     // Validate request

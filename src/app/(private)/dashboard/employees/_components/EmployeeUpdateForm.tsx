@@ -10,29 +10,23 @@ import { CancelButton } from "@/shared/components/CancelButton";
 import { InputsGrid } from "@/shared/components/InputsGrid";
 import { useAuth } from "@/core/hooks/useAuth";
 import { useUpdateEmployee } from "../_hooks/useUpdateEmployee";
-import { UpdateEmployeeInput, UpdateEmployeeSchema } from "../_schemas/employee.schema";
-import { useTeamList } from "../../teams/_hooks/useTeamList";
-import { User } from "@/shared/types";
+import type { UpdateEmployeeInput } from "../_schemas/employee.schema";
+import { UpdateEmployeeSchema } from "../_schemas/employee.schema";
+import type { IUser } from "@/shared/types";
 
 interface IEmployeeUpdateFormProps {
-  employee: User;
+  employee: IUser;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
-export function EmployeeUpdateForm({ employee, onSuccess, onCancel }: EmployeeUpdateFormProps) {
+export function EmployeeUpdateForm({ employee, onSuccess, onCancel }: IEmployeeUpdateFormProps) {
   const { execute, isLoading } = useUpdateEmployee(employee.id);
   const { user } = useAuth();
 
-  const { data: teamsData, isLoading: isLoadingTeams } = useTeamList({ limit: 100 });
-  const teams = teamsData?.data ?? [];
 
-  const teamOptions = [
-    ...teams.map((team) => ({
-      value: team.id,
-      label: team.name,
-    })),
-  ];
+
+
 
   const form = useForm<UpdateEmployeeInput>({
     resolver: zodResolver(UpdateEmployeeSchema),

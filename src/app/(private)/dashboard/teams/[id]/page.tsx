@@ -7,7 +7,7 @@ interface ITeamPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function TeamPage({ params }: TeamPageProps) {
+export default function TeamPage({ params }: ITeamPageProps) {
   const { id } = use(params);
 
   return <TeamDetails id={id} />;

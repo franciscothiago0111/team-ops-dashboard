@@ -7,7 +7,7 @@ interface ITaskPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function TaskPage({ params }: TaskPageProps) {
+export default function TaskPage({ params }: ITaskPageProps) {
   const { id } = use(params);
 
   return <TaskDetails id={id} />;

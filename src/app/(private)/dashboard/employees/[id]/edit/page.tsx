@@ -6,7 +6,7 @@ interface IEmployeeEditRouteProps {
   }>;
 }
 
-export default async function EmployeeEditRoute({ params }: EmployeeEditRouteProps) {
+export default async function EmployeeEditRoute({ params }: IEmployeeEditRouteProps) {
   const { id } = await params;
   return <EmployeeEdit id={id} />;
 }

@@ -7,7 +7,7 @@ interface ITeamEditPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function TeamEditPage({ params }: TeamEditPageProps) {
+export default function TeamEditPage({ params }: ITeamEditPageProps) {
   const { id } = use(params);
 
   return <TeamEdit id={id} />;

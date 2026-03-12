@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Card } from "@/core/ui/Card";
 import clsx from "clsx";
-import { User } from "@/shared/types";
+import type { IUser } from "@/shared/types";
 
 interface IEmployeeCardProps {
-  employee: User;
+  employee: IUser;
 }
 
-export function EmployeeCard({ employee }: EmployeeCardProps) {
+export function EmployeeCard({ employee }: IEmployeeCardProps) {
   return (
     <Card>
       <div className="flex items-start justify-between">

@@ -1,22 +1,22 @@
 import { api } from "@/core/api/http";
-import { Notification } from "@/shared/types/notification";
-import { IPagination } from "@/shared/types/pagination";
+import type { INotification } from "@/shared/types/notification";
+import type { IPagination } from "@/shared/types/pagination";
 
-export interface IINotificationListParams {
+export interface INotificationListParams {
   page?: number;
   limit?: number;
   isRead?: boolean;
 }
 
 export const NotificationService = {
-  list: async (params: INotificationListParams = {}): Promise<IPagination<Notification>> => {
-    return await api.get<IPagination<Notification>>("/notifications", {
+  list: async (params: INotificationListParams = {}): Promise<IPagination<INotification>> => {
+    return await api.get<IPagination<INotification>>("/notifications", {
       params: { ...params },
     });
   },
 
-  markAsRead: async (id: string): Promise<Notification> => {
-    return await api.patch<Notification>(`/notifications/${id}/read`, {});
+  markAsRead: async (id: string): Promise<INotification> => {
+    return await api.patch<INotification>(`/notifications/${id}/read`, {});
   },
 
   markAllAsRead: async (): Promise<void> => {

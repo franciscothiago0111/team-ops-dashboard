@@ -12,7 +12,7 @@ interface IEmployeeEditProps {
   id: string;
 }
 
-export function EmployeeEdit({ id }: EmployeeEditProps) {
+export function EmployeeEdit({ id }: IEmployeeEditProps) {
   const router = useRouter();
   const { data: employee, isLoading, error } = useEmployeeDetails(id);
 

@@ -1,12 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { Notification } from "@/shared/types/notification";
-import { IPagination } from "@/shared/types/pagination";
-import { NotificationService, INotificationListParams } from "../_services/notification.service";
+import type { INotification } from "@/shared/types/notification";
+import type { IPagination } from "@/shared/types/pagination";
+import type { INotificationListParams } from "../_services/notification.service";
+import { NotificationService } from "../_services/notification.service";
 import { getSocket } from "@/core/services/io.service";
 
 export function useNotifications(params: INotificationListParams = {}) {
-  const query = useQuery<IPagination<Notification>, Error>({
+  const query = useQuery<IPagination<INotification>, Error>({
     queryKey: ["notifications", params],
     queryFn: () => NotificationService.list(params),
     staleTime: 1000 * 60 * 30, // 30 minutes

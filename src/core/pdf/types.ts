@@ -9,19 +9,19 @@ export interface IPDFGenerationOptions {
   subject?: string;
 }
 
-export interface IPDFTemplate<T = any> {
+export interface IPDFTemplate<T = Record<string, unknown>> {
   name: string;
-  generate: (data: T, options?: PDFGenerationOptions) => Promise<Buffer>;
+  generate: (data: T, options?: IPDFGenerationOptions) => Promise<Buffer>;
 }
 
 export interface IPDFTemplateRegistry {
-  [key: string]: PDFTemplate;
+  [key: string]: IPDFTemplate;
 }
 
-export interface IPDFGenerationRequest<T = any> {
+export interface IPDFGenerationRequest<T = Record<string, unknown>> {
   template: string;
   data: T;
-  options?: PDFGenerationOptions;
+  options?: IPDFGenerationOptions;
 }
 
 export interface IPDFGenerationResponse {

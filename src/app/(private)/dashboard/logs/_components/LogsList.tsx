@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
 import { LogCard } from "./LogCard";
 import { Paginate } from "@/shared/components/Pagination";
-import { ILogListParams } from "../_services/log.service";
+import type { ILogListParams } from "../_services/log.service";
 import { useLogList } from "../_hooks/useLogList";
 import { SkeletonList } from "@/core/components/LoadingState";
 import { useCSVDownload } from "@/core/hooks/useCSVDownload";
@@ -15,7 +15,7 @@ interface ILogsListProps {
   title?: string;
 }
 
-export function LogsList({ title = "Logs" }: LogsListProps) {
+export function LogsList({ title = "Logs" }: ILogsListProps) {
   const searchParams = useSearchParams();
   const { generateCSV, isGenerating } = useCSVDownload();
 

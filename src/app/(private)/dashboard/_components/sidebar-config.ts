@@ -13,7 +13,7 @@ export interface ISidebarLink {
 
 import { LayoutDashboard, Users, CheckSquare, UsersRound, History } from "lucide-react";
 
-export const sidebarLinks: SidebarLink[] = [
+export const sidebarLinks: ISidebarLink[] = [
   { label: "Visão Geral", href: "/dashboard", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: LayoutDashboard },
   { label: "Colaboradores", href: "/dashboard/employees", roles: ["ADMIN", "MANAGER"], icon: Users },
   { label: "Tarefas", href: "/dashboard/tasks", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: CheckSquare },
@@ -21,7 +21,7 @@ export const sidebarLinks: SidebarLink[] = [
   { label: "Logs", href: "/dashboard/logs", roles: ["ADMIN"], icon: History },
 ];
 
-export function filterLinksByRole(links: SidebarLink[], userRole: string): SidebarLink[] {
+export function filterLinksByRole(links: ISidebarLink[], userRole: string): ISidebarLink[] {
   const role = allowedRoles.includes(userRole as Role) ? (userRole as Role) : "EMPLOYEE";
   return links.filter((link) => link.roles.includes(role));
 }

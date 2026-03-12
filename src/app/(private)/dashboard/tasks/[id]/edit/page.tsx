@@ -14,7 +14,7 @@ interface IEditTaskPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function EditTaskPage({ params }: EditTaskPageProps) {
+export default function EditTaskPage({ params }: IEditTaskPageProps) {
   const { id } = use(params);
   const router = useRouter();
   const { user } = useAuth();

@@ -14,7 +14,7 @@ interface IEmployeeDetailsProps {
   id: string;
 }
 
-export function EmployeeDetails({ id }: EmployeeDetailsProps) {
+export function EmployeeDetails({ id }: IEmployeeDetailsProps) {
   const { data: employee, isLoading, error } = useEmployeeDetails(id);
 
   if (isLoading) {

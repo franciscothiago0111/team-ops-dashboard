@@ -1,13 +1,13 @@
 import { Card } from "@/core/ui/Card";
-import { LogEntry } from "@/shared/types/log-entry";
+import type { ILogEntry } from "@/shared/types/log-entry";
 import { formatDate } from "@/core/utils/formatters";
 import clsx from "clsx";
 
 interface ILogCardProps {
-  log: LogEntry;
+  log: ILogEntry;
 }
 
-export function LogCard({ log }: LogCardProps) {
+export function LogCard({ log }: ILogCardProps) {
   return (
     <Card>
       <div className="flex items-start justify-between">
