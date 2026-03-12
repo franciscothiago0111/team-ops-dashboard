@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import { getToken } from './storage.service';
 import { Notification } from '@/shared/types/notification';
+import { env } from '../config/env';
 
 let socket: Socket | null = null;
 
@@ -34,7 +35,7 @@ export function initSocket(): Socket | null {
       return null;
     }
 
-    const URL_IO = process.env.NEXT_PUBLIC_URL_IO || 'http://localhost:3001';
+    const URL_IO = env.ioUrl || 'http://localhost:3001';
 
     console.log('🔌 Conectando ao WebSocket:', { url: URL_IO });
 
