@@ -34,7 +34,7 @@ export function initSocket(): Socket | null {
       return null;
     }
 
-    const URL_IO = process.env.URL_IO || 'http://localhost:3001';
+    const URL_IO = process.env.NEXT_PUBLIC_URL_IO || 'http://localhost:3001';
 
     console.log('🔌 Conectando ao WebSocket:', { url: URL_IO });
 
