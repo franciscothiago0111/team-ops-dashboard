@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/core/ui/Button";
 import { Input } from "@/core/ui/Input";
 import { useLogin } from "../_hooks/useLogin";
-import { LoginInput, LoginSchema } from "../_schemas/login.schema";
+import type { LoginInput } from "../_schemas/login.schema";
+import { LoginSchema } from "../_schemas/login.schema";
 
 export function LoginForm() {
   const { execute, isLoading } = useLogin();

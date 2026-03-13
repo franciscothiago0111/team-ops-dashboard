@@ -17,6 +17,8 @@ export function useLogin() {
     try {
       setIsLoading(true);
       const response = await AuthService.login(data);
+
+      console.log("Login successful:", response);
       setUser(response.user);
       toast.success("Bem-vindo de volta!");
       router.push("/dashboard");
@@ -27,7 +29,7 @@ export function useLogin() {
       } else {
         toast.error("Credenciais inválidas");
       }
-      throw error;
+
     } finally {
       setIsLoading(false);
     }

@@ -48,9 +48,7 @@ class Http {
     } catch (err) {
       if (err instanceof ApiError && err.statusCode === 401) {
         clearAuthData();
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
-        }
+
       }
       throw err;
     }
