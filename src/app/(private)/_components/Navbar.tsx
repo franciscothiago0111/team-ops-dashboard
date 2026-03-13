@@ -7,12 +7,12 @@ interface IUser {
   role: string;
 }
 
-interface IDashboardNavbarProps {
+interface INavbarProps {
   user: IUser;
   onToggleSidebar: () => void;
 }
 
-export function DashboardNavbar({ user, onToggleSidebar }: IDashboardNavbarProps) {
+export function Navbar({ user, onToggleSidebar }: INavbarProps) {
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white shadow-sm">
       <div className="flex items-center justify-between px-4 py-4 md:px-8">

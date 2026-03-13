@@ -8,9 +8,10 @@ import { useAuth } from "@/core/hooks/useAuth";
 import { isTokenExpired } from "@/core/services/storage.service";
 import { useSidebarState } from "../_hooks/useSidebarState";
 import { sidebarLinks, filterLinksByRole } from "./sidebar-config";
-import { DashboardSidebar } from "./DashboardSidebar";
-import { DashboardNavbar } from "./DashboardNavbar";
+
 import { DashboardLoadingState } from "./DashboardLoadingState";
+import { Navbar } from "./Navbar";
+import { Sidebar } from "./Sidebar";
 
 interface IDashboardShellProps {
   children: ReactNode;
@@ -45,7 +46,7 @@ function DashboardShellInner({ children }: IDashboardShellProps) {
   return (
     <div className="min-h-screen bg-slate-50" suppressHydrationWarning>
       <div className="flex min-h-screen">
-        <DashboardSidebar
+        <Sidebar
           user={user}
           filteredLinks={filteredLinks}
           isSidebarOpen={isSidebarOpen}
@@ -61,7 +62,7 @@ function DashboardShellInner({ children }: IDashboardShellProps) {
             isSidebarOpen ? "lg:ml-64" : "lg:ml-[72px]"
           )}
         >
-          <DashboardNavbar user={user} onToggleSidebar={toggleSidebar} />
+          <Navbar user={user} onToggleSidebar={toggleSidebar} />
 
           {/* Page Content */}
           <main className="flex-1 px-4 py-8 md:px-8 md:py-10">{children}</main>

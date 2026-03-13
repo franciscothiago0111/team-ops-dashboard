@@ -8,7 +8,7 @@ import type { ISidebarLink } from "./sidebar-config";
 import type { IUser } from "@/shared/types";
 
 
-interface IDashboardSidebarProps {
+interface ISidebarProps {
   user: IUser;
   filteredLinks: ISidebarLink[];
   isSidebarOpen: boolean;
@@ -23,14 +23,14 @@ const roleLabels: Record<string, string> = {
   EMPLOYEE: "Colaborador",
 };
 
-export function DashboardSidebar({
+export function Sidebar({
   user,
   filteredLinks,
   isSidebarOpen,
   onToggleSidebar,
   onLinkClick,
   onLogout,
-}: IDashboardSidebarProps) {
+}: ISidebarProps) {
   const pathname = usePathname();
   const initials = user.name
     ? user.name
