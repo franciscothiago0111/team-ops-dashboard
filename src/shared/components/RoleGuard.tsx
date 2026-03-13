@@ -6,7 +6,7 @@ import { useAuth } from "@/core/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ErrorState } from "./ErrorState";
 import type { Role } from "@/shared/types/user";
-import { DashboardShell } from "@/app/(private)/dashboard/_components/DashboardShell";
+import { DashboardShell } from "@/app/(private)/_components/DashboardShell";
 
 interface IRoleGuardProps {
   children: ReactNode;

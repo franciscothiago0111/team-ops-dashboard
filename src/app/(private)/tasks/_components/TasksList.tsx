@@ -63,7 +63,7 @@ export function TasksList({ title = "Tarefas" }: ITasksListProps) {
         <p className="text-sm text-slate-500">Crie a primeira tarefa para começar.</p>
         {canCreateTask && (
           <Link
-            href="/dashboard/tasks/new"
+            href="/tasks/new"
             className="mt-4 inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
           >
             Criar tarefa
@@ -84,7 +84,7 @@ export function TasksList({ title = "Tarefas" }: ITasksListProps) {
         </div>
         {canCreateTask && (
           <Link
-            href="/dashboard/tasks/new"
+            href="/tasks/new"
             className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
           >
             Nova tarefa

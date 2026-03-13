@@ -15,10 +15,10 @@ import { LayoutDashboard, Users, CheckSquare, UsersRound, History } from "lucide
 
 export const sidebarLinks: ISidebarLink[] = [
   { label: "Visão Geral", href: "/dashboard", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: LayoutDashboard },
-  { label: "Colaboradores", href: "/dashboard/employees", roles: ["ADMIN", "MANAGER"], icon: Users },
-  { label: "Tarefas", href: "/dashboard/tasks", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: CheckSquare },
-  { label: "Times", href: "/dashboard/teams", roles: ["ADMIN", "MANAGER"], icon: UsersRound },
-  { label: "Logs", href: "/dashboard/logs", roles: ["ADMIN"], icon: History },
+  { label: "Colaboradores", href: "/employees", roles: ["ADMIN", "MANAGER"], icon: Users },
+  { label: "Tarefas", href: "/tasks", roles: ["ADMIN", "MANAGER", "EMPLOYEE"], icon: CheckSquare },
+  { label: "Times", href: "/teams", roles: ["ADMIN", "MANAGER"], icon: UsersRound },
+  { label: "Logs", href: "/logs", roles: ["ADMIN"], icon: History },
 ];
 
 export function filterLinksByRole(links: ISidebarLink[], userRole: string): ISidebarLink[] {

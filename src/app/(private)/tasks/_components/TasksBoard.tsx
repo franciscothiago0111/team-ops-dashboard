@@ -136,7 +136,7 @@ export function TasksBoard() {
           />
           {canCreateTask && (
             <Link
-              href="/dashboard/tasks/new"
+              href="/tasks/new"
               className="inline-flex h-11 items-center gap-2 rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
             >
               <Plus className="h-4 w-4" />

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/core/hooks/useAuth";
 import { LoadingState } from "@/shared/components/LoadingState";
+import { DashboardShell } from "./_components/DashboardShell";
 
 export default function PrivateLayout({
   children,
@@ -27,5 +28,5 @@ export default function PrivateLayout({
     return <LoadingState message="Redirecting to login..." />;
   }
 
-  return <>{children}</>;
+  return <DashboardShell>{children}</DashboardShell>;
 }

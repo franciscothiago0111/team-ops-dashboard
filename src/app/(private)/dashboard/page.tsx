@@ -60,13 +60,13 @@ export default function DashboardPage() {
           {user?.role === "ADMIN" && (
             <>
               <Link
-                href="/dashboard/employees"
+                href="/employees"
                 className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-black transition hover:bg-slate-50"
               >
                 Ver colaboradores
               </Link>
               <Link
-                href="/dashboard/teams"
+                href="/teams"
                 className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-black transition hover:bg-slate-50"
               >
                 Ver times
@@ -74,7 +74,7 @@ export default function DashboardPage() {
             </>
           )}
           <Link
-            href="/dashboard/tasks"
+            href="/tasks"
             className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800"
           >
             Ver tarefas

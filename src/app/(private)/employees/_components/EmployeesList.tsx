@@ -3,65 +3,66 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/core/ui/Button";
-import { TeamCard } from "./TeamCard";
+import { EmployeeCard } from "./EmployeeCard";
 import { Paginate } from "@/shared/components/Pagination";
-import type { ITeamListParams } from "../_services/team.service";
-import { useTeamList } from "../_hooks/useTeamList";
+import type { IEmployeeListParams } from "../_services/employee.service";
+import { useEmployeeList } from "../_hooks/useEmployeeList";
 import { SkeletonList } from "@/core/components/LoadingState";
-import { useAuth } from "@/core/hooks/useAuth";
 import { useCSVDownload } from "@/core/hooks/useCSVDownload";
 import { CSVDownloadButton } from "@/shared/components/CSVDownloadButton";
 import { formatDate } from "@/core/utils/formatters";
-import { stripHtmlTags } from "@/core/utils/text";
+import { usePersistedFilters } from "@/core/hooks/usePersistedFilters";
 
-interface ITeamsListProps {
+interface IEmployeesListProps {
   title?: string;
 }
 
-export function TeamsList({ title = "Times" }: ITeamsListProps) {
+const EMPLOYEE_FILTER_KEYS = ["name", "role"];
+
+export function EmployeesList({ title = "Colaboradores" }: IEmployeesListProps) {
   const searchParams = useSearchParams();
-  const { user } = useAuth();
+  usePersistedFilters("employees-filters", EMPLOYEE_FILTER_KEYS);
   const { generateCSV, isGenerating } = useCSVDownload();
 
-  const canCreateTeam = user?.role === "ADMIN";
-
-  const filters: ITeamListParams = {
+  const filters: IEmployeeListParams = {
     name: searchParams.get("name") || undefined,
+    role: searchParams.get("role") || undefined,
     page: searchParams.get("page") ? Number(searchParams.get("page")) : undefined,
     limit: searchParams.get("limit") ? Number(searchParams.get("limit")) : 10,
   };
 
   // Separate query for CSV export with high limit
-  const filtersCsv: ITeamListParams = {
+  const filtersCsv: IEmployeeListParams = {
     ...filters,
     page: undefined,
     limit: 10000000,
   };
 
-  const { data, isLoading, error, refetch } = useTeamList(filters);
-  const { data: dataCsv } = useTeamList(filtersCsv);
+  const { data, isLoading, error, refetch } = useEmployeeList(filters);
+  const { data: dataCsv } = useEmployeeList(filtersCsv);
 
-  const teams = data?.data ?? [];
+  const employees = data?.data ?? [];
 
   const handleDownloadCSV = async () => {
     if (!dataCsv?.data || dataCsv.data.length === 0) {
       return;
     }
 
-    const csvData = dataCsv.data.map((team) => ({
-      ID: team.id,
-      Nome: team.name,
-      Descrição: stripHtmlTags(team.description || ""),
-      Gerente: team.manager?.name || "",
-      "Número de membros": team.members?.length || 0,
-      "Número de tarefas": team.tasks?.length || 0,
-      "Criado em": formatDate(team.createdAt) || "",
-      "Atualizado em": team.updatedAt ? formatDate(team.updatedAt) : "",
+    const csvData = dataCsv.data.map((employee) => ({
+      ID: employee.id,
+      Nome: employee.name,
+      Email: employee.email,
+      Função: employee.role,
+      Equipe: employee.team?.name || "",
+      "Criado em": formatDate(employee.createdAt) || "",
+      "Atualizado em": employee.updatedAt ? formatDate(employee.updatedAt) : "",
     }));
 
-    const fileName = `times_${formatDate(new Date())}.csv`;
+    const fileName = `colaboradores_${formatDate(new Date())}.csv`;
     await generateCSV({ data: csvData, filename: fileName });
   };
+
+
 
   if (isLoading) {
     return (
@@ -77,25 +78,23 @@ export function TeamsList({ title = "Times" }: ITeamsListProps) {
   if (error) {
     return (
       <div className="space-y-3">
-        <p className="text-sm text-red-500">Erro ao carregar times.</p>
+        <p className="text-sm text-red-500">Erro ao carregar colaboradores.</p>
         <Button onClick={() => void refetch()}>Tentar novamente</Button>
       </div>
     );
   }
 
-  if (!teams.length) {
+  if (!employees.length) {
     return (
       <div className="rounded-2xl border border-dashed border-slate-200 p-10 text-center">
-        <p className="text-lg font-semibold text-slate-900">Nenhum time encontrado</p>
-        <p className="text-sm text-slate-500">Crie o primeiro time para começar.</p>
-        {canCreateTeam && (
-          <Link
-            href="/dashboard/teams/new"
-            className="mt-4 inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
-          >
-            Criar time
-          </Link>
-        )}
+        <p className="text-lg font-semibold text-slate-900">Nenhum colaborador encontrado</p>
+        <p className="text-sm text-slate-500">Cadastre o primeiro colaborador para começar.</p>
+        <Link
+          href="/employees/new"
+          className="mt-4 inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
+        >
+          Cadastrar colaborador
+        </Link>
       </div>
     );
   }
@@ -115,20 +114,18 @@ export function TeamsList({ title = "Times" }: ITeamsListProps) {
             isLoading={isGenerating}
             disabled={!dataCsv?.data || dataCsv.data.length === 0}
           />
-          {canCreateTeam && (
-            <Link
-              href="/dashboard/teams/new"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
-            >
-              Novo time
-            </Link>
-          )}
+          <Link
+            href="/employees/new"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-slate-900 px-5 text-sm font-semibold text-white"
+          >
+            Novo colaborador
+          </Link>
         </div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
-        {teams.map((team) => (
-          <TeamCard key={team.id} team={team} />
+        {employees.map((employee) => (
+          <EmployeeCard key={employee.id} employee={employee} />
         ))}
       </div>
 
@@ -145,8 +142,9 @@ export function TeamsList({ title = "Times" }: ITeamsListProps) {
         currentPage={data?.currentPage}
         register={data?.data.length}
         registersPrePage={data?.limit}
-        itemLabel="times"
+        itemLabel="colaboradores"
       />
+
     </div>
   );
 }
